@@ -468,6 +468,10 @@
     aarch64_stxr,                              // llvm.aarch64.stxr
     aarch64_subp,                              // llvm.aarch64.subp
     aarch64_tagp,                              // llvm.aarch64.tagp
+    aarch64_tcancel,                           // llvm.aarch64.tcancel
+    aarch64_tcommit,                           // llvm.aarch64.tcommit
+    aarch64_tstart,                            // llvm.aarch64.tstart
+    aarch64_ttest,                             // llvm.aarch64.ttest
     aarch64_udiv,                              // llvm.aarch64.udiv
     amdgcn_alignbit,                           // llvm.amdgcn.alignbit
     amdgcn_alignbyte,                          // llvm.amdgcn.alignbyte
