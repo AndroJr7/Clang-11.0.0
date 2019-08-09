@@ -1057,6 +1057,8 @@
     amdgcn_raw_buffer_atomic_add,              // llvm.amdgcn.raw.buffer.atomic.add
     amdgcn_raw_buffer_atomic_and,              // llvm.amdgcn.raw.buffer.atomic.and
     amdgcn_raw_buffer_atomic_cmpswap,          // llvm.amdgcn.raw.buffer.atomic.cmpswap
+    amdgcn_raw_buffer_atomic_dec,              // llvm.amdgcn.raw.buffer.atomic.dec
+    amdgcn_raw_buffer_atomic_inc,              // llvm.amdgcn.raw.buffer.atomic.inc
     amdgcn_raw_buffer_atomic_or,               // llvm.amdgcn.raw.buffer.atomic.or
     amdgcn_raw_buffer_atomic_smax,             // llvm.amdgcn.raw.buffer.atomic.smax
     amdgcn_raw_buffer_atomic_smin,             // llvm.amdgcn.raw.buffer.atomic.smin
@@ -1109,6 +1111,8 @@
     amdgcn_struct_buffer_atomic_add,           // llvm.amdgcn.struct.buffer.atomic.add
     amdgcn_struct_buffer_atomic_and,           // llvm.amdgcn.struct.buffer.atomic.and
     amdgcn_struct_buffer_atomic_cmpswap,       // llvm.amdgcn.struct.buffer.atomic.cmpswap
+    amdgcn_struct_buffer_atomic_dec,           // llvm.amdgcn.struct.buffer.atomic.dec
+    amdgcn_struct_buffer_atomic_inc,           // llvm.amdgcn.struct.buffer.atomic.inc
     amdgcn_struct_buffer_atomic_or,            // llvm.amdgcn.struct.buffer.atomic.or
     amdgcn_struct_buffer_atomic_smax,          // llvm.amdgcn.struct.buffer.atomic.smax
     amdgcn_struct_buffer_atomic_smin,          // llvm.amdgcn.struct.buffer.atomic.smin

@@ -1445,6 +1445,8 @@ OPTION(prefix_1, "fno-sanitize-cfi-cross-dso", fno_sanitize_cfi_cross_dso, Flag,
        "Disable control flow integrity (CFI) checks for cross-DSO calls.", nullptr, nullptr)
 OPTION(prefix_1, "fno-sanitize-coverage=", fno_sanitize_coverage, CommaJoined, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Disable specified features of coverage instrumentation for Sanitizers", nullptr, "func,bb,edge,indirect-calls,trace-bb,trace-cmp,trace-div,trace-gep,8bit-counters,trace-pc,trace-pc-guard,no-prune,inline-8bit-counters")
+OPTION(prefix_1, "fno-sanitize-link-c++-runtime", fno_sanitize_link_cxx_runtime, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fno-sanitize-link-runtime", fno_sanitize_link_runtime, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-sanitize-memory-track-origins", fno_sanitize_memory_track_origins, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Disable origins tracking in MemorySanitizer", nullptr, nullptr)
 OPTION(prefix_1, "fno-sanitize-memory-use-after-dtor", fno_sanitize_memory_use_after_dtor, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
@@ -1820,6 +1822,7 @@ OPTION(prefix_1, "fsanitize-coverage=", fsanitize_coverage, CommaJoined, f_clang
 OPTION(prefix_1, "fsanitize-hwaddress-abi=", fsanitize_hwaddress_abi_EQ, Joined, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Select the HWAddressSanitizer ABI to target (interceptor or platform, default interceptor)", nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-link-c++-runtime", fsanitize_link_cxx_runtime, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fsanitize-link-runtime", fsanitize_link_runtime, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-memory-track-origins=", fsanitize_memory_track_origins_EQ, Joined, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Enable origins tracking in MemorySanitizer", nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-memory-track-origins", fsanitize_memory_track_origins, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
@@ -2329,6 +2332,8 @@ OPTION(prefix_1, "masm-verbose", masm_verbose, Flag, INVALID, INVALID, nullptr, 
 OPTION(prefix_1, "masm=", masm_EQ, Joined, m_Group, INVALID, nullptr, DriverOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "massembler-fatal-warnings", massembler_fatal_warnings, Flag, INVALID, INVALID, nullptr, CC1Option | CC1AsOption | NoDriverOption, 0,
        "Make assembler warnings fatal", nullptr, nullptr)
+OPTION(prefix_1, "massembler-no-warn", massembler_no_warn, Flag, INVALID, INVALID, nullptr, CC1Option | CC1AsOption | NoDriverOption, 0,
+       "Make assembler not emit warnings", nullptr, nullptr)
 OPTION(prefix_1, "matomics", matomics, Flag, m_wasm_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mavx2", mavx2, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mavx512bf16", mavx512bf16, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
@@ -3360,6 +3365,8 @@ OPTION(prefix_2, "std:", _SLASH_std, Joined, cl_compile_Group, INVALID, nullptr,
        "Set C++ version (c++14,c++17,c++latest)", nullptr, nullptr)
 OPTION(prefix_4, "std=", std_EQ, Joined, CompileOnly_Group, INVALID, nullptr, CC1Option, 0,
        "Language standard to compile for", nullptr, nullptr)
+OPTION(prefix_1, "stdlib++-isystem", stdlibxx_isystem, JoinedOrSeparate, clang_i_Group, INVALID, nullptr, DriverOption, 0,
+       "Use directory as the C++ standard library include path", "<directory>", nullptr)
 OPTION(prefix_4, "stdlib=", stdlib_EQ, Joined, INVALID, INVALID, nullptr, CC1Option, 0,
        "C++ standard library to use", nullptr, "libc++,libstdc++,platform")
 OPTION(prefix_3, "stdlib", _stdlib, Separate, INVALID, stdlib_EQ, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -3694,7 +3701,7 @@ bool ValuesWereAdded;
     const char *Values =
     #define LANGSTANDARD(id, name, lang, desc, features) name ","
     #define LANGSTANDARD_ALIAS(id, alias) alias ","
-    #include "clang/Frontend/LangStandards.def"
+    #include "clang/Basic/LangStandards.def"
     ;
   
 ValuesWereAdded = Opt.addValues("-std=", Values);

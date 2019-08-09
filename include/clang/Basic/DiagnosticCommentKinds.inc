@@ -25,6 +25,7 @@ DIAG(warn_doc_html_missing_end_tag, CLASS_WARNING, (unsigned)diag::Severity::Ign
 DIAG(warn_doc_html_start_end_mismatch, CLASS_WARNING, (unsigned)diag::Severity::Ignored, "HTML start tag '%0' closed by '%1'", 192, SFINAE_Suppress, false, false, 27)
 DIAG(warn_doc_html_start_tag_expected_ident_or_greater, CLASS_WARNING, (unsigned)diag::Severity::Ignored, "HTML start tag prematurely ended, expected attribute name or '>'", 190, SFINAE_Suppress, false, false, 27)
 DIAG(warn_doc_html_start_tag_expected_quoted_string, CLASS_WARNING, (unsigned)diag::Severity::Ignored, "expected quoted string after equals sign", 190, SFINAE_Suppress, false, false, 27)
+DIAG(warn_doc_inline_contents_no_argument, CLASS_WARNING, (unsigned)diag::Severity::Ignored, "'%select{\\|@}0%1' command does not have an argument", 190, SFINAE_Suppress, false, false, 27)
 DIAG(warn_doc_param_duplicate, CLASS_WARNING, (unsigned)diag::Severity::Ignored, "parameter '%0' is already documented", 190, SFINAE_Suppress, false, false, 27)
 DIAG(warn_doc_param_invalid_direction, CLASS_WARNING, (unsigned)diag::Severity::Ignored, "unrecognized parameter passing direction, valid directions are '[in]', '[out]' and '[in,out]'", 190, SFINAE_Suppress, false, false, 27)
 DIAG(warn_doc_param_not_attached_to_a_function_decl, CLASS_WARNING, (unsigned)diag::Severity::Ignored, "'%select{\\|@}0param' command used in a comment that is not attached to a function declaration", 190, SFINAE_Suppress, false, false, 27)
