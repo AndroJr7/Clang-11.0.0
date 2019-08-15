@@ -168,6 +168,10 @@
   bool VisitCFConsumedAttr(CFConsumedAttr *A) {
     return true; 
   }
+  bool TraverseCFICanonicalJumpTableAttr(CFICanonicalJumpTableAttr *A);
+  bool VisitCFICanonicalJumpTableAttr(CFICanonicalJumpTableAttr *A) {
+    return true; 
+  }
   bool TraverseCFReturnsNotRetainedAttr(CFReturnsNotRetainedAttr *A);
   bool VisitCFReturnsNotRetainedAttr(CFReturnsNotRetainedAttr *A) {
     return true; 
@@ -1568,6 +1572,15 @@ bool VISITORCLASS<Derived>::TraverseCFConsumedAttr(CFConsumedAttr *A) {
   if (!getDerived().VisitAttr(A))
     return false;
   if (!getDerived().VisitCFConsumedAttr(A))
+    return false;
+  return true;
+}
+
+template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseCFICanonicalJumpTableAttr(CFICanonicalJumpTableAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitCFICanonicalJumpTableAttr(A))
     return false;
   return true;
 }
@@ -3976,6 +3989,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseCFAuditedTransferAttr(cast<CFAuditedTransferAttr>(A));
     case attr::CFConsumed:
       return getDerived().TraverseCFConsumedAttr(cast<CFConsumedAttr>(A));
+    case attr::CFICanonicalJumpTable:
+      return getDerived().TraverseCFICanonicalJumpTableAttr(cast<CFICanonicalJumpTableAttr>(A));
     case attr::CFReturnsNotRetained:
       return getDerived().TraverseCFReturnsNotRetainedAttr(cast<CFReturnsNotRetainedAttr>(A));
     case attr::CFReturnsRetained:

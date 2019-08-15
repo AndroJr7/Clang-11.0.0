@@ -1731,6 +1731,30 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::CFConsumed; }
 };
 
+class CFICanonicalJumpTableAttr : public InheritableAttr {
+public:
+  static CFICanonicalJumpTableAttr *CreateImplicit(ASTContext &Ctx, SourceRange Loc = SourceRange()) {
+    auto *A = new (Ctx) CFICanonicalJumpTableAttr(Loc, Ctx, 0);
+    A->setImplicit(true);
+    return A;
+  }
+
+  CFICanonicalJumpTableAttr(SourceRange R, ASTContext &Ctx
+              , unsigned SI
+             )
+    : InheritableAttr(attr::CFICanonicalJumpTable, R, SI, false, false)
+  {
+  }
+
+  CFICanonicalJumpTableAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::CFICanonicalJumpTable; }
+};
+
 class CFReturnsNotRetainedAttr : public InheritableAttr {
 public:
   static CFReturnsNotRetainedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Loc = SourceRange()) {

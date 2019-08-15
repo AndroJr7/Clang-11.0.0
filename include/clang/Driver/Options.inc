@@ -122,7 +122,7 @@ OPTION(prefix_1, "analyzer-config-compatibility-mode=", analyzer_config_compatib
 OPTION(prefix_1, "analyzer-config-compatibility-mode", analyzer_config_compatibility_mode, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Don't emit errors on invalid analyzer-config inputs", nullptr, nullptr)
 OPTION(prefix_1, "analyzer-config-help", analyzer_config_help, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
-       "Display the list of -analyzer-config options", nullptr, nullptr)
+       "Display the list of -analyzer-config options. These are meant for development purposes only!", nullptr, nullptr)
 OPTION(prefix_1, "analyzer-config", analyzer_config, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Choose analyzer options to enable", nullptr, nullptr)
 OPTION(prefix_1, "analyzer-constraints=", analyzer_constraints_EQ, Joined, INVALID, analyzer_constraints, nullptr, CC1Option | NoDriverOption, 0, nullptr, nullptr, nullptr)
@@ -1441,6 +1441,8 @@ OPTION(prefix_1, "fno-sanitize-address-use-odr-indicator", fno_sanitize_address_
        "Disable ODR indicator globals", nullptr, nullptr)
 OPTION(prefix_1, "fno-sanitize-blacklist", fno_sanitize_blacklist, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Don't use blacklist file for sanitizers", nullptr, nullptr)
+OPTION(prefix_1, "fno-sanitize-cfi-canonical-jump-tables", fno_sanitize_cfi_canonical_jump_tables, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
+       "Do not make the jump table addresses canonical in the symbol table", nullptr, nullptr)
 OPTION(prefix_1, "fno-sanitize-cfi-cross-dso", fno_sanitize_cfi_cross_dso, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Disable control flow integrity (CFI) checks for cross-DSO calls.", nullptr, nullptr)
 OPTION(prefix_1, "fno-sanitize-coverage=", fno_sanitize_coverage, CommaJoined, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
@@ -1787,6 +1789,8 @@ OPTION(prefix_1, "fsanitize-address-use-odr-indicator", fsanitize_address_use_od
        "Enable ODR indicator globals to avoid false ODR violation reports in partially sanitized programs at the cost of an increase in binary size", nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-blacklist=", fsanitize_blacklist, Joined, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Path to blacklist file for sanitizers", nullptr, nullptr)
+OPTION(prefix_1, "fsanitize-cfi-canonical-jump-tables", fsanitize_cfi_canonical_jump_tables, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
+       "Make the jump table addresses canonical in the symbol table", nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-cfi-cross-dso", fsanitize_cfi_cross_dso, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Enable control flow integrity (CFI) checks for cross-DSO calls.", nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-cfi-icall-generalize-pointers", fsanitize_cfi_icall_generalize_pointers, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,

@@ -1760,6 +1760,48 @@ const char *CFConsumedAttr::getSpelling() const {
   }
 }
 
+CFICanonicalJumpTableAttr *CFICanonicalJumpTableAttr::clone(ASTContext &C) const {
+  auto *A = new (C) CFICanonicalJumpTableAttr(getLocation(), C, getSpellingListIndex());
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->Implicit = Implicit;
+  return A;
+}
+
+void CFICanonicalJumpTableAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (SpellingListIndex) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((cfi_canonical_jump_table))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::cfi_canonical_jump_table]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::cfi_canonical_jump_table]]";
+    break;
+  }
+}
+}
+
+const char *CFICanonicalJumpTableAttr::getSpelling() const {
+  switch (SpellingListIndex) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "cfi_canonical_jump_table";
+  case 1:
+    return "cfi_canonical_jump_table";
+  case 2:
+    return "cfi_canonical_jump_table";
+  }
+}
+
 CFReturnsNotRetainedAttr *CFReturnsNotRetainedAttr::clone(ASTContext &C) const {
   auto *A = new (C) CFReturnsNotRetainedAttr(getLocation(), C, getSpellingListIndex());
   A->Inherited = Inherited;
@@ -11424,6 +11466,8 @@ const char *Attr::getSpelling() const {
     return cast<CFAuditedTransferAttr>(this)->getSpelling();
   case attr::CFConsumed:
     return cast<CFConsumedAttr>(this)->getSpelling();
+  case attr::CFICanonicalJumpTable:
+    return cast<CFICanonicalJumpTableAttr>(this)->getSpelling();
   case attr::CFReturnsNotRetained:
     return cast<CFReturnsNotRetainedAttr>(this)->getSpelling();
   case attr::CFReturnsRetained:
@@ -11996,6 +12040,8 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<CFAuditedTransferAttr>(this)->clone(C);
   case attr::CFConsumed:
     return cast<CFConsumedAttr>(this)->clone(C);
+  case attr::CFICanonicalJumpTable:
+    return cast<CFICanonicalJumpTableAttr>(this)->clone(C);
   case attr::CFReturnsNotRetained:
     return cast<CFReturnsNotRetainedAttr>(this)->clone(C);
   case attr::CFReturnsRetained:
@@ -12568,6 +12614,8 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<CFAuditedTransferAttr>(this)->printPretty(OS, Policy);
   case attr::CFConsumed:
     return cast<CFConsumedAttr>(this)->printPretty(OS, Policy);
+  case attr::CFICanonicalJumpTable:
+    return cast<CFICanonicalJumpTableAttr>(this)->printPretty(OS, Policy);
   case attr::CFReturnsNotRetained:
     return cast<CFReturnsNotRetainedAttr>(this)->printPretty(OS, Policy);
   case attr::CFReturnsRetained:

@@ -340,6 +340,13 @@ Record.push_back(SA->getType());
     Record.push_back(A->getSpellingListIndex());
     break;
   }
+  case attr::CFICanonicalJumpTable: {
+    const auto *SA = cast<CFICanonicalJumpTableAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->getSpellingListIndex());
+    break;
+  }
   case attr::CFReturnsNotRetained: {
     const auto *SA = cast<CFReturnsNotRetainedAttr>(A);
     Record.push_back(SA->isInherited());

@@ -238,6 +238,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<CFConsumedAttr>(At);
       return A->clone(C);
     }
+    case attr::CFICanonicalJumpTable: {
+      const auto *A = cast<CFICanonicalJumpTableAttr>(At);
+      return A->clone(C);
+    }
     case attr::CFReturnsNotRetained: {
       const auto *A = cast<CFReturnsNotRetainedAttr>(At);
       return A->clone(C);
@@ -1450,6 +1454,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
       return nullptr;
     }
     case attr::CFConsumed: {
+      return nullptr;
+    }
+    case attr::CFICanonicalJumpTable: {
       return nullptr;
     }
     case attr::CFReturnsNotRetained: {

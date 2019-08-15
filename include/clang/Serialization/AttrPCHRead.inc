@@ -435,6 +435,15 @@
     New->setImplicit(isImplicit);
     break;
   }
+  case attr::CFICanonicalJumpTable: {
+    bool isInherited = Record.readInt();
+    bool isImplicit = Record.readInt();
+    unsigned Spelling = Record.readInt();
+    New = new (Context) CFICanonicalJumpTableAttr(Range, Context, Spelling);
+    cast<InheritableAttr>(New)->setInherited(isInherited);
+    New->setImplicit(isImplicit);
+    break;
+  }
   case attr::CFReturnsNotRetained: {
     bool isInherited = Record.readInt();
     bool isImplicit = Record.readInt();

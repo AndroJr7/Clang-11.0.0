@@ -212,6 +212,7 @@
   __interceptor_getsockname;
   __interceptor_getsockopt;
   __interceptor_gettimeofday;
+  __interceptor_getusershell;
   __interceptor_getutent;
   __interceptor_getutid;
   __interceptor_getutline;
@@ -1459,6 +1460,7 @@
   getsockname;
   getsockopt;
   gettimeofday;
+  getusershell;
   getutent;
   getutid;
   getutline;

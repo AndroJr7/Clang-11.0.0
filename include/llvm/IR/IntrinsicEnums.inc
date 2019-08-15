@@ -30,6 +30,9 @@
     convert_to_fp16,                           // llvm.convert.to.fp16
     copysign,                                  // llvm.copysign
     coro_alloc,                                // llvm.coro.alloc
+    coro_alloca_alloc,                         // llvm.coro.alloca.alloc
+    coro_alloca_free,                          // llvm.coro.alloca.free
+    coro_alloca_get,                           // llvm.coro.alloca.get
     coro_begin,                                // llvm.coro.begin
     coro_destroy,                              // llvm.coro.destroy
     coro_done,                                 // llvm.coro.done
@@ -37,14 +40,18 @@
     coro_frame,                                // llvm.coro.frame
     coro_free,                                 // llvm.coro.free
     coro_id,                                   // llvm.coro.id
+    coro_id_retcon,                            // llvm.coro.id.retcon
+    coro_id_retcon_once,                       // llvm.coro.id.retcon.once
     coro_noop,                                 // llvm.coro.noop
     coro_param,                                // llvm.coro.param
+    coro_prepare_retcon,                       // llvm.coro.prepare.retcon
     coro_promise,                              // llvm.coro.promise
     coro_resume,                               // llvm.coro.resume
     coro_save,                                 // llvm.coro.save
     coro_size,                                 // llvm.coro.size
     coro_subfn_addr,                           // llvm.coro.subfn.addr
     coro_suspend,                              // llvm.coro.suspend
+    coro_suspend_retcon,                       // llvm.coro.suspend.retcon
     cos,                                       // llvm.cos
     ctlz,                                      // llvm.ctlz
     ctpop,                                     // llvm.ctpop
@@ -214,6 +221,7 @@
     preserve_struct_access_index,              // llvm.preserve.struct.access.index
     preserve_union_access_index,               // llvm.preserve.union.access.index
     ptr_annotation,                            // llvm.ptr.annotation
+    ptrmask,                                   // llvm.ptrmask
     read_register,                             // llvm.read_register
     readcyclecounter,                          // llvm.readcyclecounter
     returnaddress,                             // llvm.returnaddress

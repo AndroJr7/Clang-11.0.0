@@ -165,6 +165,7 @@
   __interceptor_getresuid;
   __interceptor_getsockname;
   __interceptor_getsockopt;
+  __interceptor_getusershell;
   __interceptor_getutent;
   __interceptor_getutid;
   __interceptor_getutline;
@@ -1321,6 +1322,7 @@
   getresuid;
   getsockname;
   getsockopt;
+  getusershell;
   getutent;
   getutid;
   getutline;

@@ -122,6 +122,7 @@ DIAG(err_invalid_branch_protection, CLASS_ERROR, (unsigned)diag::Severity::Error
 DIAG(err_no_external_assembler, CLASS_ERROR, (unsigned)diag::Severity::Error, "there is no external assembler that can be used on this platform", 0, SFINAE_SubstitutionFailure, false, true, 0)
 DIAG(err_objc_weak_unsupported, CLASS_ERROR, (unsigned)diag::Severity::Error, "-fobjc-weak is not supported on the current deployment target", 0, SFINAE_SubstitutionFailure, false, true, 0)
 DIAG(err_objc_weak_with_gc, CLASS_ERROR, (unsigned)diag::Severity::Error, "-fobjc-weak is not supported in Objective-C garbage collection", 0, SFINAE_SubstitutionFailure, false, true, 0)
+DIAG(err_stack_tagging_requires_hardware_feature, CLASS_ERROR, (unsigned)diag::Severity::Error, "'-fsanitize=memtag' requires hardware support (+memtag)", 0, SFINAE_SubstitutionFailure, false, true, 0)
 DIAG(err_target_unsupported_arch, CLASS_ERROR, (unsigned)diag::Severity::Error, "the target architecture '%0' is not supported by the target '%1'", 0, SFINAE_SubstitutionFailure, false, true, 0)
 DIAG(err_test_module_file_extension_format, CLASS_ERROR, (unsigned)diag::Severity::Error, "-ftest-module-file-extension argument '%0' is not of the required form 'blockname:major:minor:hashed:user info'", 0, SFINAE_SubstitutionFailure, false, true, 0)
 DIAG(note_drv_address_sanitizer_debug_runtime, CLASS_NOTE, (unsigned)diag::Severity::Fatal, "AddressSanitizer doesn't support linking with debug runtime libraries yet", 0, SFINAE_Suppress, false, false, 0)

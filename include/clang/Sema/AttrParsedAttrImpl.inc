@@ -499,6 +499,19 @@ static void matchRulesForCFConsumed(llvm::SmallVectorImpl<std::pair<attr::Subjec
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_parameter, /*IsSupported=*/true));
 }
 
+static bool checkCFICanonicalJumpTableAppertainsTo(Sema &S, const ParsedAttr &Attr, const Decl *D) {
+  if (!D || (!isa<FunctionDecl>(D))) {
+    S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
+      << Attr << "functions";
+    return false;
+  }
+  return true;
+}
+
+static void matchRulesForCFICanonicalJumpTable(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) {
+  MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
+}
+
 static bool checkCFUnknownTransferAppertainsTo(Sema &S, const ParsedAttr &Attr, const Decl *D) {
   if (!D || (!isa<FunctionDecl>(D))) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
@@ -3178,6 +3191,7 @@ static const ParsedAttrInfo AttrInfoMap[ParsedAttr::UnknownAttribute + 1] = {
   { 0, 0, 0, 0, 1, 0, 1, 0, defaultAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, nullptr },  // AT_CDecl
   { 0, 0, 0, 0, 0, 0, 0, 1, checkCFAuditedTransferAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForCFAuditedTransfer },  // AT_CFAuditedTransfer
   { 0, 0, 0, 0, 0, 0, 0, 1, checkCFConsumedAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForCFConsumed },  // AT_CFConsumed
+  { 0, 0, 0, 0, 0, 0, 0, 1, checkCFICanonicalJumpTableAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForCFICanonicalJumpTable },  // AT_CFICanonicalJumpTable
   { 0, 0, 0, 0, 0, 0, 0, 0, defaultAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, nullptr },  // AT_CFReturnsNotRetained
   { 0, 0, 0, 0, 0, 0, 0, 0, defaultAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, nullptr },  // AT_CFReturnsRetained
   { 0, 0, 0, 0, 0, 0, 0, 1, checkCFUnknownTransferAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForCFUnknownTransfer },  // AT_CFUnknownTransfer

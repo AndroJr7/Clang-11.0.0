@@ -1387,13 +1387,17 @@ static ParsedAttr::Kind getAttrKind(StringRef Name, ParsedAttr::Syntax Syntax) {
       return ParsedAttr::AT_SharedTrylockFunction;	 // "shared_trylock_function"
     }
     break;
-  case 24:	 // 4 strings to match.
+  case 24:	 // 5 strings to match.
     switch (Name[0]) {
     default: break;
     case 'a':	 // 1 string to match.
       if (memcmp(Name.data()+1, "ssert_shared_capability", 23) != 0)
         break;
       return ParsedAttr::AT_AssertCapability;	 // "assert_shared_capability"
+    case 'c':	 // 1 string to match.
+      if (memcmp(Name.data()+1, "fi_canonical_jump_table", 23) != 0)
+        break;
+      return ParsedAttr::AT_CFICanonicalJumpTable;	 // "cfi_canonical_jump_table"
     case 'e':	 // 1 string to match.
       if (memcmp(Name.data()+1, "xclusive_locks_required", 23) != 0)
         break;
@@ -3160,10 +3164,10 @@ static ParsedAttr::Kind getAttrKind(StringRef Name, ParsedAttr::Syntax Syntax) {
       return ParsedAttr::AT_AnyX86NoCallerSavedRegisters;	 // "gnu::no_caller_saved_registers"
     }
     break;
-  case 31:	 // 5 strings to match.
+  case 31:	 // 6 strings to match.
     switch (Name[0]) {
     default: break;
-    case 'c':	 // 4 strings to match.
+    case 'c':	 // 5 strings to match.
       if (memcmp(Name.data()+1, "lang::", 6) != 0)
         break;
       switch (Name[7]) {
@@ -3172,6 +3176,10 @@ static ParsedAttr::Kind getAttrKind(StringRef Name, ParsedAttr::Syntax Syntax) {
         if (memcmp(Name.data()+8, "ssert_shared_capability", 23) != 0)
           break;
         return ParsedAttr::AT_AssertCapability;	 // "clang::assert_shared_capability"
+      case 'c':	 // 1 string to match.
+        if (memcmp(Name.data()+8, "fi_canonical_jump_table", 23) != 0)
+          break;
+        return ParsedAttr::AT_CFICanonicalJumpTable;	 // "clang::cfi_canonical_jump_table"
       case 'e':	 // 1 string to match.
         if (memcmp(Name.data()+8, "xclusive_locks_required", 23) != 0)
           break;
@@ -3947,11 +3955,15 @@ static ParsedAttr::Kind getAttrKind(StringRef Name, ParsedAttr::Syntax Syntax) {
       return ParsedAttr::AT_OSReturnsNotRetained;	 // "clang::os_returns_not_retained"
     }
     break;
-  case 31:	 // 2 strings to match.
+  case 31:	 // 3 strings to match.
     if (memcmp(Name.data()+0, "clang::", 7) != 0)
       break;
     switch (Name[7]) {
     default: break;
+    case 'c':	 // 1 string to match.
+      if (memcmp(Name.data()+8, "fi_canonical_jump_table", 23) != 0)
+        break;
+      return ParsedAttr::AT_CFICanonicalJumpTable;	 // "clang::cfi_canonical_jump_table"
     case 'o':	 // 1 string to match.
       if (memcmp(Name.data()+8, "bjc_externally_retained", 23) != 0)
         break;

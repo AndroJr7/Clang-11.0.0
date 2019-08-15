@@ -288,6 +288,15 @@
         return 2;
     break;
   }
+  case AT_CFICanonicalJumpTable: {
+    if (Name == "cfi_canonical_jump_table" && SyntaxUsed == 0 && Scope == "")
+        return 0;
+    if (Name == "cfi_canonical_jump_table" && SyntaxUsed == 1 && Scope == "clang")
+        return 1;
+    if (Name == "cfi_canonical_jump_table" && SyntaxUsed == 2 && Scope == "clang")
+        return 2;
+    break;
+  }
   case AT_CFReturnsNotRetained: {
     if (Name == "cf_returns_not_retained" && SyntaxUsed == 0 && Scope == "")
         return 0;
