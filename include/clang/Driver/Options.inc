@@ -30,6 +30,7 @@ OPTION(nullptr, "<W/R group>", Diag_Group, Group, CompileOnly_Group, INVALID, nu
 OPTION(nullptr, "<I group>", I_Group, Group, IncludePath_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(nullptr, "<I/i group>", IncludePath_Group, Group, Preprocessor_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(nullptr, "<T/e/s/t/u group>", Link_Group, Group, INVALID, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(nullptr, "<LongDouble group>", LongDouble_Group, Group, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(nullptr, "<M group>", M_Group, Group, Preprocessor_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(nullptr, "<O group>", O_Group, Group, CompileOnly_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(nullptr, "<Preprocessor group>", Preprocessor_Group, Group, CompileOnly_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -2552,10 +2553,12 @@ OPTION(prefix_1, "mlocal-sdata", mlocal_sdata, Flag, m_mips_Features_Group, INVA
        "Extend the -G behaviour to object local data (MIPS)", nullptr, nullptr)
 OPTION(prefix_1, "mlong-calls", mlong_calls, Flag, m_Group, INVALID, nullptr, 0, 0,
        "Generate branches with extended addressability, usually via indirect jumps.", nullptr, nullptr)
-OPTION(prefix_1, "mlong-double-128", mlong_double_128, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
+OPTION(prefix_1, "mlong-double-128", mlong_double_128, Flag, LongDouble_Group, INVALID, nullptr, CC1Option, 0,
        "Force long double to be 128 bits", nullptr, nullptr)
-OPTION(prefix_1, "mlong-double-64", mlong_double_64, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
+OPTION(prefix_1, "mlong-double-64", mlong_double_64, Flag, LongDouble_Group, INVALID, nullptr, CC1Option, 0,
        "Force long double to be 64 bits", nullptr, nullptr)
+OPTION(prefix_1, "mlong-double-80", mlong_double_80, Flag, LongDouble_Group, INVALID, nullptr, CC1Option, 0,
+       "Force long double to be 80 bits, padded to 128 bits for storage", nullptr, nullptr)
 OPTION(prefix_1, "mlongcall", mlongcall, Flag, m_ppc_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mlwp", mlwp, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mlzcnt", mlzcnt, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)

@@ -67,7 +67,7 @@ DIAG(err_too_large_for_fixed_point, CLASS_ERROR, (unsigned)diag::Severity::Error
 DIAG(err_unable_to_make_temp, CLASS_ERROR, (unsigned)diag::Severity::Error, "unable to make temporary file: %0", 0, SFINAE_SubstitutionFailure, false, true, 0)
 DIAG(err_unable_to_rename_temp, CLASS_ERROR, (unsigned)diag::Severity::Error, "unable to rename temporary '%0' to output file '%1': '%2'", 0, SFINAE_SubstitutionFailure, false, true, 0)
 DIAG(err_unimplemented_conversion_with_fixed_point_type, CLASS_ERROR, (unsigned)diag::Severity::Error, "conversion between fixed point and %0 is not yet supported", 0, SFINAE_SubstitutionFailure, false, true, 0)
-DIAG(err_unknown_analyzer_checker, CLASS_ERROR, (unsigned)diag::Severity::Error, "no analyzer checkers or packages are associated with '%0'", 0, SFINAE_SubstitutionFailure, false, true, 0)
+DIAG(err_unknown_analyzer_checker_or_package, CLASS_ERROR, (unsigned)diag::Severity::Error, "no analyzer checkers or packages are associated with '%0'", 0, SFINAE_SubstitutionFailure, false, true, 0)
 DIAG(err_unsupported_abi_for_opt, CLASS_ERROR, (unsigned)diag::Severity::Error, "'%0' can only be used with the '%1' ABI", 0, SFINAE_SubstitutionFailure, false, true, 0)
 DIAG(err_unsupported_bom, CLASS_ERROR, (unsigned)diag::Severity::Fatal, "%0 byte order mark detected in '%1', but encoding is not supported", 0, SFINAE_SubstitutionFailure, false, true, 0)
 DIAG(err_use_of_tag_name_without_tag, CLASS_ERROR, (unsigned)diag::Severity::Error, "must use '%1' tag to refer to type %0%select{| in this scope}2", 0, SFINAE_SubstitutionFailure, false, true, 0)
