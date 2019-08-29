@@ -574,7 +574,7 @@ static ParsedAttr::Kind getAttrKind(StringRef Name, ParsedAttr::Syntax Syntax) {
       break;
     }
     break;
-  case 11:	 // 18 strings to match.
+  case 11:	 // 19 strings to match.
     switch (Name[0]) {
     default: break;
     case 'a':	 // 2 strings to match.
@@ -609,6 +609,10 @@ static ParsedAttr::Kind getAttrKind(StringRef Name, ParsedAttr::Syntax Syntax) {
       if (memcmp(Name.data()+1, "iagnose_if", 10) != 0)
         break;
       return ParsedAttr::AT_DiagnoseIf;	 // "diagnose_if"
+    case 'f':	 // 1 string to match.
+      if (memcmp(Name.data()+1, "allthrough", 10) != 0)
+        break;
+      return ParsedAttr::AT_FallThrough;	 // "fallthrough"
     case 'g':	 // 1 string to match.
       if (memcmp(Name.data()+1, "uarded_var", 10) != 0)
         break;
@@ -2337,7 +2341,7 @@ static ParsedAttr::Kind getAttrKind(StringRef Name, ParsedAttr::Syntax Syntax) {
       break;
     }
     break;
-  case 16:	 // 8 strings to match.
+  case 16:	 // 9 strings to match.
     switch (Name[0]) {
     default: break;
     case 'c':	 // 3 strings to match.
@@ -2359,7 +2363,7 @@ static ParsedAttr::Kind getAttrKind(StringRef Name, ParsedAttr::Syntax Syntax) {
         return ParsedAttr::AT_VecReturn;	 // "clang::vecreturn"
       }
       break;
-    case 'g':	 // 5 strings to match.
+    case 'g':	 // 6 strings to match.
       if (memcmp(Name.data()+1, "nu::", 4) != 0)
         break;
       switch (Name[5]) {
@@ -2372,6 +2376,10 @@ static ParsedAttr::Kind getAttrKind(StringRef Name, ParsedAttr::Syntax Syntax) {
         if (memcmp(Name.data()+6, "onstructor", 10) != 0)
           break;
         return ParsedAttr::AT_Constructor;	 // "gnu::constructor"
+      case 'f':	 // 1 string to match.
+        if (memcmp(Name.data()+6, "allthrough", 10) != 0)
+          break;
+        return ParsedAttr::AT_FallThrough;	 // "gnu::fallthrough"
       case 'n':	 // 1 string to match.
         if (memcmp(Name.data()+6, "omicromips", 10) != 0)
           break;

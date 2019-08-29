@@ -616,6 +616,10 @@
         return 1;
     if (Name == "fallthrough" && SyntaxUsed == 1 && Scope == "clang")
         return 2;
+    if (Name == "fallthrough" && SyntaxUsed == 0 && Scope == "")
+        return 3;
+    if (Name == "fallthrough" && SyntaxUsed == 1 && Scope == "gnu")
+        return 4;
     break;
   }
   case AT_FastCall: {

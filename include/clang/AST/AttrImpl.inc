@@ -3455,6 +3455,14 @@ void FallThroughAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy)
     OS << " [[clang::fallthrough]]";
     break;
   }
+  case 3 : {
+    OS << " __attribute__((fallthrough))";
+    break;
+  }
+  case 4 : {
+    OS << " [[gnu::fallthrough]]";
+    break;
+  }
 }
 }
 
@@ -3468,6 +3476,10 @@ const char *FallThroughAttr::getSpelling() const {
   case 1:
     return "fallthrough";
   case 2:
+    return "fallthrough";
+  case 3:
+    return "fallthrough";
+  case 4:
     return "fallthrough";
   }
 }
@@ -6285,7 +6297,7 @@ const char *OMPDeclareSimdDeclAttr::getSpelling() const {
 }
 
 OMPDeclareTargetDeclAttr *OMPDeclareTargetDeclAttr::clone(ASTContext &C) const {
-  auto *A = new (C) OMPDeclareTargetDeclAttr(getLocation(), C, mapType, getSpellingListIndex());
+  auto *A = new (C) OMPDeclareTargetDeclAttr(getLocation(), C, mapType, devType, getSpellingListIndex());
   A->Inherited = Inherited;
   A->IsPackExpansion = IsPackExpansion;
   A->Implicit = Implicit;

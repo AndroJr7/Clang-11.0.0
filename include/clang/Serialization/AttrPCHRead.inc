@@ -1606,7 +1606,8 @@
     bool isImplicit = Record.readInt();
     unsigned Spelling = Record.readInt();
     OMPDeclareTargetDeclAttr::MapTypeTy mapType(static_cast<OMPDeclareTargetDeclAttr::MapTypeTy>(Record.readInt()));
-    New = new (Context) OMPDeclareTargetDeclAttr(Range, Context, mapType, Spelling);
+    OMPDeclareTargetDeclAttr::DevTypeTy devType(static_cast<OMPDeclareTargetDeclAttr::DevTypeTy>(Record.readInt()));
+    New = new (Context) OMPDeclareTargetDeclAttr(Range, Context, mapType, devType, Spelling);
     cast<InheritableAttr>(New)->setInherited(isInherited);
     New->setImplicit(isImplicit);
     break;

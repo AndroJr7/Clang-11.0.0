@@ -89,6 +89,8 @@
     experimental_constrained_fma,              // llvm.experimental.constrained.fma
     experimental_constrained_fmul,             // llvm.experimental.constrained.fmul
     experimental_constrained_fpext,            // llvm.experimental.constrained.fpext
+    experimental_constrained_fptosi,           // llvm.experimental.constrained.fptosi
+    experimental_constrained_fptoui,           // llvm.experimental.constrained.fptoui
     experimental_constrained_fptrunc,          // llvm.experimental.constrained.fptrunc
     experimental_constrained_frem,             // llvm.experimental.constrained.frem
     experimental_constrained_fsub,             // llvm.experimental.constrained.fsub
@@ -475,6 +477,7 @@
     aarch64_stxp,                              // llvm.aarch64.stxp
     aarch64_stxr,                              // llvm.aarch64.stxr
     aarch64_subp,                              // llvm.aarch64.subp
+    aarch64_sve_fcvtzs_i32f16,                 // llvm.aarch64.sve.fcvtzs.i32f16
     aarch64_tagp,                              // llvm.aarch64.tagp
     aarch64_tcancel,                           // llvm.aarch64.tcancel
     aarch64_tcommit,                           // llvm.aarch64.tcommit

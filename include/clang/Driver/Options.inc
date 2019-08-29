@@ -386,7 +386,7 @@ OPTION(prefix_2, "d1reportAllClassLayout", _SLASH_d1reportAllClassLayout, Flag, 
 OPTION(prefix_2, "d2FastFail", _SLASH_d2FastFail, Flag, cl_ignored_Group, INVALID, nullptr, CLOption | DriverOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_2, "d2Zi+", _SLASH_d2Zi_PLUS, Flag, cl_ignored_Group, INVALID, nullptr, CLOption | DriverOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_2, "d2", _SLASH_d2, Joined, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "dA", dA, Flag, d_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "dA", dA, Flag, INVALID, fverbose_asm, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "dD", dD, Flag, d_Group, INVALID, nullptr, CC1Option, 0,
        "Print macro definitions in -E mode in addition to normal output", nullptr, nullptr)
 OPTION(prefix_1, "dead_strip", dead__strip, Flag, INVALID, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -2092,6 +2092,8 @@ OPTION(prefix_2, "Gd", _SLASH_Gd, Flag, cl_Group, INVALID, nullptr, CLOption | D
        "Set __cdecl as a default calling convention", nullptr, nullptr)
 OPTION(prefix_1, "gembed-source", gembed_source, Flag, g_flags_Group, INVALID, nullptr, CC1Option, 0,
        "Embed source text in DWARF debug sections", nullptr, nullptr)
+OPTION(prefix_1, "gen-cdb-fragment-path", gen_cdb_fragment_path, Separate, internal_debug_Group, INVALID, nullptr, DriverOption | HelpHidden | CoreOption, 0,
+       "Emit a compilation database fragment to the specified directory", nullptr, nullptr)
 OPTION(prefix_1, "gen-reproducer", gen_reproducer, Flag, internal_debug_Group, INVALID, nullptr, DriverOption | HelpHidden | CoreOption, 0,
        "Auto-generates preprocessed source files and a reproduction script", nullptr, nullptr)
 OPTION(prefix_2, "Ge", _SLASH_Ge, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0, nullptr, nullptr, nullptr)
@@ -2579,7 +2581,7 @@ OPTION(prefix_1, "mmmx", mmmx, Flag, m_x86_Features_Group, INVALID, nullptr, Cor
 OPTION(prefix_1, "mmovbe", mmovbe, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mmovdir64b", mmovdir64b, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mmovdiri", mmovdiri, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "mmpx", mmpx, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mmpx", mmpx, Flag, clang_ignored_legacy_options_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mms-bitfields", mms_bitfields, Flag, m_Group, INVALID, nullptr, CC1Option, 0,
        "Set the default structure layout to be compatible with the Microsoft compiler standard", nullptr, nullptr)
 OPTION(prefix_1, "mmsa", mmsa, Flag, m_mips_Features_Group, INVALID, nullptr, 0, 0,
@@ -2700,7 +2702,7 @@ OPTION(prefix_1, "mno-movdir64b", mno_movdir64b, Flag, m_x86_Features_Group, INV
 OPTION(prefix_1, "mno-movdiri", mno_movdiri, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-movt", mno_movt, Flag, m_arm_Features_Group, INVALID, nullptr, 0, 0,
        "Disallow use of movt/movw pairs (ARM only)", nullptr, nullptr)
-OPTION(prefix_1, "mno-mpx", mno_mpx, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mno-mpx", mno_mpx, Flag, clang_ignored_legacy_options_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-ms-bitfields", mno_ms_bitfields, Flag, m_Group, INVALID, nullptr, 0, 0,
        "Do not set the default structure layout to be compatible with the Microsoft compiler standard", nullptr, nullptr)
 OPTION(prefix_1, "mno-msa", mno_msa, Flag, m_mips_Features_Group, INVALID, nullptr, 0, 0,

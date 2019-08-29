@@ -452,6 +452,17 @@
       OS << " MT_Link";
       break;
     }
+    switch(SA->getDevType()) {
+    case OMPDeclareTargetDeclAttr::DT_Host:
+      OS << " DT_Host";
+      break;
+    case OMPDeclareTargetDeclAttr::DT_NoHost:
+      OS << " DT_NoHost";
+      break;
+    case OMPDeclareTargetDeclAttr::DT_Any:
+      OS << " DT_Any";
+      break;
+    }
   }
   void VisitObjCBridgeAttr(const ObjCBridgeAttr *A) {
     const auto *SA = cast<ObjCBridgeAttr>(A); (void)SA;

@@ -1250,6 +1250,7 @@ Record.push_back(SA->getBranchState());
     Record.push_back(A->isImplicit());
     Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getMapType());
+Record.push_back(SA->getDevType());
     break;
   }
   case attr::OMPReferencedVar: {

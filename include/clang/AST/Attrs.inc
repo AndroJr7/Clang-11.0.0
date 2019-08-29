@@ -6048,18 +6048,29 @@ private:
   MapTypeTy mapType;
 
 public:
-  static OMPDeclareTargetDeclAttr *CreateImplicit(ASTContext &Ctx, MapTypeTy MapType, SourceRange Loc = SourceRange()) {
-    auto *A = new (Ctx) OMPDeclareTargetDeclAttr(Loc, Ctx, MapType, 0);
+  enum DevTypeTy {
+    DT_Host,
+    DT_NoHost,
+    DT_Any
+  };
+private:
+  DevTypeTy devType;
+
+public:
+  static OMPDeclareTargetDeclAttr *CreateImplicit(ASTContext &Ctx, MapTypeTy MapType, DevTypeTy DevType, SourceRange Loc = SourceRange()) {
+    auto *A = new (Ctx) OMPDeclareTargetDeclAttr(Loc, Ctx, MapType, DevType, 0);
     A->setImplicit(true);
     return A;
   }
 
   OMPDeclareTargetDeclAttr(SourceRange R, ASTContext &Ctx
               , MapTypeTy MapType
+              , DevTypeTy DevType
               , unsigned SI
              )
     : InheritableAttr(attr::OMPDeclareTargetDecl, R, SI, false, false)
               , mapType(MapType)
+              , devType(DevType)
   {
   }
 
@@ -6090,9 +6101,36 @@ public:
     }
     llvm_unreachable("No enumerator with that value");
   }
+  DevTypeTy getDevType() const {
+    return devType;
+  }
+
+  static bool ConvertStrToDevTypeTy(StringRef Val, DevTypeTy &Out) {
+    Optional<DevTypeTy> R = llvm::StringSwitch<Optional<DevTypeTy>>(Val)
+      .Case("host", OMPDeclareTargetDeclAttr::DT_Host)
+      .Case("nohost", OMPDeclareTargetDeclAttr::DT_NoHost)
+      .Case("any", OMPDeclareTargetDeclAttr::DT_Any)
+      .Default(Optional<DevTypeTy>());
+    if (R) {
+      Out = *R;
+      return true;
+    }
+    return false;
+  }
+
+  static const char *ConvertDevTypeTyToStr(DevTypeTy Val) {
+    switch(Val) {
+    case OMPDeclareTargetDeclAttr::DT_Host: return "host";
+    case OMPDeclareTargetDeclAttr::DT_NoHost: return "nohost";
+    case OMPDeclareTargetDeclAttr::DT_Any: return "any";
+    }
+    llvm_unreachable("No enumerator with that value");
+  }
 
     void printPrettyPragma(raw_ostream &OS, const PrintingPolicy &Policy) const {
       // Use fake syntax because it is for testing and debugging purpose only.
+      if (getDevType() != DT_Any)
+        OS << " device_type(" << ConvertDevTypeTyToStr(getDevType()) << ")";
       if (getMapType() != MT_To)
         OS << ' ' << ConvertMapTypeTyToStr(getMapType());
     }
@@ -6102,6 +6140,14 @@ public:
         return llvm::None;
       if (const auto *Attr = VD->getAttr<OMPDeclareTargetDeclAttr>())
         return Attr->getMapType();
+
+      return llvm::None;
+    }
+    static llvm::Optional<DevTypeTy> getDeviceType(const ValueDecl *VD) {
+      if (!VD->hasAttrs())
+        return llvm::None;
+      if (const auto *Attr = VD->getAttr<OMPDeclareTargetDeclAttr>())
+        return Attr->getDevType();
 
       return llvm::None;
     }
