@@ -5822,6 +5822,8 @@
     wasm_memory_grow,                          // llvm.wasm.memory.grow
     wasm_memory_init,                          // llvm.wasm.memory.init
     wasm_memory_size,                          // llvm.wasm.memory.size
+    wasm_qfma,                                 // llvm.wasm.qfma
+    wasm_qfms,                                 // llvm.wasm.qfms
     wasm_rethrow_in_catch,                     // llvm.wasm.rethrow.in.catch
     wasm_sub_saturate_signed,                  // llvm.wasm.sub.saturate.signed
     wasm_sub_saturate_unsigned,                // llvm.wasm.sub.saturate.unsigned

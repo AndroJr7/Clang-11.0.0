@@ -1061,6 +1061,15 @@ set_target_properties(llvm-extract PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS llvm-extract )
 list(APPEND _IMPORT_CHECK_FILES_FOR_llvm-extract "${_IMPORT_PREFIX}/bin/llvm-extract" )
 
+# Import target "llvm-ifs" for configuration "Release"
+set_property(TARGET llvm-ifs APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(llvm-ifs PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/llvm-ifs"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS llvm-ifs )
+list(APPEND _IMPORT_CHECK_FILES_FOR_llvm-ifs "${_IMPORT_PREFIX}/bin/llvm-ifs" )
+
 # Import target "llvm-jitlink" for configuration "Release"
 set_property(TARGET llvm-jitlink APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(llvm-jitlink PROPERTIES
