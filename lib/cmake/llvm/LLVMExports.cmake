@@ -291,7 +291,7 @@ set_target_properties(LLVMOption PROPERTIES
 add_library(LLVMRemarks STATIC IMPORTED)
 
 set_target_properties(LLVMRemarks PROPERTIES
-  INTERFACE_LINK_LIBRARIES "LLVMSupport"
+  INTERFACE_LINK_LIBRARIES "LLVMBitstreamReader;LLVMSupport"
 )
 
 # Create imported target LLVMDebugInfoDWARF
@@ -368,7 +368,7 @@ set_target_properties(LLVMMCJIT PROPERTIES
 add_library(LLVMOrcJIT STATIC IMPORTED)
 
 set_target_properties(LLVMOrcJIT PROPERTIES
-  INTERFACE_LINK_LIBRARIES "LLVMCore;LLVMExecutionEngine;LLVMJITLink;LLVMMC;LLVMObject;LLVMRuntimeDyld;LLVMSupport;LLVMTarget;LLVMTransformUtils;\$<LINK_ONLY:LLVMAnalysis>;\$<LINK_ONLY:LLVMBitReader>;\$<LINK_ONLY:LLVMBitWriter>;\$<LINK_ONLY:LLVMPasses>"
+  INTERFACE_LINK_LIBRARIES "LLVMCore;LLVMExecutionEngine;LLVMJITLink;LLVMMC;LLVMObject;LLVMPasses;LLVMRuntimeDyld;LLVMSupport;LLVMTarget;LLVMTransformUtils;\$<LINK_ONLY:LLVMAnalysis>;\$<LINK_ONLY:LLVMBitReader>;\$<LINK_ONLY:LLVMBitWriter>;\$<LINK_ONLY:LLVMPasses>"
 )
 
 # Create imported target LLVMRuntimeDyld
@@ -740,7 +740,6 @@ add_executable(llvm-readobj IMPORTED)
 
 # Create imported target llvm-reduce
 add_executable(llvm-reduce IMPORTED)
-set_property(TARGET llvm-reduce PROPERTY ENABLE_EXPORTS 1)
 
 # Create imported target llvm-rtdyld
 add_executable(llvm-rtdyld IMPORTED)

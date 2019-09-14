@@ -259,6 +259,7 @@
     uadd_sat,                                  // llvm.uadd.sat
     uadd_with_overflow,                        // llvm.uadd.with.overflow
     umul_fix,                                  // llvm.umul.fix
+    umul_fix_sat,                              // llvm.umul.fix.sat
     umul_with_overflow,                        // llvm.umul.with.overflow
     usub_sat,                                  // llvm.usub.sat
     usub_with_overflow,                        // llvm.usub.with.overflow
@@ -477,7 +478,9 @@
     aarch64_stxp,                              // llvm.aarch64.stxp
     aarch64_stxr,                              // llvm.aarch64.stxr
     aarch64_subp,                              // llvm.aarch64.subp
+    aarch64_sve_abs,                           // llvm.aarch64.sve.abs
     aarch64_sve_fcvtzs_i32f16,                 // llvm.aarch64.sve.fcvtzs.i32f16
+    aarch64_sve_neg,                           // llvm.aarch64.sve.neg
     aarch64_tagp,                              // llvm.aarch64.tagp
     aarch64_tcancel,                           // llvm.aarch64.tcancel
     aarch64_tcommit,                           // llvm.aarch64.tcommit
@@ -1025,6 +1028,8 @@
     amdgcn_interp_p1_f16,                      // llvm.amdgcn.interp.p1.f16
     amdgcn_interp_p2,                          // llvm.amdgcn.interp.p2
     amdgcn_interp_p2_f16,                      // llvm.amdgcn.interp.p2.f16
+    amdgcn_is_private,                         // llvm.amdgcn.is.private
+    amdgcn_is_shared,                          // llvm.amdgcn.is.shared
     amdgcn_kernarg_segment_ptr,                // llvm.amdgcn.kernarg.segment.ptr
     amdgcn_kill,                               // llvm.amdgcn.kill
     amdgcn_ldexp,                              // llvm.amdgcn.ldexp
@@ -1413,6 +1418,10 @@
     arm_usub8,                                 // llvm.arm.usub8
     arm_uxtab16,                               // llvm.arm.uxtab16
     arm_uxtb16,                                // llvm.arm.uxtb16
+    arm_vctp16,                                // llvm.arm.vctp16
+    arm_vctp32,                                // llvm.arm.vctp32
+    arm_vctp64,                                // llvm.arm.vctp64
+    arm_vctp8,                                 // llvm.arm.vctp8
     arm_vcvtr,                                 // llvm.arm.vcvtr
     arm_vcvtru,                                // llvm.arm.vcvtru
     bpf_load_byte,                             // llvm.bpf.load.byte
@@ -5822,6 +5831,8 @@
     wasm_memory_grow,                          // llvm.wasm.memory.grow
     wasm_memory_init,                          // llvm.wasm.memory.init
     wasm_memory_size,                          // llvm.wasm.memory.size
+    wasm_narrow_signed,                        // llvm.wasm.narrow.signed
+    wasm_narrow_unsigned,                      // llvm.wasm.narrow.unsigned
     wasm_qfma,                                 // llvm.wasm.qfma
     wasm_qfms,                                 // llvm.wasm.qfms
     wasm_rethrow_in_catch,                     // llvm.wasm.rethrow.in.catch
@@ -5833,6 +5844,10 @@
     wasm_tls_size,                             // llvm.wasm.tls.size
     wasm_trunc_saturate_signed,                // llvm.wasm.trunc.saturate.signed
     wasm_trunc_saturate_unsigned,              // llvm.wasm.trunc.saturate.unsigned
+    wasm_widen_high_signed,                    // llvm.wasm.widen.high.signed
+    wasm_widen_high_unsigned,                  // llvm.wasm.widen.high.unsigned
+    wasm_widen_low_signed,                     // llvm.wasm.widen.low.signed
+    wasm_widen_low_unsigned,                   // llvm.wasm.widen.low.unsigned
     x86_3dnow_pavgusb,                         // llvm.x86.3dnow.pavgusb
     x86_3dnow_pf2id,                           // llvm.x86.3dnow.pf2id
     x86_3dnow_pfacc,                           // llvm.x86.3dnow.pfacc

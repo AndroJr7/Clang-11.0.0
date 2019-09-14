@@ -1563,7 +1563,7 @@ static ParsedAttr::Kind getAttrKind(StringRef Name, ParsedAttr::Syntax Syntax) {
     case 'r':	 // 1 string to match.
       if (memcmp(Name.data()+1, "equire_constant_initialization", 30) != 0)
         break;
-      return ParsedAttr::AT_RequireConstantInit;	 // "require_constant_initialization"
+      return ParsedAttr::AT_ConstInit;	 // "require_constant_initialization"
     }
     break;
   case 34:	 // 1 string to match.
@@ -3327,7 +3327,7 @@ static ParsedAttr::Kind getAttrKind(StringRef Name, ParsedAttr::Syntax Syntax) {
     case 'r':	 // 1 string to match.
       if (memcmp(Name.data()+8, "equire_constant_initialization", 30) != 0)
         break;
-      return ParsedAttr::AT_RequireConstantInit;	 // "clang::require_constant_initialization"
+      return ParsedAttr::AT_ConstInit;	 // "clang::require_constant_initialization"
     }
     break;
   case 41:	 // 1 string to match.
@@ -4216,7 +4216,7 @@ static ParsedAttr::Kind getAttrKind(StringRef Name, ParsedAttr::Syntax Syntax) {
       return ParsedAttr::AT_OpenCLConstantAddressSpace;	 // "constant"
     }
     break;
-  case 9:	 // 8 strings to match.
+  case 9:	 // 9 strings to match.
     switch (Name[0]) {
     default: break;
     case '_':	 // 7 strings to match.
@@ -4257,6 +4257,10 @@ static ParsedAttr::Kind getAttrKind(StringRef Name, ParsedAttr::Syntax Syntax) {
         return ParsedAttr::AT_ThisCall;	 // "_thiscall"
       }
       break;
+    case 'c':	 // 1 string to match.
+      if (memcmp(Name.data()+1, "onstinit", 8) != 0)
+        break;
+      return ParsedAttr::AT_ConstInit;	 // "constinit"
     case 'r':	 // 1 string to match.
       if (memcmp(Name.data()+1, "ead_only", 8) != 0)
         break;

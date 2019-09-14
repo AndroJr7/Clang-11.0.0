@@ -160,6 +160,9 @@
     const auto *SA = cast<CodeSegAttr>(A); (void)SA;
     OS << " \"" << SA->getName() << "\"";
   }
+  void VisitConstInitAttr(const ConstInitAttr *A) {
+    OS << " " << A->getSpelling();
+  }
   void VisitConstructorAttr(const ConstructorAttr *A) {
     const auto *SA = cast<ConstructorAttr>(A); (void)SA;
     OS << " " << SA->getPriority();

@@ -301,7 +301,7 @@ add_executable(modularize IMPORTED)
 add_library(clangTidy STATIC IMPORTED)
 
 set_target_properties(clangTidy PROPERTIES
-  INTERFACE_LINK_LIBRARIES "clangAST;clangASTMatchers;clangBasic;clangFormat;clangFrontend;clangLex;clangRewrite;clangSema;clangSerialization;clangTooling;clangToolingCore;LLVMSupport"
+  INTERFACE_LINK_LIBRARIES "clangAnalysis;clangAST;clangASTMatchers;clangBasic;clangFormat;clangFrontend;clangLex;clangRewrite;clangSema;clangSerialization;clangTooling;clangToolingCore;LLVMSupport"
 )
 
 # Create imported target clangTidyAndroidModule

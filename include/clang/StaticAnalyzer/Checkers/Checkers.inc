@@ -295,6 +295,8 @@ CHECKER_OPTION("bool", "debug.AnalysisOrder", "*", "Enables all callbacks.", "fa
 CHECKER_OPTION("int", "alpha.clone.CloneChecker", "MinimumCloneComplexity", "Ensures that every clone has at least the given complexity. Complexity is here defined as the total amount of children of a statement. This constraint assumes the first statement in the group is representative for all other statements in the group in terms of complexity.", "50", "released", false)
 CHECKER_OPTION("bool", "alpha.clone.CloneChecker", "ReportNormalClones", "Report all clones, even less suspicious ones.", "true", "released", false)
 CHECKER_OPTION("string", "alpha.clone.CloneChecker", "IgnoredFilesPattern", "If supplied, the checker wont analyze files with a filename that matches the given pattern.", "\"\"", "released", false)
+CHECKER_OPTION("bool", "deadcode.DeadStores", "WarnForDeadNestedAssignments", "Warns for deadstores in nested assignments.E.g.: if ((P = f())) where P is unused.", "true", "released", false)
+CHECKER_OPTION("bool", "deadcode.DeadStores", "ShowFixIts", "Enable fix-it hints for this checker", "false", "alpha", false)
 CHECKER_OPTION("bool", "unix.DynamicMemoryModeling", "Optimistic", "If set to true, the checker assumes that all the allocating and deallocating functions are annotated with ownership_holds, ownership_takes and ownership_returns.", "false", "alpha", false)
 CHECKER_OPTION("string", "alpha.security.taint.TaintPropagation", "Config", "Specifies the name of the configuration file.", "", "alpha", false)
 CHECKER_OPTION("int", "alpha.security.MmapWriteExec", "MmapProtExec", "Specifies the value of PROT_EXEC", "0x04", "released", false)
@@ -310,6 +312,7 @@ CHECKER_OPTION("bool", "optin.cplusplus.UninitializedObject", "NotesAsWarnings",
 CHECKER_OPTION("bool", "optin.cplusplus.UninitializedObject", "CheckPointeeInitialization", "If set to false, the checker will not analyze the pointee of pointer/reference fields, and will only check whether the object itself is initialized.", "false", "alpha", false)
 CHECKER_OPTION("string", "optin.cplusplus.UninitializedObject", "IgnoreRecordsWithField", "If supplied, the checker will not analyze structures that have a field with a name or type name that matches the given pattern.", "\"\"", "released", false)
 CHECKER_OPTION("bool", "optin.cplusplus.UninitializedObject", "IgnoreGuardedFields", "If set to true, the checker will analyze _syntactically_ whether the found uninitialized object is used without a preceding assert call. Defaults to false.", "false", "alpha", false)
+CHECKER_OPTION("bool", "optin.cplusplus.VirtualCall", "ShowFixIts", "Enable fix-it hints for this checker", "false", "alpha", false)
 CHECKER_OPTION("bool", "optin.cplusplus.VirtualCall", "PureOnly", "Disables the checker. Keeps cplusplus.PureVirtualCall enabled. This option is only provided for backwards compatibility.", "false", "alpha", false)
 #endif // GET_CHECKER_OPTIONS
 

@@ -842,6 +842,8 @@ OPTION(prefix_1, "fexec-charset=", fexec_charset_EQ, Joined, f_Group, INVALID, n
 OPTION(prefix_1, "fexpensive-optimizations", anonymous_10, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fexperimental-isel", fexperimental_isel, Flag, f_clang_Group, INVALID, nullptr, 0, 0,
        "Enables the experimental global instruction selector", nullptr, nullptr)
+OPTION(prefix_1, "fexperimental-new-constant-interpreter", fexperimental_new_constant_interpreter, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
+       "Enable the experimental new constant interpreter", nullptr, nullptr)
 OPTION(prefix_1, "fexperimental-new-pass-manager", fexperimental_new_pass_manager, Flag, f_clang_Group, INVALID, nullptr, CC1Option, 0,
        "Enables an experimental new pass manager in LLVM.", nullptr, nullptr)
 OPTION(prefix_1, "fextdirs=", fextdirs_EQ, Joined, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -925,6 +927,8 @@ OPTION(prefix_1, "fforce-emit-vtables", fforce_emit_vtables, Flag, f_Group, INVA
        "Emits more virtual tables to improve devirtualization", nullptr, nullptr)
 OPTION(prefix_1, "fforce-enable-int128", fforce_enable_int128, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Enable support for int128_t type", nullptr, nullptr)
+OPTION(prefix_1, "fforce-experimental-new-constant-interpreter", fforce_experimental_new_constant_interpreter, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
+       "Force the use of the experimental new constant interpreter, failing on missing features", nullptr, nullptr)
 OPTION(prefix_1, "ffp-contract=", ffp_contract, Joined, f_Group, INVALID, nullptr, CC1Option, 0,
        "Form fused FP ops (e.g. FMAs): fast (everywhere) | on (according to FP_CONTRACT pragma, default) | off (never fuse)", nullptr, "fast,on,off")
 OPTION(prefix_1, "ffpe-trap=", ffpe_trap_EQ, Joined, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -1018,7 +1022,9 @@ OPTION(prefix_1, "fkeep-inline-functions", anonymous_34_f, Flag, clang_ignored_g
 OPTION(prefix_1, "fkeep-static-consts", fkeep_static_consts, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Keep static const variables even if unused", nullptr, nullptr)
 OPTION(prefix_1, "flat_namespace", flat__namespace, Flag, INVALID, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "flax-vector-conversions", flax_vector_conversions, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "flax-vector-conversions=", flax_vector_conversions_EQ, Joined, f_Group, INVALID, nullptr, CC1Option, 0,
+       "Enable implicit vector bit-casts", nullptr, "none,integer,all")
+OPTION(prefix_1, "flax-vector-conversions", flax_vector_conversions, Flag, f_Group, flax_vector_conversions_EQ, "integer\0", 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "flimit-debug-info", flimit_debug_info, Flag, INVALID, fno_standalone_debug, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "flimited-precision=", flimited_precision_EQ, Joined, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "flto-jobs=", flto_jobs_EQ, Joined, f_Group, INVALID, nullptr, CC1Option, 0,
@@ -1319,8 +1325,7 @@ OPTION(prefix_1, "fno-ivopts", ivopts_fno, Flag, clang_ignored_gcc_optimization_
 OPTION(prefix_1, "fno-jump-tables", fno_jump_tables, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Do not use jump tables for lowering switches", nullptr, nullptr)
 OPTION(prefix_1, "fno-keep-inline-functions", anonymous_34_fno, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "fno-lax-vector-conversions", fno_lax_vector_conversions, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
-       "Disallow implicit conversions between vectors with a different number of elements or different element types", nullptr, nullptr)
+OPTION(prefix_1, "fno-lax-vector-conversions", fno_lax_vector_conversions, Flag, f_Group, flax_vector_conversions_EQ, "none\0", 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-limit-debug-info", fno_limit_debug_info, Flag, INVALID, fstandalone_debug, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-lto-unit", fno_lto_unit, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-lto", fno_lto, Flag, f_Group, INVALID, nullptr, 0, 0,
@@ -2021,6 +2026,8 @@ OPTION(prefix_1, "fvisibility=", fvisibility_EQ, Joined, f_Group, INVALID, nullp
        "Set the default symbol visibility for all global declarations", nullptr, "hidden,default")
 OPTION(prefix_1, "fvisibility", fvisibility, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Default type and symbol visibility", nullptr, nullptr)
+OPTION(prefix_1, "fwasm-exceptions", fwasm_exceptions, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
+       "Use WebAssembly style exceptions", nullptr, nullptr)
 OPTION(prefix_1, "fwchar-type=", fwchar_type_EQ, Joined, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Select underlying type for wchar_t", nullptr, "char,short,int")
 OPTION(prefix_1, "fweb", web_f, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
@@ -2765,6 +2772,7 @@ OPTION(prefix_1, "mno-sign-ext", mno_sign_ext, Flag, m_wasm_Features_Group, INVA
 OPTION(prefix_1, "mno-simd128", mno_simd128, Flag, m_wasm_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-soft-float", mno_soft_float, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-speculative-load-hardening", mno_speculative_load_hardening, Flag, m_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mno-spe", mno_spe, Flag, m_ppc_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-sram-ecc", mno_sram_ecc, Flag, m_amdgpu_Features_Group, INVALID, nullptr, 0, 0,
        "Disable SRAM ECC (AMDGPU only)", nullptr, nullptr)
 OPTION(prefix_1, "mno-sse2", mno_sse2, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
@@ -2903,6 +2911,7 @@ OPTION(prefix_1, "msmall-data-threshold=", msmall_data_threshold_EQ, Joined, m_G
 OPTION(prefix_1, "msoft-float", msoft_float, Flag, m_Group, INVALID, nullptr, CC1Option, 0,
        "Use software floating point", nullptr, nullptr)
 OPTION(prefix_1, "mspeculative-load-hardening", mspeculative_load_hardening, Flag, m_Group, INVALID, nullptr, CoreOption | CC1Option, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mspe", mspe, Flag, m_ppc_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "msram-ecc", msram_ecc, Flag, m_amdgpu_Features_Group, INVALID, nullptr, 0, 0,
        "Enable SRAM ECC (AMDGPU only)", nullptr, nullptr)
 OPTION(prefix_1, "msse2", msse2, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
@@ -3365,6 +3374,8 @@ OPTION(prefix_1, "static-libgfortran", static_libgfortran, Flag, gfortran_Group,
 OPTION(prefix_1, "static-libsan", static_libsan, Flag, INVALID, INVALID, nullptr, 0, 0,
        "Statically link the sanitizer runtime", nullptr, nullptr)
 OPTION(prefix_1, "static-libstdc++", static_libstdcxx, Flag, INVALID, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "static-openmp", static_openmp, Flag, INVALID, INVALID, nullptr, 0, 0,
+       "Use the static host OpenMP runtime while linking.", nullptr, nullptr)
 OPTION(prefix_1, "static-pie", static_pie, Flag, INVALID, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_4, "static", static, Flag, INVALID, INVALID, nullptr, NoArgumentUnused, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "stats-file=", stats_file, Joined, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
