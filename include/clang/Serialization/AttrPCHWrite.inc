@@ -1100,6 +1100,12 @@ Record.push_back(SA->getMapType());
 Record.push_back(SA->getDevType());
     break;
   }
+  case attr::OMPDeclareVariant: {
+    const auto *SA = cast<OMPDeclareVariantAttr>(A);
+    Record.push_back(A->isImplicit());
+    Record.AddStmt(SA->getVariantFuncRef());
+    break;
+  }
   case attr::OMPReferencedVar: {
     const auto *SA = cast<OMPReferencedVarAttr>(A);
     Record.push_back(A->isImplicit());

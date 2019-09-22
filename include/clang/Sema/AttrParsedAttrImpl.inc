@@ -135,7 +135,9 @@ static unsigned AcquireCapabilityAttrSpellingMap(const ParsedAttr &Attr) {
     GNU_acquire_shared_capability = 2,
     CXX11_clang_acquire_shared_capability = 3,
     GNU_exclusive_lock_function = 4,
-    GNU_shared_lock_function = 5
+    GNU_shared_lock_function = 5,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -214,7 +216,9 @@ static unsigned AlignedAttrSpellingMap(const ParsedAttr &Attr) {
     CXX11_gnu_aligned = 1,
     Declspec_align = 2,
     Keyword_alignas = 3,
-    Keyword_Alignas = 4
+    Keyword_Alignas = 4,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -285,7 +289,9 @@ static unsigned AlwaysInlineAttrSpellingMap(const ParsedAttr &Attr) {
   enum Spelling {
     GNU_always_inline = 0,
     CXX11_gnu_always_inline = 1,
-    Keyword_forceinline = 2
+    Keyword_forceinline = 2,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -357,7 +363,9 @@ static unsigned ArgumentWithTypeTagAttrSpellingMap(const ParsedAttr &Attr) {
     C2x_clang_argument_with_type_tag = 2,
     GNU_pointer_with_type_tag = 3,
     CXX11_clang_pointer_with_type_tag = 4,
-    C2x_clang_pointer_with_type_tag = 5
+    C2x_clang_pointer_with_type_tag = 5,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -401,7 +409,9 @@ static unsigned AssertCapabilityAttrSpellingMap(const ParsedAttr &Attr) {
     GNU_assert_capability = 0,
     CXX11_clang_assert_capability = 1,
     GNU_assert_shared_capability = 2,
-    CXX11_clang_assert_shared_capability = 3
+    CXX11_clang_assert_shared_capability = 3,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -702,7 +712,9 @@ static unsigned CapabilityAttrSpellingMap(const ParsedAttr &Attr) {
     GNU_capability = 0,
     CXX11_clang_capability = 1,
     GNU_shared_capability = 2,
-    CXX11_clang_shared_capability = 3
+    CXX11_clang_shared_capability = 3,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -807,7 +819,9 @@ static unsigned ConstInitAttrSpellingMap(const ParsedAttr &Attr) {
   enum Spelling {
     Keyword_constinit = 0,
     GNU_require_constant_initialization = 1,
-    CXX11_clang_require_constant_initialization = 2
+    CXX11_clang_require_constant_initialization = 2,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -1328,7 +1342,9 @@ static unsigned LoopHintAttrSpellingMap(const ParsedAttr &Attr) {
     Pragma_unroll = 1,
     Pragma_nounroll = 2,
     Pragma_unroll_and_jam = 3,
-    Pragma_nounroll_and_jam = 4
+    Pragma_nounroll_and_jam = 4,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -1380,7 +1396,9 @@ static unsigned MSInheritanceAttrSpellingMap(const ParsedAttr &Attr) {
     Keyword_single_inheritance = 0,
     Keyword_multiple_inheritance = 1,
     Keyword_virtual_inheritance = 2,
-    Keyword_unspecified_inheritance = 3
+    Keyword_unspecified_inheritance = 3,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -1492,7 +1510,9 @@ static unsigned MipsLongCallAttrSpellingMap(const ParsedAttr &Attr) {
     GNU_long_call = 0,
     CXX11_gnu_long_call = 1,
     GNU_far = 2,
-    CXX11_gnu_far = 3
+    CXX11_gnu_far = 3,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -1523,7 +1543,9 @@ static unsigned MipsShortCallAttrSpellingMap(const ParsedAttr &Attr) {
     GNU_short_call = 0,
     CXX11_gnu_short_call = 1,
     GNU_near = 2,
-    CXX11_gnu_near = 3
+    CXX11_gnu_near = 3,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -2240,7 +2262,9 @@ static unsigned OpenCLAccessAttrSpellingMap(const ParsedAttr &Attr) {
   enum Spelling {
     Keyword_read_only = 0,
     Keyword_write_only = 2,
-    Keyword_read_write = 4
+    Keyword_read_write = 4,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -2358,7 +2382,9 @@ static unsigned OwnershipAttrSpellingMap(const ParsedAttr &Attr) {
     C2x_clang_ownership_returns = 5,
     GNU_ownership_takes = 6,
     CXX11_clang_ownership_takes = 7,
-    C2x_clang_ownership_takes = 8
+    C2x_clang_ownership_takes = 8,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -2405,7 +2431,9 @@ static unsigned PassObjectSizeAttrSpellingMap(const ParsedAttr &Attr) {
     C2x_clang_pass_object_size = 2,
     GNU_pass_dynamic_object_size = 3,
     CXX11_clang_pass_dynamic_object_size = 4,
-    C2x_clang_pass_dynamic_object_size = 5
+    C2x_clang_pass_dynamic_object_size = 5,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -2524,7 +2552,9 @@ static unsigned ReleaseCapabilityAttrSpellingMap(const ParsedAttr &Attr) {
     GNU_release_generic_capability = 4,
     CXX11_clang_release_generic_capability = 5,
     GNU_unlock_function = 6,
-    CXX11_clang_unlock_function = 7
+    CXX11_clang_unlock_function = 7,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -2594,7 +2624,9 @@ static unsigned RequiresCapabilityAttrSpellingMap(const ParsedAttr &Attr) {
     GNU_requires_shared_capability = 4,
     CXX11_clang_requires_shared_capability = 5,
     GNU_shared_locks_required = 6,
-    CXX11_clang_shared_locks_required = 7
+    CXX11_clang_shared_locks_required = 7,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -2624,7 +2656,9 @@ static unsigned RestrictAttrSpellingMap(const ParsedAttr &Attr) {
   enum Spelling {
     Declspec_restrict = 0,
     GNU_malloc = 1,
-    CXX11_gnu_malloc = 2
+    CXX11_gnu_malloc = 2,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -2707,7 +2741,9 @@ static unsigned SectionAttrSpellingMap(const ParsedAttr &Attr) {
   enum Spelling {
     GNU_section = 0,
     CXX11_gnu_section = 1,
-    Declspec_allocate = 2
+    Declspec_allocate = 2,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -2891,7 +2927,9 @@ static unsigned TryAcquireCapabilityAttrSpellingMap(const ParsedAttr &Attr) {
     GNU_try_acquire_capability = 0,
     CXX11_clang_try_acquire_capability = 1,
     GNU_try_acquire_shared_capability = 2,
-    CXX11_clang_try_acquire_shared_capability = 3
+    CXX11_clang_try_acquire_shared_capability = 3,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -2927,7 +2965,9 @@ static unsigned UnusedAttrSpellingMap(const ParsedAttr &Attr) {
     CXX11_maybe_unused = 0,
     GNU_unused = 1,
     CXX11_gnu_unused = 2,
-    C2x_maybe_unused = 3
+    C2x_maybe_unused = 3,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -3027,7 +3067,9 @@ static unsigned WarnUnusedResultAttrSpellingMap(const ParsedAttr &Attr) {
     C2x_nodiscard = 1,
     CXX11_clang_warn_unused_result = 2,
     GNU_warn_unused_result = 3,
-    CXX11_gnu_warn_unused_result = 4
+    CXX11_gnu_warn_unused_result = 4,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();
@@ -3137,7 +3179,9 @@ static unsigned XRayInstrumentAttrSpellingMap(const ParsedAttr &Attr) {
     C2x_clang_xray_always_instrument = 2,
     GNU_xray_never_instrument = 3,
     CXX11_clang_xray_never_instrument = 4,
-    C2x_clang_xray_never_instrument = 5
+    C2x_clang_xray_never_instrument = 5,
+  SpellingNotCalculated = 15
+
   };
 
   unsigned Idx = Attr.getAttributeSpellingListIndex();

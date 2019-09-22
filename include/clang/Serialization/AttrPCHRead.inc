@@ -1461,6 +1461,13 @@
     New->setImplicit(isImplicit);
     break;
   }
+  case attr::OMPDeclareVariant: {
+    bool isImplicit = Record.readInt();
+    Expr * variantFuncRef = Record.readExpr();
+    New = new (Context) OMPDeclareVariantAttr(Context, Info, variantFuncRef);
+    New->setImplicit(isImplicit);
+    break;
+  }
   case attr::OMPReferencedVar: {
     bool isImplicit = Record.readInt();
     Expr * ref = Record.readExpr();

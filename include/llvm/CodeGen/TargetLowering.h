@@ -838,7 +838,7 @@ public:
     int          offset = 0;       // offset off of ptrVal
     unsigned     size = 0;         // the size of the memory location
                                    // (taken from memVT if zero)
-    MaybeAlign align = Align(1);   // alignment
+    MaybeAlign align = Align::None(); // alignment
 
     MachineMemOperand::Flags flags = MachineMemOperand::MONone;
     IntrinsicInfo() = default;
@@ -3364,6 +3364,18 @@ public:
       const SmallVectorImpl<MachineBasicBlock *> &Exits) const {
     llvm_unreachable("Not Implemented");
   }
+
+  /// Return 1 if we can compute the negated form of the specified expression
+  /// for the same cost as the expression itself, or 2 if we can compute the
+  /// negated form more cheaply than the expression itself. Else return 0.
+  virtual char isNegatibleForFree(SDValue Op, SelectionDAG &DAG,
+                                  bool LegalOperations, bool ForCodeSize,
+                                  unsigned Depth = 0) const;
+
+  /// If isNegatibleForFree returns true, return the newly negated expression.
+  virtual SDValue getNegatedExpression(SDValue Op, SelectionDAG &DAG,
+                                       bool LegalOperations, bool ForCodeSize,
+                                       unsigned Depth = 0) const;
 
   //===--------------------------------------------------------------------===//
   // Lowering methods - These methods must be implemented by targets so that

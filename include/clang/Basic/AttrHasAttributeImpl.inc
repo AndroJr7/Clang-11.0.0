@@ -420,6 +420,7 @@ case AttrSyntax::Pragma:
     .Case("nounroll_and_jam", 1)
     .Case("declare simd", 1)
     .Case("declare target", 1)
+    .Case("declare variant", 1)
     .Default(0);
 case AttrSyntax::CXX: {
 if (ScopeName == "") {

@@ -648,6 +648,10 @@
   bool VisitOMPDeclareTargetDeclAttr(OMPDeclareTargetDeclAttr *A) {
     return true; 
   }
+  bool TraverseOMPDeclareVariantAttr(OMPDeclareVariantAttr *A);
+  bool VisitOMPDeclareVariantAttr(OMPDeclareVariantAttr *A) {
+    return true; 
+  }
   bool TraverseOMPReferencedVarAttr(OMPReferencedVarAttr *A);
   bool VisitOMPReferencedVarAttr(OMPReferencedVarAttr *A) {
     return true; 
@@ -2736,6 +2740,17 @@ bool VISITORCLASS<Derived>::TraverseOMPDeclareTargetDeclAttr(OMPDeclareTargetDec
 }
 
 template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseOMPDeclareVariantAttr(OMPDeclareVariantAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitOMPDeclareVariantAttr(A))
+    return false;
+  if (!getDerived().TraverseStmt(A->getVariantFuncRef()))
+    return false;
+  return true;
+}
+
+template <typename Derived>
 bool VISITORCLASS<Derived>::TraverseOMPReferencedVarAttr(OMPReferencedVarAttr *A) {
   if (!getDerived().VisitAttr(A))
     return false;
@@ -4229,6 +4244,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseOMPDeclareSimdDeclAttr(cast<OMPDeclareSimdDeclAttr>(A));
     case attr::OMPDeclareTargetDecl:
       return getDerived().TraverseOMPDeclareTargetDeclAttr(cast<OMPDeclareTargetDeclAttr>(A));
+    case attr::OMPDeclareVariant:
+      return getDerived().TraverseOMPDeclareVariantAttr(cast<OMPDeclareVariantAttr>(A));
     case attr::OMPReferencedVar:
       return getDerived().TraverseOMPReferencedVarAttr(cast<OMPReferencedVarAttr>(A));
     case attr::OMPThreadPrivateDecl:

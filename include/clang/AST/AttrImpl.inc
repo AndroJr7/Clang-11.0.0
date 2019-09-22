@@ -6369,6 +6369,37 @@ const char *OMPDeclareTargetDeclAttr::getSpelling() const {
   }
 }
 
+OMPDeclareVariantAttr *OMPDeclareVariantAttr::clone(ASTContext &C) const {
+  auto *A = new (C) OMPDeclareVariantAttr(C, *this, variantFuncRef);
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void OMPDeclareVariantAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << "#pragma omp declare variant";
+    printPrettyPragma(OS, Policy);
+    OS << "\n";    break;
+  }
+}
+}
+
+const char *OMPDeclareVariantAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "declare variant";
+  }
+}
+
 OMPReferencedVarAttr *OMPReferencedVarAttr::clone(ASTContext &C) const {
   auto *A = new (C) OMPReferencedVarAttr(C, *this, ref);
   A->Inherited = Inherited;
@@ -11724,6 +11755,8 @@ const char *Attr::getSpelling() const {
     return cast<OMPDeclareSimdDeclAttr>(this)->getSpelling();
   case attr::OMPDeclareTargetDecl:
     return cast<OMPDeclareTargetDeclAttr>(this)->getSpelling();
+  case attr::OMPDeclareVariant:
+    return cast<OMPDeclareVariantAttr>(this)->getSpelling();
   case attr::OMPReferencedVar:
     return cast<OMPReferencedVarAttr>(this)->getSpelling();
   case attr::OMPThreadPrivateDecl:
@@ -12298,6 +12331,8 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<OMPDeclareSimdDeclAttr>(this)->clone(C);
   case attr::OMPDeclareTargetDecl:
     return cast<OMPDeclareTargetDeclAttr>(this)->clone(C);
+  case attr::OMPDeclareVariant:
+    return cast<OMPDeclareVariantAttr>(this)->clone(C);
   case attr::OMPReferencedVar:
     return cast<OMPReferencedVarAttr>(this)->clone(C);
   case attr::OMPThreadPrivateDecl:
@@ -12872,6 +12907,8 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<OMPDeclareSimdDeclAttr>(this)->printPretty(OS, Policy);
   case attr::OMPDeclareTargetDecl:
     return cast<OMPDeclareTargetDeclAttr>(this)->printPretty(OS, Policy);
+  case attr::OMPDeclareVariant:
+    return cast<OMPDeclareVariantAttr>(this)->printPretty(OS, Policy);
   case attr::OMPReferencedVar:
     return cast<OMPReferencedVarAttr>(this)->printPretty(OS, Policy);
   case attr::OMPThreadPrivateDecl:

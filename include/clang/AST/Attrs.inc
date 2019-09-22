@@ -517,7 +517,9 @@ public:
     GNU_acquire_shared_capability = 2,
     CXX11_clang_acquire_shared_capability = 3,
     GNU_exclusive_lock_function = 4,
-    GNU_shared_lock_function = 5
+    GNU_shared_lock_function = 5,
+  SpellingNotCalculated = 15
+
   };
 
   static AcquireCapabilityAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -916,7 +918,9 @@ public:
     CXX11_gnu_aligned = 1,
     Declspec_align = 2,
     Keyword_alignas = 3,
-    Keyword_Alignas = 4
+    Keyword_Alignas = 4,
+  SpellingNotCalculated = 15
+
   };
 
   static AlignedAttr *CreateImplicit(ASTContext &Ctx, bool IsAlignmentExpr, void *Alignment, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -1156,7 +1160,9 @@ public:
   enum Spelling {
     GNU_always_inline = 0,
     CXX11_gnu_always_inline = 1,
-    Keyword_forceinline = 2
+    Keyword_forceinline = 2,
+  SpellingNotCalculated = 15
+
   };
 
   static AlwaysInlineAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -1479,7 +1485,9 @@ public:
     C2x_clang_argument_with_type_tag = 2,
     GNU_pointer_with_type_tag = 3,
     CXX11_clang_pointer_with_type_tag = 4,
-    C2x_clang_pointer_with_type_tag = 5
+    C2x_clang_pointer_with_type_tag = 5,
+  SpellingNotCalculated = 15
+
   };
 
   static ArgumentWithTypeTagAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * ArgumentKind, ParamIdx ArgumentIdx, ParamIdx TypeTagIdx, bool IsPointer, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -1696,7 +1704,9 @@ public:
     GNU_assert_capability = 0,
     CXX11_clang_assert_capability = 1,
     GNU_assert_shared_capability = 2,
-    CXX11_clang_assert_shared_capability = 3
+    CXX11_clang_assert_shared_capability = 3,
+  SpellingNotCalculated = 15
+
   };
 
   static AssertCapabilityAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -3149,7 +3159,9 @@ public:
     GNU_capability = 0,
     CXX11_clang_capability = 1,
     GNU_shared_capability = 2,
-    CXX11_clang_shared_capability = 3
+    CXX11_clang_shared_capability = 3,
+  SpellingNotCalculated = 15
+
   };
 
   static CapabilityAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -3532,7 +3544,9 @@ public:
   enum Spelling {
     Keyword_constinit = 0,
     GNU_require_constant_initialization = 1,
-    CXX11_clang_require_constant_initialization = 2
+    CXX11_clang_require_constant_initialization = 2,
+  SpellingNotCalculated = 15
+
   };
 
   static ConstInitAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -4816,7 +4830,9 @@ class FinalAttr : public InheritableAttr {
 public:
   enum Spelling {
     Keyword_final = 0,
-    Keyword_sealed = 1
+    Keyword_sealed = 1,
+  SpellingNotCalculated = 15
+
   };
 
   static FinalAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -5926,7 +5942,9 @@ public:
     Pragma_unroll = 1,
     Pragma_nounroll = 2,
     Pragma_unroll_and_jam = 3,
-    Pragma_nounroll_and_jam = 4
+    Pragma_nounroll_and_jam = 4,
+  SpellingNotCalculated = 15
+
   };
 
   static LoopHintAttr *CreateImplicit(ASTContext &Ctx, OptionType Option, LoopHintState State, Expr * Value, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -6255,7 +6273,9 @@ public:
     Keyword_single_inheritance = 0,
     Keyword_multiple_inheritance = 1,
     Keyword_virtual_inheritance = 2,
-    Keyword_unspecified_inheritance = 3
+    Keyword_unspecified_inheritance = 3,
+  SpellingNotCalculated = 15
+
   };
 
   static MSInheritanceAttr *CreateImplicit(ASTContext &Ctx, bool BestCase, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -6901,7 +6921,9 @@ public:
     GNU_long_call = 0,
     CXX11_gnu_long_call = 1,
     GNU_far = 2,
-    CXX11_gnu_far = 3
+    CXX11_gnu_far = 3,
+  SpellingNotCalculated = 15
+
   };
 
   static MipsLongCallAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -6955,7 +6977,9 @@ public:
     GNU_short_call = 0,
     CXX11_gnu_short_call = 1,
     GNU_near = 2,
-    CXX11_gnu_near = 3
+    CXX11_gnu_near = 3,
+  SpellingNotCalculated = 15
+
   };
 
   static MipsShortCallAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -8748,6 +8772,65 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::OMPDeclareTargetDecl; }
 };
 
+class OMPDeclareVariantAttr : public Attr {
+Expr * variantFuncRef;
+
+public:
+  static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) OMPDeclareVariantAttr(Ctx, CommonInfo, VariantFuncRef);
+    A->setImplicit(true);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) OMPDeclareVariantAttr(Ctx, CommonInfo, VariantFuncRef);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return CreateImplicit(Ctx, VariantFuncRef, I);
+  }
+  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return Create(Ctx, VariantFuncRef, I);
+  }
+  OMPDeclareVariantAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , Expr * VariantFuncRef
+             )
+    : Attr(Ctx, CommonInfo, attr::OMPDeclareVariant, false)
+              , variantFuncRef(VariantFuncRef)
+  {
+  }
+
+  OMPDeclareVariantAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  Expr * getVariantFuncRef() const {
+    return variantFuncRef;
+  }
+
+
+    void printPrettyPragma(raw_ostream & OS, const PrintingPolicy &Policy)
+        const {
+      if (const Expr *E = getVariantFuncRef()) {
+        OS << "(";
+        E->printPretty(OS, nullptr, Policy);
+        OS << ")";
+      }
+      // TODO: add printing of real context selectors.
+      OS << " match(unknown={})";
+    }
+  
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::OMPDeclareVariant; }
+};
+
 class OMPReferencedVarAttr : public Attr {
 Expr * ref;
 
@@ -10202,7 +10285,9 @@ public:
   enum Spelling {
     Keyword_read_only = 0,
     Keyword_write_only = 2,
-    Keyword_read_write = 4
+    Keyword_read_write = 4,
+  SpellingNotCalculated = 15
+
   };
 
   static OpenCLAccessAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -10787,7 +10872,9 @@ public:
     C2x_clang_ownership_returns = 5,
     GNU_ownership_takes = 6,
     CXX11_clang_ownership_takes = 7,
-    C2x_clang_ownership_takes = 8
+    C2x_clang_ownership_takes = 8,
+  SpellingNotCalculated = 15
+
   };
 
   static OwnershipAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * Module, ParamIdx *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -11047,7 +11134,9 @@ public:
     C2x_clang_pass_object_size = 2,
     GNU_pass_dynamic_object_size = 3,
     CXX11_clang_pass_dynamic_object_size = 4,
-    C2x_clang_pass_dynamic_object_size = 5
+    C2x_clang_pass_dynamic_object_size = 5,
+  SpellingNotCalculated = 15
+
   };
 
   static PassObjectSizeAttr *CreateImplicit(ASTContext &Ctx, int Type, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -11940,7 +12029,9 @@ public:
     GNU_release_generic_capability = 4,
     CXX11_clang_release_generic_capability = 5,
     GNU_unlock_function = 6,
-    CXX11_clang_unlock_function = 7
+    CXX11_clang_unlock_function = 7,
+  SpellingNotCalculated = 15
+
   };
 
   static ReleaseCapabilityAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -12132,7 +12223,9 @@ public:
     GNU_requires_shared_capability = 4,
     CXX11_clang_requires_shared_capability = 5,
     GNU_shared_locks_required = 6,
-    CXX11_clang_shared_locks_required = 7
+    CXX11_clang_shared_locks_required = 7,
+  SpellingNotCalculated = 15
+
   };
 
   static RequiresCapabilityAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -12210,7 +12303,9 @@ public:
   enum Spelling {
     Declspec_restrict = 0,
     GNU_malloc = 1,
-    CXX11_gnu_malloc = 2
+    CXX11_gnu_malloc = 2,
+  SpellingNotCalculated = 15
+
   };
 
   static RestrictAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -12501,7 +12596,9 @@ public:
   enum Spelling {
     GNU_section = 0,
     CXX11_gnu_section = 1,
-    Declspec_allocate = 2
+    Declspec_allocate = 2,
+  SpellingNotCalculated = 15
+
   };
 
   static SectionAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -13620,7 +13717,9 @@ public:
     GNU_try_acquire_capability = 0,
     CXX11_clang_try_acquire_capability = 1,
     GNU_try_acquire_shared_capability = 2,
-    CXX11_clang_try_acquire_shared_capability = 3
+    CXX11_clang_try_acquire_shared_capability = 3,
+  SpellingNotCalculated = 15
+
   };
 
   static TryAcquireCapabilityAttr *CreateImplicit(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -14172,7 +14271,9 @@ public:
     CXX11_maybe_unused = 0,
     GNU_unused = 1,
     CXX11_gnu_unused = 2,
-    C2x_maybe_unused = 3
+    C2x_maybe_unused = 3,
+  SpellingNotCalculated = 15
+
   };
 
   static UnusedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -14577,7 +14678,9 @@ public:
     C2x_nodiscard = 1,
     CXX11_clang_warn_unused_result = 2,
     GNU_warn_unused_result = 3,
-    CXX11_gnu_warn_unused_result = 4
+    CXX11_gnu_warn_unused_result = 4,
+  SpellingNotCalculated = 15
+
   };
 
   static WarnUnusedResultAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Message, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -15035,7 +15138,9 @@ public:
     C2x_clang_xray_always_instrument = 2,
     GNU_xray_never_instrument = 3,
     CXX11_clang_xray_never_instrument = 4,
-    C2x_clang_xray_never_instrument = 5
+    C2x_clang_xray_never_instrument = 5,
+  SpellingNotCalculated = 15
+
   };
 
   static XRayInstrumentAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {

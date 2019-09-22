@@ -770,6 +770,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<OMPDeclareTargetDeclAttr>(At);
       return A->clone(C);
     }
+    case attr::OMPDeclareVariant: {
+      const auto *A = cast<OMPDeclareVariantAttr>(At);
+      return A->clone(C);
+    }
     case attr::OMPReferencedVar: {
       const auto *A = cast<OMPReferencedVarAttr>(At);
       return A->clone(C);
@@ -1816,6 +1820,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
       return nullptr;
     }
     case attr::OMPDeclareTargetDecl: {
+      return nullptr;
+    }
+    case attr::OMPDeclareVariant: {
       return nullptr;
     }
     case attr::OMPReferencedVar: {

@@ -114,6 +114,10 @@
     for (OMPDeclareSimdDeclAttr::steps_iterator I = SA->steps_begin(), E = SA->steps_end(); I != E; ++I)
       Visit(*I);
   }
+  void VisitOMPDeclareVariantAttr(const OMPDeclareVariantAttr *A) {
+    const auto *SA = cast<OMPDeclareVariantAttr>(A); (void)SA;
+    Visit(SA->getVariantFuncRef());
+  }
   void VisitOMPReferencedVarAttr(const OMPReferencedVarAttr *A) {
     const auto *SA = cast<OMPReferencedVarAttr>(A); (void)SA;
     Visit(SA->getRef());

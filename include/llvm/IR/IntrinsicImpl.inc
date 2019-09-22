@@ -13035,10 +13035,10 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     44, // llvm.mips.insve.h
     44, // llvm.mips.insve.w
     2, // llvm.mips.lbux
-    149, // llvm.mips.ld.b
-    149, // llvm.mips.ld.d
-    149, // llvm.mips.ld.h
-    149, // llvm.mips.ld.w
+    2, // llvm.mips.ld.b
+    2, // llvm.mips.ld.d
+    2, // llvm.mips.ld.h
+    2, // llvm.mips.ld.w
     22, // llvm.mips.ldi.b
     22, // llvm.mips.ldi.d
     22, // llvm.mips.ldi.h
@@ -13189,7 +13189,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     5, // llvm.mips.precrqu.s.qb.ph
     29, // llvm.mips.prepend
     1, // llvm.mips.raddu.w.qb
-    150, // llvm.mips.rddsp
+    149, // llvm.mips.rddsp
     1, // llvm.mips.repl.ph
     1, // llvm.mips.repl.qb
     44, // llvm.mips.sat.s.b
@@ -13271,10 +13271,10 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     44, // llvm.mips.srlri.d
     44, // llvm.mips.srlri.h
     44, // llvm.mips.srlri.w
-    151, // llvm.mips.st.b
-    151, // llvm.mips.st.d
-    151, // llvm.mips.st.h
-    151, // llvm.mips.st.w
+    137, // llvm.mips.st.b
+    137, // llvm.mips.st.d
+    137, // llvm.mips.st.h
+    137, // llvm.mips.st.w
     1, // llvm.mips.subq.ph
     1, // llvm.mips.subq.s.ph
     5, // llvm.mips.subq.s.w
@@ -13316,7 +13316,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.mips.vshf.d
     1, // llvm.mips.vshf.h
     1, // llvm.mips.vshf.w
-    152, // llvm.mips.wrdsp
+    150, // llvm.mips.wrdsp
     1, // llvm.mips.xor.v
     44, // llvm.mips.xori.b
     1, // llvm.nvvm.add.rm.d
@@ -13493,12 +13493,12 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.nvvm.istypep.sampler
     1, // llvm.nvvm.istypep.surface
     1, // llvm.nvvm.istypep.texture
-    153, // llvm.nvvm.ldg.global.f
-    153, // llvm.nvvm.ldg.global.i
-    153, // llvm.nvvm.ldg.global.p
-    153, // llvm.nvvm.ldu.global.f
-    153, // llvm.nvvm.ldu.global.i
-    153, // llvm.nvvm.ldu.global.p
+    151, // llvm.nvvm.ldg.global.f
+    151, // llvm.nvvm.ldg.global.i
+    151, // llvm.nvvm.ldg.global.p
+    151, // llvm.nvvm.ldu.global.f
+    151, // llvm.nvvm.ldu.global.i
+    151, // llvm.nvvm.ldu.global.p
     1, // llvm.nvvm.lg2.approx.d
     1, // llvm.nvvm.lg2.approx.f
     1, // llvm.nvvm.lg2.approx.ftz.f
@@ -13565,8 +13565,8 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.nvvm.rcp.rz.d
     1, // llvm.nvvm.rcp.rz.f
     1, // llvm.nvvm.rcp.rz.ftz.f
-    154, // llvm.nvvm.read.ptx.sreg.clock
-    154, // llvm.nvvm.read.ptx.sreg.clock64
+    152, // llvm.nvvm.read.ptx.sreg.clock
+    152, // llvm.nvvm.read.ptx.sreg.clock64
     1, // llvm.nvvm.read.ptx.sreg.ctaid.w
     1, // llvm.nvvm.read.ptx.sreg.ctaid.x
     1, // llvm.nvvm.read.ptx.sreg.ctaid.y
@@ -13620,10 +13620,10 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.nvvm.read.ptx.sreg.ntid.y
     1, // llvm.nvvm.read.ptx.sreg.ntid.z
     1, // llvm.nvvm.read.ptx.sreg.nwarpid
-    154, // llvm.nvvm.read.ptx.sreg.pm0
-    154, // llvm.nvvm.read.ptx.sreg.pm1
-    154, // llvm.nvvm.read.ptx.sreg.pm2
-    154, // llvm.nvvm.read.ptx.sreg.pm3
+    152, // llvm.nvvm.read.ptx.sreg.pm0
+    152, // llvm.nvvm.read.ptx.sreg.pm1
+    152, // llvm.nvvm.read.ptx.sreg.pm2
+    152, // llvm.nvvm.read.ptx.sreg.pm3
     1, // llvm.nvvm.read.ptx.sreg.smid
     1, // llvm.nvvm.read.ptx.sreg.tid.w
     1, // llvm.nvvm.read.ptx.sreg.tid.x
@@ -14615,11 +14615,11 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     2, // llvm.ppc.altivec.lvxl
     20, // llvm.ppc.altivec.mfvscr
     5, // llvm.ppc.altivec.mtvscr
-    155, // llvm.ppc.altivec.stvebx
-    155, // llvm.ppc.altivec.stvehx
-    155, // llvm.ppc.altivec.stvewx
-    155, // llvm.ppc.altivec.stvx
-    155, // llvm.ppc.altivec.stvxl
+    153, // llvm.ppc.altivec.stvebx
+    153, // llvm.ppc.altivec.stvehx
+    153, // llvm.ppc.altivec.stvewx
+    153, // llvm.ppc.altivec.stvx
+    153, // llvm.ppc.altivec.stvxl
     1, // llvm.ppc.altivec.vabsdub
     1, // llvm.ppc.altivec.vabsduh
     1, // llvm.ppc.altivec.vabsduw
@@ -14898,16 +14898,16 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.ppc.qpx.qvlpcls
     1, // llvm.ppc.qpx.qvlpcrd
     1, // llvm.ppc.qpx.qvlpcrs
-    155, // llvm.ppc.qpx.qvstfcd
-    155, // llvm.ppc.qpx.qvstfcda
-    155, // llvm.ppc.qpx.qvstfcs
-    155, // llvm.ppc.qpx.qvstfcsa
-    155, // llvm.ppc.qpx.qvstfd
-    155, // llvm.ppc.qpx.qvstfda
-    155, // llvm.ppc.qpx.qvstfiw
-    155, // llvm.ppc.qpx.qvstfiwa
-    155, // llvm.ppc.qpx.qvstfs
-    155, // llvm.ppc.qpx.qvstfsa
+    153, // llvm.ppc.qpx.qvstfcd
+    153, // llvm.ppc.qpx.qvstfcda
+    153, // llvm.ppc.qpx.qvstfcs
+    153, // llvm.ppc.qpx.qvstfcsa
+    153, // llvm.ppc.qpx.qvstfd
+    153, // llvm.ppc.qpx.qvstfda
+    153, // llvm.ppc.qpx.qvstfiw
+    153, // llvm.ppc.qpx.qvstfiwa
+    153, // llvm.ppc.qpx.qvstfs
+    153, // llvm.ppc.qpx.qvstfsa
     1, // llvm.ppc.scalar.extract.expq
     1, // llvm.ppc.scalar.insert.exp.qp
     5, // llvm.ppc.set.texasr
@@ -14940,12 +14940,12 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     2, // llvm.ppc.vsx.lxvll
     2, // llvm.ppc.vsx.lxvw4x
     2, // llvm.ppc.vsx.lxvw4x.be
-    155, // llvm.ppc.vsx.stxvd2x
-    155, // llvm.ppc.vsx.stxvd2x.be
-    155, // llvm.ppc.vsx.stxvl
-    155, // llvm.ppc.vsx.stxvll
-    155, // llvm.ppc.vsx.stxvw4x
-    155, // llvm.ppc.vsx.stxvw4x.be
+    153, // llvm.ppc.vsx.stxvd2x
+    153, // llvm.ppc.vsx.stxvd2x.be
+    153, // llvm.ppc.vsx.stxvl
+    153, // llvm.ppc.vsx.stxvll
+    153, // llvm.ppc.vsx.stxvw4x
+    153, // llvm.ppc.vsx.stxvw4x.be
     1, // llvm.ppc.vsx.xsmaxdp
     1, // llvm.ppc.vsx.xsmindp
     1, // llvm.ppc.vsx.xvcmpeqdp
@@ -15028,34 +15028,34 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.r600.txl
     1, // llvm.r600.txlc
     1, // llvm.r600.txq
-    156, // llvm.riscv.masked.atomicrmw.add.i32
-    156, // llvm.riscv.masked.atomicrmw.add.i64
-    157, // llvm.riscv.masked.atomicrmw.max.i32
-    157, // llvm.riscv.masked.atomicrmw.max.i64
-    157, // llvm.riscv.masked.atomicrmw.min.i32
-    157, // llvm.riscv.masked.atomicrmw.min.i64
-    156, // llvm.riscv.masked.atomicrmw.nand.i32
-    156, // llvm.riscv.masked.atomicrmw.nand.i64
-    156, // llvm.riscv.masked.atomicrmw.sub.i32
-    156, // llvm.riscv.masked.atomicrmw.sub.i64
-    156, // llvm.riscv.masked.atomicrmw.umax.i32
-    156, // llvm.riscv.masked.atomicrmw.umax.i64
-    156, // llvm.riscv.masked.atomicrmw.umin.i32
-    156, // llvm.riscv.masked.atomicrmw.umin.i64
-    156, // llvm.riscv.masked.atomicrmw.xchg.i32
-    156, // llvm.riscv.masked.atomicrmw.xchg.i64
-    157, // llvm.riscv.masked.cmpxchg.i32
-    157, // llvm.riscv.masked.cmpxchg.i64
+    154, // llvm.riscv.masked.atomicrmw.add.i32
+    154, // llvm.riscv.masked.atomicrmw.add.i64
+    155, // llvm.riscv.masked.atomicrmw.max.i32
+    155, // llvm.riscv.masked.atomicrmw.max.i64
+    155, // llvm.riscv.masked.atomicrmw.min.i32
+    155, // llvm.riscv.masked.atomicrmw.min.i64
+    154, // llvm.riscv.masked.atomicrmw.nand.i32
+    154, // llvm.riscv.masked.atomicrmw.nand.i64
+    154, // llvm.riscv.masked.atomicrmw.sub.i32
+    154, // llvm.riscv.masked.atomicrmw.sub.i64
+    154, // llvm.riscv.masked.atomicrmw.umax.i32
+    154, // llvm.riscv.masked.atomicrmw.umax.i64
+    154, // llvm.riscv.masked.atomicrmw.umin.i32
+    154, // llvm.riscv.masked.atomicrmw.umin.i64
+    154, // llvm.riscv.masked.atomicrmw.xchg.i32
+    154, // llvm.riscv.masked.atomicrmw.xchg.i64
+    155, // llvm.riscv.masked.cmpxchg.i32
+    155, // llvm.riscv.masked.cmpxchg.i64
     5, // llvm.s390.efpc
     1, // llvm.s390.etnd
     44, // llvm.s390.lcbb
-    155, // llvm.s390.ntstg
+    153, // llvm.s390.ntstg
     5, // llvm.s390.ppa.txassist
     5, // llvm.s390.sfpc
-    158, // llvm.s390.tabort
-    159, // llvm.s390.tbegin
-    159, // llvm.s390.tbegin.nofloat
-    159, // llvm.s390.tbeginc
+    156, // llvm.s390.tabort
+    157, // llvm.s390.tbegin
+    157, // llvm.s390.tbegin.nofloat
+    157, // llvm.s390.tbeginc
     1, // llvm.s390.tdc
     5, // llvm.s390.tend
     1, // llvm.s390.vaccb
@@ -15164,7 +15164,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.s390.vistrfs
     1, // llvm.s390.vistrh
     1, // llvm.s390.vistrhs
-    149, // llvm.s390.vlbb
+    158, // llvm.s390.vlbb
     2, // llvm.s390.vll
     2, // llvm.s390.vlrl
     1, // llvm.s390.vmaeb
@@ -15235,7 +15235,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     29, // llvm.s390.vsrd
     1, // llvm.s390.vsrl
     1, // llvm.s390.vsrlb
-    155, // llvm.s390.vstl
+    153, // llvm.s390.vstl
     143, // llvm.s390.vstrcb
     143, // llvm.s390.vstrcbs
     143, // llvm.s390.vstrcf
@@ -15248,7 +15248,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     143, // llvm.s390.vstrczfs
     143, // llvm.s390.vstrczh
     143, // llvm.s390.vstrczhs
-    155, // llvm.s390.vstrl
+    153, // llvm.s390.vstrl
     1, // llvm.s390.vstrsb
     1, // llvm.s390.vstrsf
     1, // llvm.s390.vstrsh
@@ -15276,27 +15276,27 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.s390.vupllh
     58, // llvm.wasm.alltrue
     58, // llvm.wasm.anytrue
-    160, // llvm.wasm.atomic.notify
-    161, // llvm.wasm.atomic.wait.i32
-    161, // llvm.wasm.atomic.wait.i64
+    159, // llvm.wasm.atomic.notify
+    160, // llvm.wasm.atomic.wait.i32
+    160, // llvm.wasm.atomic.wait.i64
     58, // llvm.wasm.bitselect
-    162, // llvm.wasm.data.drop
-    163, // llvm.wasm.extract.exception
-    163, // llvm.wasm.get.ehselector
-    163, // llvm.wasm.get.exception
+    161, // llvm.wasm.data.drop
+    162, // llvm.wasm.extract.exception
+    162, // llvm.wasm.get.ehselector
+    162, // llvm.wasm.get.exception
     44, // llvm.wasm.landingpad.index
     1, // llvm.wasm.lsda
     5, // llvm.wasm.memory.grow
-    164, // llvm.wasm.memory.init
+    163, // llvm.wasm.memory.init
     20, // llvm.wasm.memory.size
     58, // llvm.wasm.narrow.signed
     58, // llvm.wasm.narrow.unsigned
     58, // llvm.wasm.qfma
     58, // llvm.wasm.qfms
-    165, // llvm.wasm.rethrow.in.catch
+    164, // llvm.wasm.rethrow.in.catch
     58, // llvm.wasm.sub.saturate.signed
     58, // llvm.wasm.sub.saturate.unsigned
-    166, // llvm.wasm.throw
+    165, // llvm.wasm.throw
     58, // llvm.wasm.tls.align
     20, // llvm.wasm.tls.base
     58, // llvm.wasm.tls.size
@@ -15566,10 +15566,10 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.x86.avx512.ktestz.d
     1, // llvm.x86.avx512.ktestz.q
     1, // llvm.x86.avx512.ktestz.w
-    167, // llvm.x86.avx512.mask.add.sd.round
-    167, // llvm.x86.avx512.mask.add.ss.round
-    168, // llvm.x86.avx512.mask.cmp.sd
-    168, // llvm.x86.avx512.mask.cmp.ss
+    166, // llvm.x86.avx512.mask.add.sd.round
+    166, // llvm.x86.avx512.mask.add.ss.round
+    167, // llvm.x86.avx512.mask.cmp.sd
+    167, // llvm.x86.avx512.mask.cmp.ss
     1, // llvm.x86.avx512.mask.compress
     1, // llvm.x86.avx512.mask.cvtpd2dq.128
     143, // llvm.x86.avx512.mask.cvtpd2dq.512
@@ -15598,8 +15598,8 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.x86.avx512.mask.cvtps2uqq.256
     143, // llvm.x86.avx512.mask.cvtps2uqq.512
     1, // llvm.x86.avx512.mask.cvtqq2ps.128
-    167, // llvm.x86.avx512.mask.cvtsd2ss.round
-    167, // llvm.x86.avx512.mask.cvtss2sd.round
+    166, // llvm.x86.avx512.mask.cvtsd2ss.round
+    166, // llvm.x86.avx512.mask.cvtss2sd.round
     1, // llvm.x86.avx512.mask.cvttpd2dq.128
     143, // llvm.x86.avx512.mask.cvttpd2dq.512
     1, // llvm.x86.avx512.mask.cvttpd2qq.128
@@ -15622,17 +15622,17 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.x86.avx512.mask.cvttps2uqq.256
     143, // llvm.x86.avx512.mask.cvttps2uqq.512
     1, // llvm.x86.avx512.mask.cvtuqq2ps.128
-    167, // llvm.x86.avx512.mask.div.sd.round
-    167, // llvm.x86.avx512.mask.div.ss.round
+    166, // llvm.x86.avx512.mask.div.sd.round
+    166, // llvm.x86.avx512.mask.div.ss.round
     1, // llvm.x86.avx512.mask.expand
     143, // llvm.x86.avx512.mask.fixupimm.pd.128
     143, // llvm.x86.avx512.mask.fixupimm.pd.256
-    169, // llvm.x86.avx512.mask.fixupimm.pd.512
+    168, // llvm.x86.avx512.mask.fixupimm.pd.512
     143, // llvm.x86.avx512.mask.fixupimm.ps.128
     143, // llvm.x86.avx512.mask.fixupimm.ps.256
-    169, // llvm.x86.avx512.mask.fixupimm.ps.512
-    169, // llvm.x86.avx512.mask.fixupimm.sd
-    169, // llvm.x86.avx512.mask.fixupimm.ss
+    168, // llvm.x86.avx512.mask.fixupimm.ps.512
+    168, // llvm.x86.avx512.mask.fixupimm.sd
+    168, // llvm.x86.avx512.mask.fixupimm.ss
     44, // llvm.x86.avx512.mask.fpclass.sd
     44, // llvm.x86.avx512.mask.fpclass.ss
     122, // llvm.x86.avx512.mask.gather.dpd.512
@@ -15665,22 +15665,22 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.x86.avx512.mask.getexp.ps.128
     1, // llvm.x86.avx512.mask.getexp.ps.256
     143, // llvm.x86.avx512.mask.getexp.ps.512
-    167, // llvm.x86.avx512.mask.getexp.sd
-    167, // llvm.x86.avx512.mask.getexp.ss
+    166, // llvm.x86.avx512.mask.getexp.sd
+    166, // llvm.x86.avx512.mask.getexp.ss
     44, // llvm.x86.avx512.mask.getmant.pd.128
     44, // llvm.x86.avx512.mask.getmant.pd.256
-    170, // llvm.x86.avx512.mask.getmant.pd.512
+    169, // llvm.x86.avx512.mask.getmant.pd.512
     44, // llvm.x86.avx512.mask.getmant.ps.128
     44, // llvm.x86.avx512.mask.getmant.ps.256
-    170, // llvm.x86.avx512.mask.getmant.ps.512
-    171, // llvm.x86.avx512.mask.getmant.sd
-    171, // llvm.x86.avx512.mask.getmant.ss
-    167, // llvm.x86.avx512.mask.max.sd.round
-    167, // llvm.x86.avx512.mask.max.ss.round
-    167, // llvm.x86.avx512.mask.min.sd.round
-    167, // llvm.x86.avx512.mask.min.ss.round
-    167, // llvm.x86.avx512.mask.mul.sd.round
-    167, // llvm.x86.avx512.mask.mul.ss.round
+    169, // llvm.x86.avx512.mask.getmant.ps.512
+    170, // llvm.x86.avx512.mask.getmant.sd
+    170, // llvm.x86.avx512.mask.getmant.ss
+    166, // llvm.x86.avx512.mask.max.sd.round
+    166, // llvm.x86.avx512.mask.max.ss.round
+    166, // llvm.x86.avx512.mask.min.sd.round
+    166, // llvm.x86.avx512.mask.min.ss.round
+    166, // llvm.x86.avx512.mask.mul.sd.round
+    166, // llvm.x86.avx512.mask.mul.ss.round
     1, // llvm.x86.avx512.mask.pmov.db.128
     1, // llvm.x86.avx512.mask.pmov.db.256
     1, // llvm.x86.avx512.mask.pmov.db.512
@@ -15787,36 +15787,36 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     137, // llvm.x86.avx512.mask.pmovus.wb.mem.512
     29, // llvm.x86.avx512.mask.range.pd.128
     29, // llvm.x86.avx512.mask.range.pd.256
-    171, // llvm.x86.avx512.mask.range.pd.512
+    170, // llvm.x86.avx512.mask.range.pd.512
     29, // llvm.x86.avx512.mask.range.ps.128
     29, // llvm.x86.avx512.mask.range.ps.256
-    171, // llvm.x86.avx512.mask.range.ps.512
-    172, // llvm.x86.avx512.mask.range.sd
-    172, // llvm.x86.avx512.mask.range.ss
+    170, // llvm.x86.avx512.mask.range.ps.512
+    171, // llvm.x86.avx512.mask.range.sd
+    171, // llvm.x86.avx512.mask.range.ss
     44, // llvm.x86.avx512.mask.reduce.pd.128
     44, // llvm.x86.avx512.mask.reduce.pd.256
-    170, // llvm.x86.avx512.mask.reduce.pd.512
+    169, // llvm.x86.avx512.mask.reduce.pd.512
     44, // llvm.x86.avx512.mask.reduce.ps.128
     44, // llvm.x86.avx512.mask.reduce.ps.256
-    170, // llvm.x86.avx512.mask.reduce.ps.512
-    172, // llvm.x86.avx512.mask.reduce.sd
-    172, // llvm.x86.avx512.mask.reduce.ss
+    169, // llvm.x86.avx512.mask.reduce.ps.512
+    171, // llvm.x86.avx512.mask.reduce.sd
+    171, // llvm.x86.avx512.mask.reduce.ss
     44, // llvm.x86.avx512.mask.rndscale.pd.128
     44, // llvm.x86.avx512.mask.rndscale.pd.256
-    170, // llvm.x86.avx512.mask.rndscale.pd.512
+    169, // llvm.x86.avx512.mask.rndscale.pd.512
     44, // llvm.x86.avx512.mask.rndscale.ps.128
     44, // llvm.x86.avx512.mask.rndscale.ps.256
-    170, // llvm.x86.avx512.mask.rndscale.ps.512
-    172, // llvm.x86.avx512.mask.rndscale.sd
-    172, // llvm.x86.avx512.mask.rndscale.ss
+    169, // llvm.x86.avx512.mask.rndscale.ps.512
+    171, // llvm.x86.avx512.mask.rndscale.sd
+    171, // llvm.x86.avx512.mask.rndscale.ss
     1, // llvm.x86.avx512.mask.scalef.pd.128
     1, // llvm.x86.avx512.mask.scalef.pd.256
-    167, // llvm.x86.avx512.mask.scalef.pd.512
+    166, // llvm.x86.avx512.mask.scalef.pd.512
     1, // llvm.x86.avx512.mask.scalef.ps.128
     1, // llvm.x86.avx512.mask.scalef.ps.256
-    167, // llvm.x86.avx512.mask.scalef.ps.512
-    167, // llvm.x86.avx512.mask.scalef.sd
-    167, // llvm.x86.avx512.mask.scalef.ss
+    166, // llvm.x86.avx512.mask.scalef.ps.512
+    166, // llvm.x86.avx512.mask.scalef.sd
+    166, // llvm.x86.avx512.mask.scalef.ss
     60, // llvm.x86.avx512.mask.scatter.dpd.512
     60, // llvm.x86.avx512.mask.scatter.dpi.512
     60, // llvm.x86.avx512.mask.scatter.dpq.512
@@ -15841,10 +15841,10 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     60, // llvm.x86.avx512.mask.scattersiv4.si
     60, // llvm.x86.avx512.mask.scattersiv8.sf
     60, // llvm.x86.avx512.mask.scattersiv8.si
-    167, // llvm.x86.avx512.mask.sqrt.sd
-    167, // llvm.x86.avx512.mask.sqrt.ss
-    167, // llvm.x86.avx512.mask.sub.sd.round
-    167, // llvm.x86.avx512.mask.sub.ss.round
+    166, // llvm.x86.avx512.mask.sqrt.sd
+    166, // llvm.x86.avx512.mask.sqrt.ss
+    166, // llvm.x86.avx512.mask.sub.sd.round
+    166, // llvm.x86.avx512.mask.sub.ss.round
     1, // llvm.x86.avx512.mask.vcvtph2ps.128
     1, // llvm.x86.avx512.mask.vcvtph2ps.256
     143, // llvm.x86.avx512.mask.vcvtph2ps.512
@@ -15853,12 +15853,12 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     44, // llvm.x86.avx512.mask.vcvtps2ph.512
     143, // llvm.x86.avx512.maskz.fixupimm.pd.128
     143, // llvm.x86.avx512.maskz.fixupimm.pd.256
-    169, // llvm.x86.avx512.maskz.fixupimm.pd.512
+    168, // llvm.x86.avx512.maskz.fixupimm.pd.512
     143, // llvm.x86.avx512.maskz.fixupimm.ps.128
     143, // llvm.x86.avx512.maskz.fixupimm.ps.256
-    169, // llvm.x86.avx512.maskz.fixupimm.ps.512
-    169, // llvm.x86.avx512.maskz.fixupimm.sd
-    169, // llvm.x86.avx512.maskz.fixupimm.ss
+    168, // llvm.x86.avx512.maskz.fixupimm.ps.512
+    168, // llvm.x86.avx512.maskz.fixupimm.sd
+    168, // llvm.x86.avx512.maskz.fixupimm.ss
     29, // llvm.x86.avx512.max.pd.512
     29, // llvm.x86.avx512.max.ps.512
     29, // llvm.x86.avx512.min.pd.512
@@ -15948,8 +15948,8 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.x86.avx512.rcp14.ss
     143, // llvm.x86.avx512.rcp28.pd
     143, // llvm.x86.avx512.rcp28.ps
-    167, // llvm.x86.avx512.rcp28.sd
-    167, // llvm.x86.avx512.rcp28.ss
+    166, // llvm.x86.avx512.rcp28.sd
+    166, // llvm.x86.avx512.rcp28.ss
     1, // llvm.x86.avx512.rsqrt14.pd.128
     1, // llvm.x86.avx512.rsqrt14.pd.256
     1, // llvm.x86.avx512.rsqrt14.pd.512
@@ -15960,8 +15960,8 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.x86.avx512.rsqrt14.ss
     143, // llvm.x86.avx512.rsqrt28.pd
     143, // llvm.x86.avx512.rsqrt28.ps
-    167, // llvm.x86.avx512.rsqrt28.sd
-    167, // llvm.x86.avx512.rsqrt28.ss
+    166, // llvm.x86.avx512.rsqrt28.sd
+    166, // llvm.x86.avx512.rsqrt28.ss
     60, // llvm.x86.avx512.scatter.dpd.512
     60, // llvm.x86.avx512.scatter.dpi.512
     60, // llvm.x86.avx512.scatter.dpq.512
@@ -16230,7 +16230,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.x86.sse.cvttps2pi
     1, // llvm.x86.sse.cvttss2si
     1, // llvm.x86.sse.cvttss2si64
-    173, // llvm.x86.sse.ldmxcsr
+    172, // llvm.x86.sse.ldmxcsr
     1, // llvm.x86.sse.max.ps
     1, // llvm.x86.sse.max.ss
     1, // llvm.x86.sse.min.ps
@@ -16338,13 +16338,13 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     1, // llvm.x86.sse42.crc32.32.32
     1, // llvm.x86.sse42.crc32.32.8
     1, // llvm.x86.sse42.crc32.64.64
-    167, // llvm.x86.sse42.pcmpestri128
-    167, // llvm.x86.sse42.pcmpestria128
-    167, // llvm.x86.sse42.pcmpestric128
-    167, // llvm.x86.sse42.pcmpestrio128
-    167, // llvm.x86.sse42.pcmpestris128
-    167, // llvm.x86.sse42.pcmpestriz128
-    167, // llvm.x86.sse42.pcmpestrm128
+    166, // llvm.x86.sse42.pcmpestri128
+    166, // llvm.x86.sse42.pcmpestria128
+    166, // llvm.x86.sse42.pcmpestric128
+    166, // llvm.x86.sse42.pcmpestrio128
+    166, // llvm.x86.sse42.pcmpestris128
+    166, // llvm.x86.sse42.pcmpestriz128
+    166, // llvm.x86.sse42.pcmpestrm128
     29, // llvm.x86.sse42.pcmpistri128
     29, // llvm.x86.sse42.pcmpistria128
     29, // llvm.x86.sse42.pcmpistric128
@@ -16480,55 +16480,55 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
     5, // llvm.x86.xtest
     1, // llvm.xcore.bitrev
     5, // llvm.xcore.checkevent
-    174, // llvm.xcore.chkct
+    173, // llvm.xcore.chkct
     5, // llvm.xcore.clre
-    174, // llvm.xcore.clrpt
+    173, // llvm.xcore.clrpt
     5, // llvm.xcore.clrsr
     1, // llvm.xcore.crc32
     1, // llvm.xcore.crc8
-    174, // llvm.xcore.edu
-    174, // llvm.xcore.eeu
-    174, // llvm.xcore.endin
-    174, // llvm.xcore.freer
+    173, // llvm.xcore.edu
+    173, // llvm.xcore.eeu
+    173, // llvm.xcore.endin
+    173, // llvm.xcore.freer
     5, // llvm.xcore.geted
     5, // llvm.xcore.getet
     1, // llvm.xcore.getid
     5, // llvm.xcore.getps
     5, // llvm.xcore.getr
-    174, // llvm.xcore.getst
-    174, // llvm.xcore.getts
-    174, // llvm.xcore.in
-    174, // llvm.xcore.inct
-    174, // llvm.xcore.initcp
-    174, // llvm.xcore.initdp
-    174, // llvm.xcore.initlr
-    174, // llvm.xcore.initpc
-    174, // llvm.xcore.initsp
-    174, // llvm.xcore.inshr
-    174, // llvm.xcore.int
-    174, // llvm.xcore.mjoin
-    174, // llvm.xcore.msync
-    174, // llvm.xcore.out
-    174, // llvm.xcore.outct
-    174, // llvm.xcore.outshr
-    174, // llvm.xcore.outt
-    174, // llvm.xcore.peek
-    174, // llvm.xcore.setc
-    175, // llvm.xcore.setclk
-    174, // llvm.xcore.setd
-    174, // llvm.xcore.setev
+    173, // llvm.xcore.getst
+    173, // llvm.xcore.getts
+    173, // llvm.xcore.in
+    173, // llvm.xcore.inct
+    173, // llvm.xcore.initcp
+    173, // llvm.xcore.initdp
+    173, // llvm.xcore.initlr
+    173, // llvm.xcore.initpc
+    173, // llvm.xcore.initsp
+    173, // llvm.xcore.inshr
+    173, // llvm.xcore.int
+    173, // llvm.xcore.mjoin
+    173, // llvm.xcore.msync
+    173, // llvm.xcore.out
+    173, // llvm.xcore.outct
+    173, // llvm.xcore.outshr
+    173, // llvm.xcore.outt
+    173, // llvm.xcore.peek
+    173, // llvm.xcore.setc
+    174, // llvm.xcore.setclk
+    173, // llvm.xcore.setd
+    173, // llvm.xcore.setev
     5, // llvm.xcore.setps
-    174, // llvm.xcore.setpsc
-    174, // llvm.xcore.setpt
-    175, // llvm.xcore.setrdy
+    173, // llvm.xcore.setpsc
+    173, // llvm.xcore.setpt
+    174, // llvm.xcore.setrdy
     5, // llvm.xcore.setsr
-    174, // llvm.xcore.settw
-    174, // llvm.xcore.setv
+    173, // llvm.xcore.settw
+    173, // llvm.xcore.setv
     1, // llvm.xcore.sext
     5, // llvm.xcore.ssync
-    174, // llvm.xcore.syncr
-    174, // llvm.xcore.testct
-    174, // llvm.xcore.testwct
+    173, // llvm.xcore.syncr
+    173, // llvm.xcore.testct
+    173, // llvm.xcore.testwct
     20, // llvm.xcore.waitevent
     1, // llvm.xcore.zext
   };
@@ -16544,7 +16544,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 1;
       break;
       }
-    case 174: {
+    case 173: {
       const Attribute::AttrKind AttrParam1[]= {Attribute::NoCapture};
       AS[0] = AttributeList::get(C, 1, AttrParam1);
       const Attribute::AttrKind Atts[] = {Attribute::NoUnwind};
@@ -16552,7 +16552,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 2;
       break;
       }
-    case 175: {
+    case 174: {
       const Attribute::AttrKind AttrParam1[]= {Attribute::NoCapture};
       AS[0] = AttributeList::get(C, 1, AttrParam1);
       const Attribute::AttrKind AttrParam2[]= {Attribute::NoCapture};
@@ -16682,7 +16682,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 2;
       break;
       }
-    case 152: {
+    case 150: {
       const Attribute::AttrKind AttrParam2[]= {Attribute::ImmArg};
       AS[0] = AttributeList::get(C, 2, AttrParam2);
       const Attribute::AttrKind Atts[] = {Attribute::NoUnwind};
@@ -16818,7 +16818,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 5;
       break;
       }
-    case 156: {
+    case 154: {
       const Attribute::AttrKind AttrParam1[]= {Attribute::NoCapture};
       AS[0] = AttributeList::get(C, 1, AttrParam1);
       const Attribute::AttrKind AttrParam4[]= {Attribute::ImmArg};
@@ -16828,7 +16828,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 3;
       break;
       }
-    case 157: {
+    case 155: {
       const Attribute::AttrKind AttrParam1[]= {Attribute::NoCapture};
       AS[0] = AttributeList::get(C, 1, AttrParam1);
       const Attribute::AttrKind AttrParam5[]= {Attribute::ImmArg};
@@ -16850,14 +16850,6 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       }
     case 51: {
       const Attribute::AttrKind AttrParam3[]= {Attribute::NoCapture};
-      AS[0] = AttributeList::get(C, 3, AttrParam3);
-      const Attribute::AttrKind Atts[] = {Attribute::NoUnwind,Attribute::ArgMemOnly};
-      AS[1] = AttributeList::get(C, AttributeList::FunctionIndex, Atts);
-      NumAttrs = 2;
-      break;
-      }
-    case 151: {
-      const Attribute::AttrKind AttrParam3[]= {Attribute::ImmArg};
       AS[0] = AttributeList::get(C, 3, AttrParam3);
       const Attribute::AttrKind Atts[] = {Attribute::NoUnwind,Attribute::ArgMemOnly};
       AS[1] = AttributeList::get(C, AttributeList::FunctionIndex, Atts);
@@ -16896,7 +16888,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 2;
       break;
       }
-    case 154: {
+    case 152: {
       const Attribute::AttrKind Atts[] = {Attribute::NoUnwind,Attribute::InaccessibleMemOnly};
       AS[0] = AttributeList::get(C, AttributeList::FunctionIndex, Atts);
       NumAttrs = 1;
@@ -17068,7 +17060,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 6;
       break;
       }
-    case 155: {
+    case 153: {
       const Attribute::AttrKind Atts[] = {Attribute::NoUnwind,Attribute::WriteOnly,Attribute::ArgMemOnly};
       AS[0] = AttributeList::get(C, AttributeList::FunctionIndex, Atts);
       NumAttrs = 1;
@@ -17088,7 +17080,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 1;
       break;
       }
-    case 150: {
+    case 149: {
       const Attribute::AttrKind AttrParam1[]= {Attribute::ImmArg};
       AS[0] = AttributeList::get(C, 1, AttrParam1);
       const Attribute::AttrKind Atts[] = {Attribute::NoUnwind,Attribute::ReadOnly};
@@ -17380,7 +17372,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 1;
       break;
       }
-    case 153: {
+    case 151: {
       const Attribute::AttrKind AttrParam1[]= {Attribute::NoCapture};
       AS[0] = AttributeList::get(C, 1, AttrParam1);
       const Attribute::AttrKind Atts[] = {Attribute::NoUnwind,Attribute::ReadOnly,Attribute::ArgMemOnly};
@@ -17414,7 +17406,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 3;
       break;
       }
-    case 149: {
+    case 158: {
       const Attribute::AttrKind AttrParam2[]= {Attribute::ImmArg};
       AS[0] = AttributeList::get(C, 2, AttrParam2);
       const Attribute::AttrKind Atts[] = {Attribute::NoUnwind,Attribute::ReadOnly,Attribute::ArgMemOnly};
@@ -17566,7 +17558,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 3;
       break;
       }
-    case 170: {
+    case 169: {
       const Attribute::AttrKind AttrParam2[]= {Attribute::ImmArg};
       AS[0] = AttributeList::get(C, 2, AttrParam2);
       const Attribute::AttrKind AttrParam5[]= {Attribute::ImmArg};
@@ -17594,7 +17586,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 3;
       break;
       }
-    case 168: {
+    case 167: {
       const Attribute::AttrKind AttrParam3[]= {Attribute::ImmArg};
       AS[0] = AttributeList::get(C, 3, AttrParam3);
       const Attribute::AttrKind AttrParam5[]= {Attribute::ImmArg};
@@ -17604,7 +17596,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 3;
       break;
       }
-    case 171: {
+    case 170: {
       const Attribute::AttrKind AttrParam3[]= {Attribute::ImmArg};
       AS[0] = AttributeList::get(C, 3, AttrParam3);
       const Attribute::AttrKind AttrParam6[]= {Attribute::ImmArg};
@@ -17622,7 +17614,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 2;
       break;
       }
-    case 169: {
+    case 168: {
       const Attribute::AttrKind AttrParam4[]= {Attribute::ImmArg};
       AS[0] = AttributeList::get(C, 4, AttrParam4);
       const Attribute::AttrKind AttrParam6[]= {Attribute::ImmArg};
@@ -17632,7 +17624,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 3;
       break;
       }
-    case 167: {
+    case 166: {
       const Attribute::AttrKind AttrParam5[]= {Attribute::ImmArg};
       AS[0] = AttributeList::get(C, 5, AttrParam5);
       const Attribute::AttrKind Atts[] = {Attribute::NoUnwind,Attribute::ReadNone};
@@ -17640,7 +17632,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 2;
       break;
       }
-    case 172: {
+    case 171: {
       const Attribute::AttrKind AttrParam5[]= {Attribute::ImmArg};
       AS[0] = AttributeList::get(C, 5, AttrParam5);
       const Attribute::AttrKind AttrParam6[]= {Attribute::ImmArg};
@@ -17650,13 +17642,13 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 3;
       break;
       }
-    case 163: {
+    case 162: {
       const Attribute::AttrKind Atts[] = {Attribute::NoUnwind};
       AS[0] = AttributeList::get(C, AttributeList::FunctionIndex, Atts);
       NumAttrs = 1;
       break;
       }
-    case 161: {
+    case 160: {
       const Attribute::AttrKind AttrParam1[]= {Attribute::NoCapture,Attribute::ReadOnly};
       AS[0] = AttributeList::get(C, 1, AttrParam1);
       const Attribute::AttrKind Atts[] = {Attribute::NoUnwind,Attribute::InaccessibleMemOrArgMemOnly};
@@ -17664,7 +17656,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 2;
       break;
       }
-    case 160: {
+    case 159: {
       const Attribute::AttrKind AttrParam1[]= {Attribute::NoCapture};
       AS[0] = AttributeList::get(C, 1, AttrParam1);
       const Attribute::AttrKind Atts[] = {Attribute::NoUnwind,Attribute::InaccessibleMemOnly};
@@ -17672,7 +17664,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 2;
       break;
       }
-    case 164: {
+    case 163: {
       const Attribute::AttrKind AttrParam1[]= {Attribute::ImmArg};
       AS[0] = AttributeList::get(C, 1, AttrParam1);
       const Attribute::AttrKind AttrParam2[]= {Attribute::ImmArg};
@@ -17690,7 +17682,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 1;
       break;
       }
-    case 173: {
+    case 172: {
       const Attribute::AttrKind Atts[] = {Attribute::NoUnwind};
       AS[0] = AttributeList::get(C, AttributeList::FunctionIndex, Atts);
       NumAttrs = 1;
@@ -18118,13 +18110,13 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 1;
       break;
       }
-    case 159: {
+    case 157: {
       const Attribute::AttrKind Atts[] = {Attribute::NoUnwind,Attribute::NoDuplicate,Attribute::WriteOnly};
       AS[0] = AttributeList::get(C, AttributeList::FunctionIndex, Atts);
       NumAttrs = 1;
       break;
       }
-    case 162: {
+    case 161: {
       const Attribute::AttrKind AttrParam1[]= {Attribute::ImmArg};
       AS[0] = AttributeList::get(C, 1, AttrParam1);
       const Attribute::AttrKind Atts[] = {Attribute::NoUnwind,Attribute::NoDuplicate};
@@ -18167,13 +18159,13 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 2;
       break;
       }
-    case 165: {
+    case 164: {
       const Attribute::AttrKind Atts[] = {Attribute::NoReturn};
       AS[0] = AttributeList::get(C, AttributeList::FunctionIndex, Atts);
       NumAttrs = 1;
       break;
       }
-    case 166: {
+    case 165: {
       const Attribute::AttrKind AttrParam1[]= {Attribute::ImmArg};
       AS[0] = AttributeList::get(C, 1, AttrParam1);
       const Attribute::AttrKind Atts[] = {Attribute::NoReturn};
@@ -18181,7 +18173,7 @@ AttributeList Intrinsic::getAttributes(LLVMContext &C, ID id) {
       NumAttrs = 2;
       break;
       }
-    case 158: {
+    case 156: {
       const Attribute::AttrKind Atts[] = {Attribute::NoReturn,Attribute::WriteOnly};
       AS[0] = AttributeList::get(C, AttributeList::FunctionIndex, Atts);
       NumAttrs = 1;

@@ -2381,6 +2381,10 @@ OPTION(prefix_1, "mcldemote", mcldemote, Flag, m_x86_Features_Group, INVALID, nu
 OPTION(prefix_1, "mclflushopt", mclflushopt, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mclwb", mclwb, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mclzero", mclzero, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mcmodel=medany", mcmodel_EQ_medany, Flag, m_riscv_Features_Group, mcmodel_EQ, "medium\0", CC1Option, 0,
+       "Equivalent to -mcmodel=medium, compatible with RISC-V gcc.", nullptr, nullptr)
+OPTION(prefix_1, "mcmodel=medlow", mcmodel_EQ_medlow, Flag, m_riscv_Features_Group, mcmodel_EQ, "small\0", CC1Option, 0,
+       "Equivalent to -mcmodel=small, compatible with RISC-V gcc.", nullptr, nullptr)
 OPTION(prefix_1, "mcmodel=", mcmodel_EQ, Joined, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mcmpb", mcmpb, Flag, m_ppc_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mcmse", mcmse, Flag, m_arm_Features_Group, INVALID, nullptr, DriverOption | CC1Option, 0,
@@ -2439,7 +2443,7 @@ OPTION(prefix_1, "mextern-sdata", mextern_sdata, Flag, m_mips_Features_Group, IN
 OPTION(prefix_1, "mf16c", mf16c, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mfancy-math-387", mfancy_math_387, Flag, clang_ignored_m_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mfentry", mfentry, Flag, m_Group, INVALID, nullptr, CC1Option, 0,
-       "Insert calls to fentry at function entry (x86 only)", nullptr, nullptr)
+       "Insert calls to fentry at function entry (x86/SystemZ only)", nullptr, nullptr)
 OPTION(prefix_1, "mfix-and-continue", mfix_and_continue, Flag, clang_ignored_m_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mfix-cortex-a53-835769", mfix_cortex_a53_835769, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
        "Workaround Cortex-A53 erratum 835769 (AArch64 only)", nullptr, nullptr)
