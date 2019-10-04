@@ -476,6 +476,16 @@ set_target_properties(clangTidyCppCoreGuidelinesModule PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS clangTidyCppCoreGuidelinesModule )
 list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyCppCoreGuidelinesModule "${_IMPORT_PREFIX}/lib/libclangTidyCppCoreGuidelinesModule.a" )
 
+# Import target "clangTidyDarwinModule" for configuration "Release"
+set_property(TARGET clangTidyDarwinModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(clangTidyDarwinModule PROPERTIES
+  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyDarwinModule.a"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS clangTidyDarwinModule )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyDarwinModule "${_IMPORT_PREFIX}/lib/libclangTidyDarwinModule.a" )
+
 # Import target "clangTidyFuchsiaModule" for configuration "Release"
 set_property(TARGET clangTidyFuchsiaModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(clangTidyFuchsiaModule PROPERTIES
@@ -576,16 +586,6 @@ set_target_properties(clangTidyPerformanceModule PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS clangTidyPerformanceModule )
 list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyPerformanceModule "${_IMPORT_PREFIX}/lib/libclangTidyPerformanceModule.a" )
 
-# Import target "clangTidyPlugin" for configuration "Release"
-set_property(TARGET clangTidyPlugin APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyPlugin PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyPlugin.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyPlugin )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyPlugin "${_IMPORT_PREFIX}/lib/libclangTidyPlugin.a" )
-
 # Import target "clangTidyPortabilityModule" for configuration "Release"
 set_property(TARGET clangTidyPortabilityModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(clangTidyPortabilityModule PROPERTIES
@@ -606,6 +606,26 @@ set_target_properties(clangTidyReadabilityModule PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS clangTidyReadabilityModule )
 list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyReadabilityModule "${_IMPORT_PREFIX}/lib/libclangTidyReadabilityModule.a" )
 
+# Import target "clangTidyZirconModule" for configuration "Release"
+set_property(TARGET clangTidyZirconModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(clangTidyZirconModule PROPERTIES
+  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyZirconModule.a"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS clangTidyZirconModule )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyZirconModule "${_IMPORT_PREFIX}/lib/libclangTidyZirconModule.a" )
+
+# Import target "clangTidyPlugin" for configuration "Release"
+set_property(TARGET clangTidyPlugin APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(clangTidyPlugin PROPERTIES
+  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyPlugin.a"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS clangTidyPlugin )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyPlugin "${_IMPORT_PREFIX}/lib/libclangTidyPlugin.a" )
+
 # Import target "clang-tidy" for configuration "Release"
 set_property(TARGET clang-tidy APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(clang-tidy PROPERTIES
@@ -624,16 +644,6 @@ set_target_properties(clangTidyUtils PROPERTIES
 
 list(APPEND _IMPORT_CHECK_TARGETS clangTidyUtils )
 list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyUtils "${_IMPORT_PREFIX}/lib/libclangTidyUtils.a" )
-
-# Import target "clangTidyZirconModule" for configuration "Release"
-set_property(TARGET clangTidyZirconModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyZirconModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyZirconModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyZirconModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyZirconModule "${_IMPORT_PREFIX}/lib/libclangTidyZirconModule.a" )
 
 # Import target "clangChangeNamespace" for configuration "Release"
 set_property(TARGET clangChangeNamespace APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)

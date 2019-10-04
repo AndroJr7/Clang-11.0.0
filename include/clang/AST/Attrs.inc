@@ -1639,7 +1639,32 @@ class AsmLabelAttr : public InheritableAttr {
 unsigned labelLength;
 char *label;
 
+bool isLiteralLabel;
+
 public:
+  static AsmLabelAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Label, bool IsLiteralLabel, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) AsmLabelAttr(Ctx, CommonInfo, Label, IsLiteralLabel);
+    A->setImplicit(true);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static AsmLabelAttr *Create(ASTContext &Ctx, llvm::StringRef Label, bool IsLiteralLabel, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) AsmLabelAttr(Ctx, CommonInfo, Label, IsLiteralLabel);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static AsmLabelAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Label, bool IsLiteralLabel, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return CreateImplicit(Ctx, Label, IsLiteralLabel, I);
+  }
+  static AsmLabelAttr *Create(ASTContext &Ctx, llvm::StringRef Label, bool IsLiteralLabel, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return Create(Ctx, Label, IsLiteralLabel, I);
+  }
   static AsmLabelAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Label, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
     auto *A = new (Ctx) AsmLabelAttr(Ctx, CommonInfo, Label);
     A->setImplicit(true);
@@ -1665,9 +1690,22 @@ public:
   }
   AsmLabelAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
               , llvm::StringRef Label
+              , bool IsLiteralLabel
              )
     : InheritableAttr(Ctx, CommonInfo, attr::AsmLabel, false, false)
               , labelLength(Label.size()),label(new (Ctx, 1) char[labelLength])
+              , isLiteralLabel(IsLiteralLabel)
+  {
+      if (!Label.empty())
+        std::memcpy(label, Label.data(), labelLength);
+  }
+
+  AsmLabelAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , llvm::StringRef Label
+             )
+    : InheritableAttr(Ctx, CommonInfo, attr::AsmLabel, false, false)
+              , labelLength(Label.size()),label(new (Ctx, 1) char[labelLength])
+              , isLiteralLabel()
   {
       if (!Label.empty())
         std::memcpy(label, Label.data(), labelLength);
@@ -1690,6 +1728,14 @@ public:
       std::memcpy(this->label, S.data(), labelLength);
   }
 
+  bool getIsLiteralLabel() const {
+    return isLiteralLabel;
+  }
+
+
+bool isEquivalent(AsmLabelAttr *Other) const {
+  return getLabel() == Other->getLabel() && getIsLiteralLabel() == Other->getIsLiteralLabel();
+}
 
 
   static bool classof(const Attr *A) { return A->getKind() == attr::AsmLabel; }
@@ -8772,38 +8818,96 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::OMPDeclareTargetDecl; }
 };
 
-class OMPDeclareVariantAttr : public Attr {
+class OMPDeclareVariantAttr : public InheritableAttr {
 Expr * variantFuncRef;
 
+Expr * score;
+
 public:
-  static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
-    auto *A = new (Ctx) OMPDeclareVariantAttr(Ctx, CommonInfo, VariantFuncRef);
+  enum CtxSelectorSetType {
+    CtxSetUnknown,
+    CtxSetImplementation
+  };
+private:
+  CtxSelectorSetType ctxSelectorSet;
+
+public:
+  enum ScoreType {
+    ScoreUnknown,
+    ScoreSpecified
+  };
+private:
+  ScoreType ctxScore;
+
+public:
+  enum CtxSelectorType {
+    CtxUnknown,
+    CtxVendor
+  };
+private:
+  CtxSelectorType ctxSelector;
+
+unsigned implVendorLength;
+char *implVendor;
+
+public:
+  static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, Expr * Score, CtxSelectorSetType CtxSelectorSet, ScoreType CtxScore, CtxSelectorType CtxSelector, llvm::StringRef ImplVendor, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) OMPDeclareVariantAttr(Ctx, CommonInfo, VariantFuncRef, Score, CtxSelectorSet, CtxScore, CtxSelector, ImplVendor);
     A->setImplicit(true);
     if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
       A->setAttributeSpellingListIndex(0);
     return A;
   }
 
-  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
-    auto *A = new (Ctx) OMPDeclareVariantAttr(Ctx, CommonInfo, VariantFuncRef);
+  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, Expr * Score, CtxSelectorSetType CtxSelectorSet, ScoreType CtxScore, CtxSelectorType CtxSelector, llvm::StringRef ImplVendor, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) OMPDeclareVariantAttr(Ctx, CommonInfo, VariantFuncRef, Score, CtxSelectorSet, CtxScore, CtxSelector, ImplVendor);
     if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
       A->setAttributeSpellingListIndex(0);
     return A;
   }
 
-  static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+  static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, Expr * Score, CtxSelectorSetType CtxSelectorSet, ScoreType CtxScore, CtxSelectorType CtxSelector, llvm::StringRef ImplVendor, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
     AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
-    return CreateImplicit(Ctx, VariantFuncRef, I);
+    return CreateImplicit(Ctx, VariantFuncRef, Score, CtxSelectorSet, CtxScore, CtxSelector, ImplVendor, I);
   }
-  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, Expr * Score, CtxSelectorSetType CtxSelectorSet, ScoreType CtxScore, CtxSelectorType CtxSelector, llvm::StringRef ImplVendor, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
     AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
-    return Create(Ctx, VariantFuncRef, I);
+    return Create(Ctx, VariantFuncRef, Score, CtxSelectorSet, CtxScore, CtxSelector, ImplVendor, I);
   }
   OMPDeclareVariantAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
               , Expr * VariantFuncRef
+              , Expr * Score
+              , CtxSelectorSetType CtxSelectorSet
+              , ScoreType CtxScore
+              , CtxSelectorType CtxSelector
+              , llvm::StringRef ImplVendor
              )
-    : Attr(Ctx, CommonInfo, attr::OMPDeclareVariant, false)
+    : InheritableAttr(Ctx, CommonInfo, attr::OMPDeclareVariant, false, true)
               , variantFuncRef(VariantFuncRef)
+              , score(Score)
+              , ctxSelectorSet(CtxSelectorSet)
+              , ctxScore(CtxScore)
+              , ctxSelector(CtxSelector)
+              , implVendorLength(ImplVendor.size()),implVendor(new (Ctx, 1) char[implVendorLength])
+  {
+      if (!ImplVendor.empty())
+        std::memcpy(implVendor, ImplVendor.data(), implVendorLength);
+  }
+
+  OMPDeclareVariantAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , Expr * VariantFuncRef
+              , Expr * Score
+              , CtxSelectorSetType CtxSelectorSet
+              , ScoreType CtxScore
+              , CtxSelectorType CtxSelector
+             )
+    : InheritableAttr(Ctx, CommonInfo, attr::OMPDeclareVariant, false, true)
+              , variantFuncRef(VariantFuncRef)
+              , score(Score)
+              , ctxSelectorSet(CtxSelectorSet)
+              , ctxScore(CtxScore)
+              , ctxSelector(CtxSelector)
+              , implVendorLength(0),implVendor(nullptr)
   {
   }
 
@@ -8815,16 +8919,130 @@ public:
     return variantFuncRef;
   }
 
+  Expr * getScore() const {
+    return score;
+  }
 
+  CtxSelectorSetType getCtxSelectorSet() const {
+    return ctxSelectorSet;
+  }
+
+  static bool ConvertStrToCtxSelectorSetType(StringRef Val, CtxSelectorSetType &Out) {
+    Optional<CtxSelectorSetType> R = llvm::StringSwitch<Optional<CtxSelectorSetType>>(Val)
+      .Case("", OMPDeclareVariantAttr::CtxSetUnknown)
+      .Case("implementation", OMPDeclareVariantAttr::CtxSetImplementation)
+      .Default(Optional<CtxSelectorSetType>());
+    if (R) {
+      Out = *R;
+      return true;
+    }
+    return false;
+  }
+
+  static const char *ConvertCtxSelectorSetTypeToStr(CtxSelectorSetType Val) {
+    switch(Val) {
+    case OMPDeclareVariantAttr::CtxSetUnknown: return "";
+    case OMPDeclareVariantAttr::CtxSetImplementation: return "implementation";
+    }
+    llvm_unreachable("No enumerator with that value");
+  }
+  ScoreType getCtxScore() const {
+    return ctxScore;
+  }
+
+  static bool ConvertStrToScoreType(StringRef Val, ScoreType &Out) {
+    Optional<ScoreType> R = llvm::StringSwitch<Optional<ScoreType>>(Val)
+      .Case("", OMPDeclareVariantAttr::ScoreUnknown)
+      .Case("score", OMPDeclareVariantAttr::ScoreSpecified)
+      .Default(Optional<ScoreType>());
+    if (R) {
+      Out = *R;
+      return true;
+    }
+    return false;
+  }
+
+  static const char *ConvertScoreTypeToStr(ScoreType Val) {
+    switch(Val) {
+    case OMPDeclareVariantAttr::ScoreUnknown: return "";
+    case OMPDeclareVariantAttr::ScoreSpecified: return "score";
+    }
+    llvm_unreachable("No enumerator with that value");
+  }
+  CtxSelectorType getCtxSelector() const {
+    return ctxSelector;
+  }
+
+  static bool ConvertStrToCtxSelectorType(StringRef Val, CtxSelectorType &Out) {
+    Optional<CtxSelectorType> R = llvm::StringSwitch<Optional<CtxSelectorType>>(Val)
+      .Case("", OMPDeclareVariantAttr::CtxUnknown)
+      .Case("vendor", OMPDeclareVariantAttr::CtxVendor)
+      .Default(Optional<CtxSelectorType>());
+    if (R) {
+      Out = *R;
+      return true;
+    }
+    return false;
+  }
+
+  static const char *ConvertCtxSelectorTypeToStr(CtxSelectorType Val) {
+    switch(Val) {
+    case OMPDeclareVariantAttr::CtxUnknown: return "";
+    case OMPDeclareVariantAttr::CtxVendor: return "vendor";
+    }
+    llvm_unreachable("No enumerator with that value");
+  }
+  llvm::StringRef getImplVendor() const {
+    return llvm::StringRef(implVendor, implVendorLength);
+  }
+  unsigned getImplVendorLength() const {
+    return implVendorLength;
+  }
+  void setImplVendor(ASTContext &C, llvm::StringRef S) {
+    implVendorLength = S.size();
+    this->implVendor = new (C, 1) char [implVendorLength];
+    if (!S.empty())
+      std::memcpy(this->implVendor, S.data(), implVendorLength);
+  }
+
+
+    void printScore(raw_ostream & OS, const PrintingPolicy &Policy) const {
+      if (const Expr *E = getScore()) {
+        OS << "score(";
+        E->printPretty(OS, nullptr, Policy);
+        OS << "):";
+      }
+    }
     void printPrettyPragma(raw_ostream & OS, const PrintingPolicy &Policy)
         const {
+      assert(getCtxSelectorSet() != CtxSetUnknown &&
+             getCtxSelector() != CtxUnknown && "Unknown context selector.");
       if (const Expr *E = getVariantFuncRef()) {
         OS << "(";
         E->printPretty(OS, nullptr, Policy);
         OS << ")";
       }
       // TODO: add printing of real context selectors.
-      OS << " match(unknown={})";
+      OS << " match(";
+      switch (getCtxSelectorSet()) {
+      case CtxSetImplementation:
+        OS << "implementation={";
+        switch (getCtxSelector()) {
+        case CtxVendor:
+          OS << "vendor(";
+          printScore(OS, Policy);
+          OS << getImplVendor();
+          OS << ")";
+          break;
+        case CtxUnknown:
+          llvm_unreachable("Unknown context selector.");
+        }
+        OS << "}";
+        break;
+      case CtxSetUnknown:
+        llvm_unreachable("Unknown context selector set.");
+      }
+      OS << ")";
     }
   
 

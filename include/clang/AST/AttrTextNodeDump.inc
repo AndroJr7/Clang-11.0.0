@@ -89,6 +89,7 @@
   void VisitAsmLabelAttr(const AsmLabelAttr *A) {
     const auto *SA = cast<AsmLabelAttr>(A); (void)SA;
     OS << " \"" << SA->getLabel() << "\"";
+    if (SA->getIsLiteralLabel()) OS << " IsLiteralLabel";
   }
   void VisitAssertCapabilityAttr(const AssertCapabilityAttr *A) {
     const auto *SA = cast<AssertCapabilityAttr>(A); (void)SA;
@@ -466,6 +467,34 @@
       OS << " DT_Any";
       break;
     }
+  }
+  void VisitOMPDeclareVariantAttr(const OMPDeclareVariantAttr *A) {
+    const auto *SA = cast<OMPDeclareVariantAttr>(A); (void)SA;
+    switch(SA->getCtxSelectorSet()) {
+    case OMPDeclareVariantAttr::CtxSetUnknown:
+      OS << " CtxSetUnknown";
+      break;
+    case OMPDeclareVariantAttr::CtxSetImplementation:
+      OS << " CtxSetImplementation";
+      break;
+    }
+    switch(SA->getCtxScore()) {
+    case OMPDeclareVariantAttr::ScoreUnknown:
+      OS << " ScoreUnknown";
+      break;
+    case OMPDeclareVariantAttr::ScoreSpecified:
+      OS << " ScoreSpecified";
+      break;
+    }
+    switch(SA->getCtxSelector()) {
+    case OMPDeclareVariantAttr::CtxUnknown:
+      OS << " CtxUnknown";
+      break;
+    case OMPDeclareVariantAttr::CtxVendor:
+      OS << " CtxVendor";
+      break;
+    }
+    OS << " \"" << SA->getImplVendor() << "\"";
   }
   void VisitObjCBridgeAttr(const ObjCBridgeAttr *A) {
     const auto *SA = cast<ObjCBridgeAttr>(A); (void)SA;

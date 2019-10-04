@@ -217,6 +217,7 @@ Record.push_back(SA->getInterrupt());
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
     Record.AddString(SA->getLabel());
+    Record.push_back(SA->getIsLiteralLabel());
     break;
   }
   case attr::AssertCapability: {
@@ -1102,8 +1103,14 @@ Record.push_back(SA->getDevType());
   }
   case attr::OMPDeclareVariant: {
     const auto *SA = cast<OMPDeclareVariantAttr>(A);
+    Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
     Record.AddStmt(SA->getVariantFuncRef());
+    Record.AddStmt(SA->getScore());
+Record.push_back(SA->getCtxSelectorSet());
+Record.push_back(SA->getCtxScore());
+Record.push_back(SA->getCtxSelector());
+    Record.AddString(SA->getImplVendor());
     break;
   }
   case attr::OMPReferencedVar: {

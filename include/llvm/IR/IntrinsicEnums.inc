@@ -142,6 +142,7 @@
     gcwrite,                                   // llvm.gcwrite
     get_dynamic_area_offset,                   // llvm.get.dynamic.area.offset
     hwasan_check_memaccess,                    // llvm.hwasan.check.memaccess
+    hwasan_check_memaccess_shortgranules,      // llvm.hwasan.check.memaccess.shortgranules
     icall_branch_funnel,                       // llvm.icall.branch.funnel
     init_trampoline,                           // llvm.init.trampoline
     instrprof_increment,                       // llvm.instrprof.increment
@@ -479,8 +480,11 @@
     aarch64_stxr,                              // llvm.aarch64.stxr
     aarch64_subp,                              // llvm.aarch64.subp
     aarch64_sve_abs,                           // llvm.aarch64.sve.abs
+    aarch64_sve_cnt,                           // llvm.aarch64.sve.cnt
     aarch64_sve_fcvtzs_i32f16,                 // llvm.aarch64.sve.fcvtzs.i32f16
     aarch64_sve_neg,                           // llvm.aarch64.sve.neg
+    aarch64_sve_punpkhi,                       // llvm.aarch64.sve.punpkhi
+    aarch64_sve_punpklo,                       // llvm.aarch64.sve.punpklo
     aarch64_tagp,                              // llvm.aarch64.tagp
     aarch64_tcancel,                           // llvm.aarch64.tcancel
     aarch64_tcommit,                           // llvm.aarch64.tcommit

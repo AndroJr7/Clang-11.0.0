@@ -1287,7 +1287,7 @@ const char *ArtificialAttr::getSpelling() const {
 }
 
 AsmLabelAttr *AsmLabelAttr::clone(ASTContext &C) const {
-  auto *A = new (C) AsmLabelAttr(C, *this, getLabel());
+  auto *A = new (C) AsmLabelAttr(C, *this, getLabel(), isLiteralLabel);
   A->Inherited = Inherited;
   A->IsPackExpansion = IsPackExpansion;
   A->setImplicit(Implicit);
@@ -6370,7 +6370,7 @@ const char *OMPDeclareTargetDeclAttr::getSpelling() const {
 }
 
 OMPDeclareVariantAttr *OMPDeclareVariantAttr::clone(ASTContext &C) const {
-  auto *A = new (C) OMPDeclareVariantAttr(C, *this, variantFuncRef);
+  auto *A = new (C) OMPDeclareVariantAttr(C, *this, variantFuncRef, score, ctxSelectorSet, ctxScore, ctxSelector, getImplVendor());
   A->Inherited = Inherited;
   A->IsPackExpansion = IsPackExpansion;
   A->setImplicit(Implicit);

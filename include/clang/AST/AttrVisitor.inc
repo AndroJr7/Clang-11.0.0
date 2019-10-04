@@ -2747,6 +2747,8 @@ bool VISITORCLASS<Derived>::TraverseOMPDeclareVariantAttr(OMPDeclareVariantAttr 
     return false;
   if (!getDerived().TraverseStmt(A->getVariantFuncRef()))
     return false;
+  if (!getDerived().TraverseStmt(A->getScore()))
+    return false;
   return true;
 }
 

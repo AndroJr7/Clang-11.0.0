@@ -283,7 +283,8 @@
     bool isInherited = Record.readInt();
     bool isImplicit = Record.readInt();
     std::string label= Record.readString();
-    New = new (Context) AsmLabelAttr(Context, Info, label);
+    bool isLiteralLabel = Record.readInt();
+    New = new (Context) AsmLabelAttr(Context, Info, label, isLiteralLabel);
     cast<InheritableAttr>(New)->setInherited(isInherited);
     New->setImplicit(isImplicit);
     break;
@@ -1462,9 +1463,16 @@
     break;
   }
   case attr::OMPDeclareVariant: {
+    bool isInherited = Record.readInt();
     bool isImplicit = Record.readInt();
     Expr * variantFuncRef = Record.readExpr();
-    New = new (Context) OMPDeclareVariantAttr(Context, Info, variantFuncRef);
+    Expr * score = Record.readExpr();
+    OMPDeclareVariantAttr::CtxSelectorSetType ctxSelectorSet(static_cast<OMPDeclareVariantAttr::CtxSelectorSetType>(Record.readInt()));
+    OMPDeclareVariantAttr::ScoreType ctxScore(static_cast<OMPDeclareVariantAttr::ScoreType>(Record.readInt()));
+    OMPDeclareVariantAttr::CtxSelectorType ctxSelector(static_cast<OMPDeclareVariantAttr::CtxSelectorType>(Record.readInt()));
+    std::string implVendor= Record.readString();
+    New = new (Context) OMPDeclareVariantAttr(Context, Info, variantFuncRef, score, ctxSelectorSet, ctxScore, ctxSelector, implVendor);
+    cast<InheritableAttr>(New)->setInherited(isInherited);
     New->setImplicit(isImplicit);
     break;
   }
