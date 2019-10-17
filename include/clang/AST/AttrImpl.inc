@@ -6370,7 +6370,7 @@ const char *OMPDeclareTargetDeclAttr::getSpelling() const {
 }
 
 OMPDeclareVariantAttr *OMPDeclareVariantAttr::clone(ASTContext &C) const {
-  auto *A = new (C) OMPDeclareVariantAttr(C, *this, variantFuncRef, score, ctxSelectorSet, ctxScore, ctxSelector, getImplVendor());
+  auto *A = new (C) OMPDeclareVariantAttr(C, *this, variantFuncRef, score, ctxSelectorSet, ctxScore, ctxSelector, implVendors_, implVendors_Size);
   A->Inherited = Inherited;
   A->IsPackExpansion = IsPackExpansion;
   A->setImplicit(Implicit);
@@ -8636,6 +8636,21 @@ void PragmaClangDataSectionAttr::printPretty(raw_ostream &OS, const PrintingPoli
 }
 
 const char *PragmaClangDataSectionAttr::getSpelling() const {
+  return "(No spelling)";
+}
+
+PragmaClangRelroSectionAttr *PragmaClangRelroSectionAttr::clone(ASTContext &C) const {
+  auto *A = new (C) PragmaClangRelroSectionAttr(C, *this, getName());
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void PragmaClangRelroSectionAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+}
+
+const char *PragmaClangRelroSectionAttr::getSpelling() const {
   return "(No spelling)";
 }
 
@@ -11867,6 +11882,8 @@ const char *Attr::getSpelling() const {
     return cast<PragmaClangBSSSectionAttr>(this)->getSpelling();
   case attr::PragmaClangDataSection:
     return cast<PragmaClangDataSectionAttr>(this)->getSpelling();
+  case attr::PragmaClangRelroSection:
+    return cast<PragmaClangRelroSectionAttr>(this)->getSpelling();
   case attr::PragmaClangRodataSection:
     return cast<PragmaClangRodataSectionAttr>(this)->getSpelling();
   case attr::PragmaClangTextSection:
@@ -12443,6 +12460,8 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<PragmaClangBSSSectionAttr>(this)->clone(C);
   case attr::PragmaClangDataSection:
     return cast<PragmaClangDataSectionAttr>(this)->clone(C);
+  case attr::PragmaClangRelroSection:
+    return cast<PragmaClangRelroSectionAttr>(this)->clone(C);
   case attr::PragmaClangRodataSection:
     return cast<PragmaClangRodataSectionAttr>(this)->clone(C);
   case attr::PragmaClangTextSection:
@@ -13019,6 +13038,8 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<PragmaClangBSSSectionAttr>(this)->printPretty(OS, Policy);
   case attr::PragmaClangDataSection:
     return cast<PragmaClangDataSectionAttr>(this)->printPretty(OS, Policy);
+  case attr::PragmaClangRelroSection:
+    return cast<PragmaClangRelroSectionAttr>(this)->printPretty(OS, Policy);
   case attr::PragmaClangRodataSection:
     return cast<PragmaClangRodataSectionAttr>(this)->printPretty(OS, Policy);
   case attr::PragmaClangTextSection:

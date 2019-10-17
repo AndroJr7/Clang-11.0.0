@@ -235,6 +235,16 @@ set_target_properties(clangDependencyScanning PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS clangDependencyScanning )
 list(APPEND _IMPORT_CHECK_FILES_FOR_clangDependencyScanning "${_IMPORT_PREFIX}/lib/libclangDependencyScanning.a" )
 
+# Import target "clangTransformer" for configuration "Release"
+set_property(TARGET clangTransformer APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(clangTransformer PROPERTIES
+  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTransformer.a"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS clangTransformer )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clangTransformer "${_IMPORT_PREFIX}/lib/libclangTransformer.a" )
+
 # Import target "clangTooling" for configuration "Release"
 set_property(TARGET clangTooling APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(clangTooling PROPERTIES
@@ -321,6 +331,24 @@ set_target_properties(clang-import-test PROPERTIES
 
 list(APPEND _IMPORT_CHECK_TARGETS clang-import-test )
 list(APPEND _IMPORT_CHECK_FILES_FOR_clang-import-test "${_IMPORT_PREFIX}/bin/clang-import-test" )
+
+# Import target "clang-offload-bundler" for configuration "Release"
+set_property(TARGET clang-offload-bundler APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(clang-offload-bundler PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clang-offload-bundler"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS clang-offload-bundler )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clang-offload-bundler "${_IMPORT_PREFIX}/bin/clang-offload-bundler" )
+
+# Import target "clang-offload-wrapper" for configuration "Release"
+set_property(TARGET clang-offload-wrapper APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(clang-offload-wrapper PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clang-offload-wrapper"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS clang-offload-wrapper )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clang-offload-wrapper "${_IMPORT_PREFIX}/bin/clang-offload-wrapper" )
 
 # Import target "clang-scan-deps" for configuration "Release"
 set_property(TARGET clang-scan-deps APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
@@ -655,6 +683,15 @@ set_target_properties(clangChangeNamespace PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS clangChangeNamespace )
 list(APPEND _IMPORT_CHECK_FILES_FOR_clangChangeNamespace "${_IMPORT_PREFIX}/lib/libclangChangeNamespace.a" )
 
+# Import target "clang-change-namespace" for configuration "Release"
+set_property(TARGET clang-change-namespace APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(clang-change-namespace PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clang-change-namespace"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS clang-change-namespace )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clang-change-namespace "${_IMPORT_PREFIX}/bin/clang-change-namespace" )
+
 # Import target "clangDoc" for configuration "Release"
 set_property(TARGET clangDoc APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(clangDoc PROPERTIES
@@ -713,6 +750,15 @@ set_target_properties(findAllSymbols PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS findAllSymbols )
 list(APPEND _IMPORT_CHECK_FILES_FOR_findAllSymbols "${_IMPORT_PREFIX}/lib/libfindAllSymbols.a" )
 
+# Import target "find-all-symbols" for configuration "Release"
+set_property(TARGET find-all-symbols APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(find-all-symbols PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/find-all-symbols"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS find-all-symbols )
+list(APPEND _IMPORT_CHECK_FILES_FOR_find-all-symbols "${_IMPORT_PREFIX}/bin/find-all-symbols" )
+
 # Import target "clangMove" for configuration "Release"
 set_property(TARGET clangMove APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(clangMove PROPERTIES
@@ -723,6 +769,15 @@ set_target_properties(clangMove PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS clangMove )
 list(APPEND _IMPORT_CHECK_FILES_FOR_clangMove "${_IMPORT_PREFIX}/lib/libclangMove.a" )
 
+# Import target "clang-move" for configuration "Release"
+set_property(TARGET clang-move APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(clang-move PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clang-move"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS clang-move )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clang-move "${_IMPORT_PREFIX}/bin/clang-move" )
+
 # Import target "clangQuery" for configuration "Release"
 set_property(TARGET clangQuery APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(clangQuery PROPERTIES
@@ -732,6 +787,24 @@ set_target_properties(clangQuery PROPERTIES
 
 list(APPEND _IMPORT_CHECK_TARGETS clangQuery )
 list(APPEND _IMPORT_CHECK_FILES_FOR_clangQuery "${_IMPORT_PREFIX}/lib/libclangQuery.a" )
+
+# Import target "clang-query" for configuration "Release"
+set_property(TARGET clang-query APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(clang-query PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clang-query"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS clang-query )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clang-query "${_IMPORT_PREFIX}/bin/clang-query" )
+
+# Import target "pp-trace" for configuration "Release"
+set_property(TARGET pp-trace APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(pp-trace PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/pp-trace"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS pp-trace )
+list(APPEND _IMPORT_CHECK_FILES_FOR_pp-trace "${_IMPORT_PREFIX}/bin/pp-trace" )
 
 # Import target "clangDaemon" for configuration "Release"
 set_property(TARGET clangDaemon APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)

@@ -494,7 +494,8 @@
       OS << " CtxVendor";
       break;
     }
-    OS << " \"" << SA->getImplVendor() << "\"";
+    for (const auto &Val : SA->implVendors())
+      OS << " " << Val;
   }
   void VisitObjCBridgeAttr(const ObjCBridgeAttr *A) {
     const auto *SA = cast<ObjCBridgeAttr>(A); (void)SA;
@@ -615,6 +616,10 @@
   }
   void VisitPragmaClangDataSectionAttr(const PragmaClangDataSectionAttr *A) {
     const auto *SA = cast<PragmaClangDataSectionAttr>(A); (void)SA;
+    OS << " \"" << SA->getName() << "\"";
+  }
+  void VisitPragmaClangRelroSectionAttr(const PragmaClangRelroSectionAttr *A) {
+    const auto *SA = cast<PragmaClangRelroSectionAttr>(A); (void)SA;
     OS << " \"" << SA->getName() << "\"";
   }
   void VisitPragmaClangRodataSectionAttr(const PragmaClangRodataSectionAttr *A) {
