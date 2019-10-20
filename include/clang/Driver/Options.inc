@@ -1572,6 +1572,7 @@ OPTION(prefix_1, "fno-variable-expansion-in-unroller", variable_expansion_in_unr
 OPTION(prefix_1, "fno-vect-cost-model", vect_cost_model_fno, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-vectorize", fno_vectorize, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-verbose-asm", fno_verbose_asm, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fno-virtual-function_elimination", fno_virtual_function_elimination, Flag, f_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-wchar", fno_wchar, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Disable C++ builtin type wchar_t", nullptr, nullptr)
 OPTION(prefix_1, "fno-web", web_fno, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
@@ -2029,6 +2030,8 @@ OPTION(prefix_1, "fvect-cost-model", vect_cost_model_f, Flag, clang_ignored_gcc_
 OPTION(prefix_1, "fvectorize", fvectorize, Flag, f_Group, INVALID, nullptr, 0, 0,
        "Enable the loop vectorization passes", nullptr, nullptr)
 OPTION(prefix_1, "fverbose-asm", fverbose_asm, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fvirtual-function-elimination", fvirtual_function_elimination, Flag, f_Group, INVALID, nullptr, CoreOption | CC1Option, 0,
+       "Enables dead virtual function elimination optimization. Requires -flto=full", nullptr, nullptr)
 OPTION(prefix_1, "fvisibility-global-new-delete-hidden", fvisibility_global_new_delete_hidden, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Give global C++ operator new and delete declarations hidden visibility", nullptr, nullptr)
 OPTION(prefix_1, "fvisibility-inlines-hidden", fvisibility_inlines_hidden, Flag, f_Group, INVALID, nullptr, CC1Option, 0,

@@ -491,8 +491,12 @@
     aarch64_sve_punpklo,                       // llvm.aarch64.sve.punpklo
     aarch64_sve_sdot,                          // llvm.aarch64.sve.sdot
     aarch64_sve_sdot_lane,                     // llvm.aarch64.sve.sdot.lane
+    aarch64_sve_sunpkhi,                       // llvm.aarch64.sve.sunpkhi
+    aarch64_sve_sunpklo,                       // llvm.aarch64.sve.sunpklo
     aarch64_sve_udot,                          // llvm.aarch64.sve.udot
     aarch64_sve_udot_lane,                     // llvm.aarch64.sve.udot.lane
+    aarch64_sve_uunpkhi,                       // llvm.aarch64.sve.uunpkhi
+    aarch64_sve_uunpklo,                       // llvm.aarch64.sve.uunpklo
     aarch64_tagp,                              // llvm.aarch64.tagp
     aarch64_tcancel,                           // llvm.aarch64.tcancel
     aarch64_tcommit,                           // llvm.aarch64.tcommit
