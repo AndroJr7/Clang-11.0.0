@@ -380,6 +380,24 @@ static unsigned ArgumentWithTypeTagAttrSpellingMap(const ParsedAttr &Attr) {
   }
 }
 
+static bool checkArmMveAliasAppertainsTo(Sema &S, const ParsedAttr &Attr, const Decl *D) {
+  if (!D || (!isa<FunctionDecl>(D))) {
+    S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
+      << Attr << "functions";
+    return false;
+  }
+  return true;
+}
+
+static bool isTargetarmthumbarmebthumbeb(const TargetInfo &Target) {
+  const llvm::Triple &T = Target.getTriple(); (void)T;
+  return true && (T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::armeb || T.getArch() == llvm::Triple::thumbeb);
+}
+
+static void matchRulesForArmMveAlias(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) {
+  MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
+}
+
 static bool isInlineFunction(const Decl *D) {
   if (const auto *S = dyn_cast<FunctionDecl>(D))
     return S->isInlineSpecified();
@@ -1617,6 +1635,19 @@ static bool checkNoAliasAppertainsTo(Sema &S, const ParsedAttr &Attr, const Decl
     return false;
   }
   return true;
+}
+
+static bool checkNoBuiltinAppertainsTo(Sema &S, const ParsedAttr &Attr, const Decl *D) {
+  if (!D || (!isa<FunctionDecl>(D))) {
+    S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
+      << Attr << "functions";
+    return false;
+  }
+  return true;
+}
+
+static void matchRulesForNoBuiltin(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) {
+  MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
 static bool checkNoCommonAppertainsTo(Sema &S, const ParsedAttr &Attr, const Decl *D) {
@@ -3250,6 +3281,7 @@ static const ParsedAttrInfo AttrInfoMap[ParsedAttr::UnknownAttribute + 1] = {
   { 0, 0, 0, 1, 1, 0, 1, 1, checkAnyX86NoCfCheckAppertainsTo, defaultDiagnoseLangOpts, isTargetx86x86_64, defaultSpellingIndexToSemanticSpelling, matchRulesForAnyX86NoCfCheck },  // AT_AnyX86NoCfCheck
   { 0, 0, 0, 0, 0, 0, 0, 1, checkArcWeakrefUnavailableAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForArcWeakrefUnavailable },  // AT_ArcWeakrefUnavailable
   { 3, 0, 0, 0, 0, 0, 0, 0, checkArgumentWithTypeTagAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, ArgumentWithTypeTagAttrSpellingMap, nullptr },  // AT_ArgumentWithTypeTag
+  { 1, 0, 0, 1, 0, 0, 0, 1, checkArmMveAliasAppertainsTo, defaultDiagnoseLangOpts, isTargetarmthumbarmebthumbeb, defaultSpellingIndexToSemanticSpelling, matchRulesForArmMveAlias },  // AT_ArmMveAlias
   { 0, 0, 0, 0, 0, 0, 1, 0, checkArtificialAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, nullptr },  // AT_Artificial
   { 0, 15, 0, 0, 0, 0, 0, 0, checkAssertCapabilityAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, AssertCapabilityAttrSpellingMap, nullptr },  // AT_AssertCapability
   { 0, 15, 0, 0, 0, 0, 0, 0, checkAssertExclusiveLockAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, nullptr },  // AT_AssertExclusiveLock
@@ -3352,6 +3384,7 @@ static const ParsedAttrInfo AttrInfoMap[ParsedAttr::UnknownAttribute + 1] = {
   { 1, 0, 0, 0, 1, 0, 0, 0, defaultAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, nullptr },  // AT_NeonPolyVectorType
   { 1, 0, 0, 0, 1, 0, 0, 0, defaultAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, nullptr },  // AT_NeonVectorType
   { 0, 0, 0, 0, 0, 0, 0, 0, checkNoAliasAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, nullptr },  // AT_NoAlias
+  { 0, 15, 0, 0, 0, 0, 0, 1, checkNoBuiltinAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForNoBuiltin },  // AT_NoBuiltin
   { 0, 0, 0, 0, 0, 0, 1, 1, checkNoCommonAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForNoCommon },  // AT_NoCommon
   { 0, 0, 0, 0, 0, 0, 1, 1, checkNoDebugAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForNoDebug },  // AT_NoDebug
   { 0, 0, 0, 0, 1, 0, 0, 0, defaultAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, nullptr },  // AT_NoDeref

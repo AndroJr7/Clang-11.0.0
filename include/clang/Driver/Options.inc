@@ -263,8 +263,10 @@ OPTION(prefix_1, "CC", CC, Flag, Preprocessor_Group, INVALID, nullptr, CC1Option
        "Include comments from within macros in preprocessed output", nullptr, nullptr)
 OPTION(prefix_1, "cfg-add-implicit-dtors", analysis_CFGAddImplicitDtors, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Add C++ implicit destructors to CFGs for all analyses", nullptr, nullptr)
-OPTION(prefix_1, "cfguard", cfguard, Flag, INVALID, INVALID, nullptr, CC1Option, 0,
-       "Emit tables required for Windows Control Flow Guard.", nullptr, nullptr)
+OPTION(prefix_1, "cfguard-no-checks", cfguard_no_checks, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
+       "Emit Windows Control Flow Guard tables only (no checks)", nullptr, nullptr)
+OPTION(prefix_1, "cfguard", cfguard, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
+       "Emit Windows Control Flow Guard tables and checks", nullptr, nullptr)
 OPTION(prefix_2, "cgthreads", _SLASH_cgthreads, Joined, cl_ignored_Group, INVALID, nullptr, CLOption | DriverOption | HelpHidden, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "chain-include", chain_include, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Include and chain a header file after turning it into PCH", "<file>", nullptr)
@@ -871,54 +873,68 @@ OPTION(prefix_1, "ffixed-r19", ffixed_r19, Flag, INVALID, INVALID, nullptr, 0, 0
        "Reserve register r19 (Hexagon only)", nullptr, nullptr)
 OPTION(prefix_1, "ffixed-r9", ffixed_r9, Flag, m_arm_Features_Group, INVALID, nullptr, 0, 0,
        "Reserve the r9 register (ARM only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x10", ffixed_x10, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 10 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x11", ffixed_x11, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 11 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x12", ffixed_x12, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 12 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x13", ffixed_x13, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 13 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x14", ffixed_x14, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 14 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x15", ffixed_x15, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 15 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x18", ffixed_x18, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 18 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x1", ffixed_x1, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 1 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x20", ffixed_x20, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 20 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x21", ffixed_x21, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 21 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x22", ffixed_x22, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 22 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x23", ffixed_x23, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 23 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x24", ffixed_x24, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 24 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x25", ffixed_x25, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 25 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x26", ffixed_x26, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 26 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x27", ffixed_x27, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 27 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x28", ffixed_x28, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 28 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x2", ffixed_x2, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 2 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x3", ffixed_x3, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 3 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x4", ffixed_x4, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 4 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x5", ffixed_x5, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 5 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x6", ffixed_x6, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 6 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x7", ffixed_x7, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 7 register (AArch64 only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-x9", ffixed_x9, Flag, m_aarch64_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the 9 register (AArch64 only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x10", ffixed_x10, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 10 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x11", ffixed_x11, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 11 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x12", ffixed_x12, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 12 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x13", ffixed_x13, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 13 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x14", ffixed_x14, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 14 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x15", ffixed_x15, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 15 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x16", ffixed_x16, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 16 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x17", ffixed_x17, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 17 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x18", ffixed_x18, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 18 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x19", ffixed_x19, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 19 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x1", ffixed_x1, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 1 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x20", ffixed_x20, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 20 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x21", ffixed_x21, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 21 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x22", ffixed_x22, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 22 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x23", ffixed_x23, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 23 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x24", ffixed_x24, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 24 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x25", ffixed_x25, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 25 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x26", ffixed_x26, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 26 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x27", ffixed_x27, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 27 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x28", ffixed_x28, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 28 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x29", ffixed_x29, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 29 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x2", ffixed_x2, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 2 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x30", ffixed_x30, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 30 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x31", ffixed_x31, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 31 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x3", ffixed_x3, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 3 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x4", ffixed_x4, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 4 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x5", ffixed_x5, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 5 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x6", ffixed_x6, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 6 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x7", ffixed_x7, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 7 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x8", ffixed_x8, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 8 register (AArch64/RISC-V only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-x9", ffixed_x9, Flag, m_Group, INVALID, nullptr, 0, 0,
+       "Reserve the 9 register (AArch64/RISC-V only)", nullptr, nullptr)
 OPTION(prefix_1, "ffloat-store", float_store_f, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "ffor-scope", ffor_scope, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fforbid-guard-variables", fforbid_guard_variables, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
@@ -956,6 +972,8 @@ OPTION(prefix_1, "fgnu89-inline", fgnu89_inline, Flag, f_Group, INVALID, nullptr
 OPTION(prefix_1, "fgnuc-version=", fgnuc_version_EQ, Joined, f_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Sets various macros to claim compatibility with the given GCC version (default is 4.2.1)", nullptr, nullptr)
 OPTION(prefix_1, "fgnu", gnu_f, Flag, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fgpu-allow-device-init", fgpu_allow_device_init, Flag, INVALID, INVALID, nullptr, CC1Option, 0,
+       "Allow device side init function in HIP", nullptr, nullptr)
 OPTION(prefix_1, "fgpu-rdc", fgpu_rdc, Flag, INVALID, INVALID, nullptr, CC1Option, 0,
        "Generate relocatable device code, also known as separate compilation mode.", nullptr, nullptr)
 OPTION(prefix_1, "fheinous-gnu-extensions", fheinous_gnu_extensions, Flag, INVALID, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
@@ -1105,6 +1123,8 @@ OPTION(prefix_1, "fmodules-prune-interval=", fmodules_prune_interval, Joined, i_
        "Specify the interval (in seconds) between attempts to prune the module cache", "<seconds>", nullptr)
 OPTION(prefix_1, "fmodules-search-all", fmodules_search_all, Flag, f_Group, INVALID, nullptr, DriverOption | CC1Option, 0,
        "Search even non-imported modules to resolve references", nullptr, nullptr)
+OPTION(prefix_1, "fmodules-strict-context-hash", fmodules_strict_context_hash, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
+       "Enable hashing of all compiler options that could impact the semantics of a module in an implicit build", nullptr, nullptr)
 OPTION(prefix_1, "fmodules-strict-decluse", fmodules_strict_decluse, Flag, f_Group, INVALID, nullptr, DriverOption | CC1Option, 0,
        "Like -fmodules-decluse but requires all headers to be in modules", nullptr, nullptr)
 OPTION(prefix_1, "fmodules-ts", fmodules_ts, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
@@ -1307,6 +1327,7 @@ OPTION(prefix_1, "fno-gnu-inline-asm", fno_gnu_inline_asm, Flag, f_Group, INVALI
 OPTION(prefix_1, "fno-gnu-keywords", fno_gnu_keywords, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-gnu89-inline", fno_gnu89_inline, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-gnu", gnu_fno, Flag, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fno-gpu-allow-device-init", fno_gpu_allow_device_init, Flag, INVALID, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-gpu-rdc", fno_gpu_rdc, Flag, INVALID, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-hip-new-launch-api", fno_hip_new_launch_api, Flag, INVALID, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-honor-infinites", anonymous_17, Flag, INVALID, fno_honor_infinities, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -1958,7 +1979,7 @@ OPTION(prefix_1, "fterminated-vtables", anonymous_27, Flag, INVALID, fapple_kext
 OPTION(prefix_1, "ftest-coverage", ftest_coverage, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "ftest-module-file-extension=", ftest_module_file_extension_EQ, Joined, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "introduce a module file extension for testing purposes. The argument is parsed as blockname:major:minor:hashed:user info", nullptr, nullptr)
-OPTION(prefix_1, "fthin-link-bitcode=", fthin_link_bitcode_EQ, Joined, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
+OPTION(prefix_1, "fthin-link-bitcode=", fthin_link_bitcode_EQ, Joined, f_Group, INVALID, nullptr, CoreOption | CC1Option, 0,
        "Write minimized bitcode to <file> for the ThinLTO thin link only", nullptr, nullptr)
 OPTION(prefix_1, "fthinlto-index=", fthinlto_index_EQ, Joined, f_Group, INVALID, nullptr, CoreOption | CC1Option, 0,
        "Perform ThinLTO importing using provided function summary index", nullptr, nullptr)

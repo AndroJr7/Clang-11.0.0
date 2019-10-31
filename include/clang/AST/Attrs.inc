@@ -1595,6 +1595,54 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::ArgumentWithTypeTag; }
 };
 
+class ArmMveAliasAttr : public InheritableAttr {
+IdentifierInfo * builtinName;
+
+public:
+  static ArmMveAliasAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * BuiltinName, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) ArmMveAliasAttr(Ctx, CommonInfo, BuiltinName);
+    A->setImplicit(true);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static ArmMveAliasAttr *Create(ASTContext &Ctx, IdentifierInfo * BuiltinName, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) ArmMveAliasAttr(Ctx, CommonInfo, BuiltinName);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static ArmMveAliasAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * BuiltinName, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return CreateImplicit(Ctx, BuiltinName, I);
+  }
+  static ArmMveAliasAttr *Create(ASTContext &Ctx, IdentifierInfo * BuiltinName, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return Create(Ctx, BuiltinName, I);
+  }
+  ArmMveAliasAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , IdentifierInfo * BuiltinName
+             )
+    : InheritableAttr(Ctx, CommonInfo, attr::ArmMveAlias, false, false)
+              , builtinName(BuiltinName)
+  {
+  }
+
+  ArmMveAliasAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  IdentifierInfo * getBuiltinName() const {
+    return builtinName;
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::ArmMveAlias; }
+};
+
 class ArtificialAttr : public InheritableAttr {
 public:
   static ArtificialAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -7399,6 +7447,74 @@ public:
 
 
   static bool classof(const Attr *A) { return A->getKind() == attr::NoAlias; }
+};
+
+class NoBuiltinAttr : public Attr {
+  unsigned builtinNames_Size;
+  StringRef *builtinNames_;
+
+public:
+  static NoBuiltinAttr *CreateImplicit(ASTContext &Ctx, StringRef *BuiltinNames, unsigned BuiltinNamesSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) NoBuiltinAttr(Ctx, CommonInfo, BuiltinNames, BuiltinNamesSize);
+    A->setImplicit(true);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static NoBuiltinAttr *Create(ASTContext &Ctx, StringRef *BuiltinNames, unsigned BuiltinNamesSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) NoBuiltinAttr(Ctx, CommonInfo, BuiltinNames, BuiltinNamesSize);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static NoBuiltinAttr *CreateImplicit(ASTContext &Ctx, StringRef *BuiltinNames, unsigned BuiltinNamesSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return CreateImplicit(Ctx, BuiltinNames, BuiltinNamesSize, I);
+  }
+  static NoBuiltinAttr *Create(ASTContext &Ctx, StringRef *BuiltinNames, unsigned BuiltinNamesSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return Create(Ctx, BuiltinNames, BuiltinNamesSize, I);
+  }
+  NoBuiltinAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , StringRef *BuiltinNames, unsigned BuiltinNamesSize
+             )
+    : Attr(Ctx, CommonInfo, attr::NoBuiltin, false)
+              , builtinNames_Size(BuiltinNamesSize), builtinNames_(new (Ctx, 16) StringRef[builtinNames_Size])
+  {
+    for (size_t I = 0, E = builtinNames_Size; I != E;
+         ++I) {
+      StringRef Ref = BuiltinNames[I];
+      if (!Ref.empty()) {
+        char *Mem = new (Ctx, 1) char[Ref.size()];
+        std::memcpy(Mem, Ref.data(), Ref.size());
+        builtinNames_[I] = StringRef(Mem, Ref.size());
+      }
+    }
+  }
+
+  NoBuiltinAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             )
+    : Attr(Ctx, CommonInfo, attr::NoBuiltin, false)
+              , builtinNames_Size(0), builtinNames_(nullptr)
+  {
+  }
+
+  NoBuiltinAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  typedef StringRef* builtinNames_iterator;
+  builtinNames_iterator builtinNames_begin() const { return builtinNames_; }
+  builtinNames_iterator builtinNames_end() const { return builtinNames_ + builtinNames_Size; }
+  unsigned builtinNames_size() const { return builtinNames_Size; }
+  llvm::iterator_range<builtinNames_iterator> builtinNames() const { return llvm::make_range(builtinNames_begin(), builtinNames_end()); }
+
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::NoBuiltin; }
 };
 
 class NoCommonAttr : public InheritableAttr {

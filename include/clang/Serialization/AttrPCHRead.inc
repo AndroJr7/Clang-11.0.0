@@ -271,6 +271,15 @@
     New->setImplicit(isImplicit);
     break;
   }
+  case attr::ArmMveAlias: {
+    bool isInherited = Record.readInt();
+    bool isImplicit = Record.readInt();
+    IdentifierInfo * builtinName = Record.getIdentifierInfo();
+    New = new (Context) ArmMveAliasAttr(Context, Info, builtinName);
+    cast<InheritableAttr>(New)->setInherited(isInherited);
+    New->setImplicit(isImplicit);
+    break;
+  }
   case attr::Artificial: {
     bool isInherited = Record.readInt();
     bool isImplicit = Record.readInt();
@@ -1216,6 +1225,21 @@
     bool isImplicit = Record.readInt();
     New = new (Context) NoAliasAttr(Context, Info);
     cast<InheritableAttr>(New)->setInherited(isInherited);
+    New->setImplicit(isImplicit);
+    break;
+  }
+  case attr::NoBuiltin: {
+    bool isImplicit = Record.readInt();
+    unsigned builtinNamesSize = Record.readInt();
+    SmallVector<StringRef, 4> builtinNames;
+    builtinNames.reserve(builtinNamesSize);
+    SmallVector<std::string, 4> builtinNamesStorage;
+    builtinNamesStorage.reserve(builtinNamesSize);
+    for (unsigned i = 0; i != builtinNamesSize; ++i)
+      builtinNamesStorage.push_back(Record.readString());
+    for (unsigned i = 0; i != builtinNamesSize; ++i)
+      builtinNames.push_back(builtinNamesStorage[i]);
+    New = new (Context) NoBuiltinAttr(Context, Info, builtinNames.data(), builtinNamesSize);
     New->setImplicit(isImplicit);
     break;
   }

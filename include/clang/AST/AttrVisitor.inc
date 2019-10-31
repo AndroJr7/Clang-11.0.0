@@ -120,6 +120,10 @@
   bool VisitArgumentWithTypeTagAttr(ArgumentWithTypeTagAttr *A) {
     return true; 
   }
+  bool TraverseArmMveAliasAttr(ArmMveAliasAttr *A);
+  bool VisitArmMveAliasAttr(ArmMveAliasAttr *A) {
+    return true; 
+  }
   bool TraverseArtificialAttr(ArtificialAttr *A);
   bool VisitArtificialAttr(ArtificialAttr *A) {
     return true; 
@@ -546,6 +550,10 @@
   }
   bool TraverseNoAliasAttr(NoAliasAttr *A);
   bool VisitNoAliasAttr(NoAliasAttr *A) {
+    return true; 
+  }
+  bool TraverseNoBuiltinAttr(NoBuiltinAttr *A);
+  bool VisitNoBuiltinAttr(NoBuiltinAttr *A) {
     return true; 
   }
   bool TraverseNoCommonAttr(NoCommonAttr *A);
@@ -1444,6 +1452,15 @@ bool VISITORCLASS<Derived>::TraverseArgumentWithTypeTagAttr(ArgumentWithTypeTagA
   if (!getDerived().VisitAttr(A))
     return false;
   if (!getDerived().VisitArgumentWithTypeTagAttr(A))
+    return false;
+  return true;
+}
+
+template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseArmMveAliasAttr(ArmMveAliasAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitArmMveAliasAttr(A))
     return false;
   return true;
 }
@@ -2470,6 +2487,15 @@ bool VISITORCLASS<Derived>::TraverseNoAliasAttr(NoAliasAttr *A) {
   if (!getDerived().VisitAttr(A))
     return false;
   if (!getDerived().VisitNoAliasAttr(A))
+    return false;
+  return true;
+}
+
+template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseNoBuiltinAttr(NoBuiltinAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitNoBuiltinAttr(A))
     return false;
   return true;
 }
@@ -3995,6 +4021,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseArcWeakrefUnavailableAttr(cast<ArcWeakrefUnavailableAttr>(A));
     case attr::ArgumentWithTypeTag:
       return getDerived().TraverseArgumentWithTypeTagAttr(cast<ArgumentWithTypeTagAttr>(A));
+    case attr::ArmMveAlias:
+      return getDerived().TraverseArmMveAliasAttr(cast<ArmMveAliasAttr>(A));
     case attr::Artificial:
       return getDerived().TraverseArtificialAttr(cast<ArtificialAttr>(A));
     case attr::AsmLabel:
@@ -4209,6 +4237,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseNakedAttr(cast<NakedAttr>(A));
     case attr::NoAlias:
       return getDerived().TraverseNoAliasAttr(cast<NoAliasAttr>(A));
+    case attr::NoBuiltin:
+      return getDerived().TraverseNoBuiltinAttr(cast<NoBuiltinAttr>(A));
     case attr::NoCommon:
       return getDerived().TraverseNoCommonAttr(cast<NoCommonAttr>(A));
     case attr::NoDebug:

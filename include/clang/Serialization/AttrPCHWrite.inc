@@ -206,6 +206,13 @@ Record.push_back(SA->getInterrupt());
     Record.push_back(SA->getIsPointer());
     break;
   }
+  case attr::ArmMveAlias: {
+    const auto *SA = cast<ArmMveAliasAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.AddIdentifierRef(SA->getBuiltinName());
+    break;
+  }
   case attr::Artificial: {
     const auto *SA = cast<ArtificialAttr>(A);
     Record.push_back(SA->isInherited());
@@ -924,6 +931,14 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<NoAliasAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
+    break;
+  }
+  case attr::NoBuiltin: {
+    const auto *SA = cast<NoBuiltinAttr>(A);
+    Record.push_back(A->isImplicit());
+    Record.push_back(SA->builtinNames_size());
+    for (auto &Val : SA->builtinNames())
+      Record.AddString(Val);
     break;
   }
   case attr::NoCommon: {

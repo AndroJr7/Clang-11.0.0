@@ -210,6 +210,15 @@
         return 5;
     break;
   }
+  case AT_ArmMveAlias: {
+    if (Name == "__clang_arm_mve_alias" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "__clang_arm_mve_alias" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "__clang_arm_mve_alias" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
   case AT_Artificial: {
     if (Name == "artificial" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
@@ -1002,6 +1011,15 @@
   case AT_NoAlias: {
     if (Name == "noalias" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 0;
+    break;
+  }
+  case AT_NoBuiltin: {
+    if (Name == "no_builtin" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "no_builtin" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "no_builtin" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
     break;
   }
   case AT_NoCommon: {

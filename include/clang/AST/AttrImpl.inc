@@ -1250,6 +1250,48 @@ const char *ArgumentWithTypeTagAttr::getSpelling() const {
   }
 }
 
+ArmMveAliasAttr *ArmMveAliasAttr::clone(ASTContext &C) const {
+  auto *A = new (C) ArmMveAliasAttr(C, *this, builtinName);
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void ArmMveAliasAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((__clang_arm_mve_alias(" << (getBuiltinName() ? getBuiltinName()->getName() : "") << ")))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::__clang_arm_mve_alias(" << (getBuiltinName() ? getBuiltinName()->getName() : "") << ")]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::__clang_arm_mve_alias(" << (getBuiltinName() ? getBuiltinName()->getName() : "") << ")]]";
+    break;
+  }
+}
+}
+
+const char *ArmMveAliasAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "__clang_arm_mve_alias";
+  case 1:
+    return "__clang_arm_mve_alias";
+  case 2:
+    return "__clang_arm_mve_alias";
+  }
+}
+
 ArtificialAttr *ArtificialAttr::clone(ASTContext &C) const {
   auto *A = new (C) ArtificialAttr(C, *this);
   A->Inherited = Inherited;
@@ -5444,6 +5486,69 @@ const char *NoAliasAttr::getSpelling() const {
     return "(No spelling)";
   case 0:
     return "noalias";
+  }
+}
+
+NoBuiltinAttr *NoBuiltinAttr::clone(ASTContext &C) const {
+  auto *A = new (C) NoBuiltinAttr(C, *this, builtinNames_, builtinNames_Size);
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void NoBuiltinAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((no_builtin(";
+  bool isFirst = true;
+  for (const auto &Val : builtinNames()) {
+    if (isFirst) isFirst = false;
+    else OS << ", ";
+    OS << "\"" << Val << "\"";
+  }
+  OS << ")))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::no_builtin(";
+  bool isFirst = true;
+  for (const auto &Val : builtinNames()) {
+    if (isFirst) isFirst = false;
+    else OS << ", ";
+    OS << "\"" << Val << "\"";
+  }
+  OS << ")]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::no_builtin(";
+  bool isFirst = true;
+  for (const auto &Val : builtinNames()) {
+    if (isFirst) isFirst = false;
+    else OS << ", ";
+    OS << "\"" << Val << "\"";
+  }
+  OS << ")]]";
+    break;
+  }
+}
+}
+
+const char *NoBuiltinAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "no_builtin";
+  case 1:
+    return "no_builtin";
+  case 2:
+    return "no_builtin";
   }
 }
 
@@ -11506,6 +11611,8 @@ const char *Attr::getSpelling() const {
     return cast<ArcWeakrefUnavailableAttr>(this)->getSpelling();
   case attr::ArgumentWithTypeTag:
     return cast<ArgumentWithTypeTagAttr>(this)->getSpelling();
+  case attr::ArmMveAlias:
+    return cast<ArmMveAliasAttr>(this)->getSpelling();
   case attr::Artificial:
     return cast<ArtificialAttr>(this)->getSpelling();
   case attr::AsmLabel:
@@ -11720,6 +11827,8 @@ const char *Attr::getSpelling() const {
     return cast<NakedAttr>(this)->getSpelling();
   case attr::NoAlias:
     return cast<NoAliasAttr>(this)->getSpelling();
+  case attr::NoBuiltin:
+    return cast<NoBuiltinAttr>(this)->getSpelling();
   case attr::NoCommon:
     return cast<NoCommonAttr>(this)->getSpelling();
   case attr::NoDebug:
@@ -12084,6 +12193,8 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<ArcWeakrefUnavailableAttr>(this)->clone(C);
   case attr::ArgumentWithTypeTag:
     return cast<ArgumentWithTypeTagAttr>(this)->clone(C);
+  case attr::ArmMveAlias:
+    return cast<ArmMveAliasAttr>(this)->clone(C);
   case attr::Artificial:
     return cast<ArtificialAttr>(this)->clone(C);
   case attr::AsmLabel:
@@ -12298,6 +12409,8 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<NakedAttr>(this)->clone(C);
   case attr::NoAlias:
     return cast<NoAliasAttr>(this)->clone(C);
+  case attr::NoBuiltin:
+    return cast<NoBuiltinAttr>(this)->clone(C);
   case attr::NoCommon:
     return cast<NoCommonAttr>(this)->clone(C);
   case attr::NoDebug:
@@ -12662,6 +12775,8 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<ArcWeakrefUnavailableAttr>(this)->printPretty(OS, Policy);
   case attr::ArgumentWithTypeTag:
     return cast<ArgumentWithTypeTagAttr>(this)->printPretty(OS, Policy);
+  case attr::ArmMveAlias:
+    return cast<ArmMveAliasAttr>(this)->printPretty(OS, Policy);
   case attr::Artificial:
     return cast<ArtificialAttr>(this)->printPretty(OS, Policy);
   case attr::AsmLabel:
@@ -12876,6 +12991,8 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<NakedAttr>(this)->printPretty(OS, Policy);
   case attr::NoAlias:
     return cast<NoAliasAttr>(this)->printPretty(OS, Policy);
+  case attr::NoBuiltin:
+    return cast<NoBuiltinAttr>(this)->printPretty(OS, Policy);
   case attr::NoCommon:
     return cast<NoCommonAttr>(this)->printPretty(OS, Policy);
   case attr::NoDebug:

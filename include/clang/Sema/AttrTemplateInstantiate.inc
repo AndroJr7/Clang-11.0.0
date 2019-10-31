@@ -157,6 +157,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<ArgumentWithTypeTagAttr>(At);
       return A->clone(C);
     }
+    case attr::ArmMveAlias: {
+      const auto *A = cast<ArmMveAliasAttr>(At);
+      return A->clone(C);
+    }
     case attr::Artificial: {
       const auto *A = cast<ArtificialAttr>(At);
       return A->clone(C);
@@ -668,6 +672,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
     }
     case attr::NoAlias: {
       const auto *A = cast<NoAliasAttr>(At);
+      return A->clone(C);
+    }
+    case attr::NoBuiltin: {
+      const auto *A = cast<NoBuiltinAttr>(At);
       return A->clone(C);
     }
     case attr::NoCommon: {
@@ -1428,6 +1436,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
     case attr::ArgumentWithTypeTag: {
       return nullptr;
     }
+    case attr::ArmMveAlias: {
+      return nullptr;
+    }
     case attr::Artificial: {
       return nullptr;
     }
@@ -1749,6 +1760,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
       return nullptr;
     }
     case attr::NoAlias: {
+      return nullptr;
+    }
+    case attr::NoBuiltin: {
       return nullptr;
     }
     case attr::NoCommon: {

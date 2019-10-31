@@ -86,6 +86,11 @@
     OS << " " << SA->getTypeTagIdx().getSourceIndex();
     if (SA->getIsPointer()) OS << " IsPointer";
   }
+  void VisitArmMveAliasAttr(const ArmMveAliasAttr *A) {
+    const auto *SA = cast<ArmMveAliasAttr>(A); (void)SA;
+    if (SA->getBuiltinName())
+      OS << " " << SA->getBuiltinName()->getName();
+  }
   void VisitAsmLabelAttr(const AsmLabelAttr *A) {
     const auto *SA = cast<AsmLabelAttr>(A); (void)SA;
     OS << " \"" << SA->getLabel() << "\"";
@@ -383,6 +388,11 @@
     const auto *SA = cast<ModeAttr>(A); (void)SA;
     if (SA->getMode())
       OS << " " << SA->getMode()->getName();
+  }
+  void VisitNoBuiltinAttr(const NoBuiltinAttr *A) {
+    const auto *SA = cast<NoBuiltinAttr>(A); (void)SA;
+    for (const auto &Val : SA->builtinNames())
+      OS << " " << Val;
   }
   void VisitNoSanitizeAttr(const NoSanitizeAttr *A) {
     const auto *SA = cast<NoSanitizeAttr>(A); (void)SA;

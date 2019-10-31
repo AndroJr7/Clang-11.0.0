@@ -277,6 +277,8 @@
     xray_typedevent,                           // llvm.xray.typedevent
     aarch64_addg,                              // llvm.aarch64.addg
     aarch64_clrex,                             // llvm.aarch64.clrex
+    aarch64_cls,                               // llvm.aarch64.cls
+    aarch64_cls64,                             // llvm.aarch64.cls64
     aarch64_crc32b,                            // llvm.aarch64.crc32b
     aarch64_crc32cb,                           // llvm.aarch64.crc32cb
     aarch64_crc32ch,                           // llvm.aarch64.crc32ch
@@ -484,19 +486,35 @@
     aarch64_stxr,                              // llvm.aarch64.stxr
     aarch64_subp,                              // llvm.aarch64.subp
     aarch64_sve_abs,                           // llvm.aarch64.sve.abs
+    aarch64_sve_add,                           // llvm.aarch64.sve.add
+    aarch64_sve_bic,                           // llvm.aarch64.sve.bic
+    aarch64_sve_cls,                           // llvm.aarch64.sve.cls
+    aarch64_sve_clz,                           // llvm.aarch64.sve.clz
+    aarch64_sve_cnot,                          // llvm.aarch64.sve.cnot
     aarch64_sve_cnt,                           // llvm.aarch64.sve.cnt
     aarch64_sve_fcvtzs_i32f16,                 // llvm.aarch64.sve.fcvtzs.i32f16
+    aarch64_sve_frecps_x,                      // llvm.aarch64.sve.frecps.x
+    aarch64_sve_frsqrts_x,                     // llvm.aarch64.sve.frsqrts.x
     aarch64_sve_neg,                           // llvm.aarch64.sve.neg
+    aarch64_sve_not,                           // llvm.aarch64.sve.not
     aarch64_sve_punpkhi,                       // llvm.aarch64.sve.punpkhi
     aarch64_sve_punpklo,                       // llvm.aarch64.sve.punpklo
     aarch64_sve_sdot,                          // llvm.aarch64.sve.sdot
     aarch64_sve_sdot_lane,                     // llvm.aarch64.sve.sdot.lane
+    aarch64_sve_sub,                           // llvm.aarch64.sve.sub
+    aarch64_sve_subr,                          // llvm.aarch64.sve.subr
     aarch64_sve_sunpkhi,                       // llvm.aarch64.sve.sunpkhi
     aarch64_sve_sunpklo,                       // llvm.aarch64.sve.sunpklo
+    aarch64_sve_sxtb,                          // llvm.aarch64.sve.sxtb
+    aarch64_sve_sxth,                          // llvm.aarch64.sve.sxth
+    aarch64_sve_sxtw,                          // llvm.aarch64.sve.sxtw
     aarch64_sve_udot,                          // llvm.aarch64.sve.udot
     aarch64_sve_udot_lane,                     // llvm.aarch64.sve.udot.lane
     aarch64_sve_uunpkhi,                       // llvm.aarch64.sve.uunpkhi
     aarch64_sve_uunpklo,                       // llvm.aarch64.sve.uunpklo
+    aarch64_sve_uxtb,                          // llvm.aarch64.sve.uxtb
+    aarch64_sve_uxth,                          // llvm.aarch64.sve.uxth
+    aarch64_sve_uxtw,                          // llvm.aarch64.sve.uxtw
     aarch64_tagp,                              // llvm.aarch64.tagp
     aarch64_tcancel,                           // llvm.aarch64.tcancel
     aarch64_tcommit,                           // llvm.aarch64.tcommit
@@ -1183,6 +1201,8 @@
     arm_cdp,                                   // llvm.arm.cdp
     arm_cdp2,                                  // llvm.arm.cdp2
     arm_clrex,                                 // llvm.arm.clrex
+    arm_cls,                                   // llvm.arm.cls
+    arm_cls64,                                 // llvm.arm.cls64
     arm_cmse_tt,                               // llvm.arm.cmse.tt
     arm_cmse_tta,                              // llvm.arm.cmse.tta
     arm_cmse_ttat,                             // llvm.arm.cmse.ttat
@@ -1216,6 +1236,25 @@
     arm_mrc2,                                  // llvm.arm.mrc2
     arm_mrrc,                                  // llvm.arm.mrrc
     arm_mrrc2,                                 // llvm.arm.mrrc2
+    arm_mve_add_predicated,                    // llvm.arm.mve.add.predicated
+    arm_mve_maxv_s,                            // llvm.arm.mve.maxv.s
+    arm_mve_maxv_u,                            // llvm.arm.mve.maxv.u
+    arm_mve_minv_s,                            // llvm.arm.mve.minv.s
+    arm_mve_minv_u,                            // llvm.arm.mve.minv.u
+    arm_mve_pred_i2v,                          // llvm.arm.mve.pred.i2v
+    arm_mve_pred_v2i,                          // llvm.arm.mve.pred.v2i
+    arm_mve_sub_predicated,                    // llvm.arm.mve.sub.predicated
+    arm_mve_urshrl,                            // llvm.arm.mve.urshrl
+    arm_mve_vadc,                              // llvm.arm.mve.vadc
+    arm_mve_vadc_predicated,                   // llvm.arm.mve.vadc.predicated
+    arm_mve_vcvt_narrow,                       // llvm.arm.mve.vcvt.narrow
+    arm_mve_vcvt_narrow_predicated,            // llvm.arm.mve.vcvt.narrow.predicated
+    arm_mve_vld2q,                             // llvm.arm.mve.vld2q
+    arm_mve_vld4q,                             // llvm.arm.mve.vld4q
+    arm_mve_vldr_gather_base_wb,               // llvm.arm.mve.vldr.gather.base.wb
+    arm_mve_vldr_gather_base_wb_predicated,    // llvm.arm.mve.vldr.gather.base.wb.predicated
+    arm_mve_vst2q,                             // llvm.arm.mve.vst2q
+    arm_mve_vst4q,                             // llvm.arm.mve.vst4q
     arm_neon_aesd,                             // llvm.arm.neon.aesd
     arm_neon_aese,                             // llvm.arm.neon.aese
     arm_neon_aesimc,                           // llvm.arm.neon.aesimc
@@ -4077,6 +4116,18 @@
     nvvm_membar_cta,                           // llvm.nvvm.membar.cta
     nvvm_membar_gl,                            // llvm.nvvm.membar.gl
     nvvm_membar_sys,                           // llvm.nvvm.membar.sys
+    nvvm_mma_m8n8k4_col_col_f16_f16,           // llvm.nvvm.mma.m8n8k4.col.col.f16.f16
+    nvvm_mma_m8n8k4_col_col_f32_f16,           // llvm.nvvm.mma.m8n8k4.col.col.f32.f16
+    nvvm_mma_m8n8k4_col_col_f32_f32,           // llvm.nvvm.mma.m8n8k4.col.col.f32.f32
+    nvvm_mma_m8n8k4_col_row_f16_f16,           // llvm.nvvm.mma.m8n8k4.col.row.f16.f16
+    nvvm_mma_m8n8k4_col_row_f32_f16,           // llvm.nvvm.mma.m8n8k4.col.row.f32.f16
+    nvvm_mma_m8n8k4_col_row_f32_f32,           // llvm.nvvm.mma.m8n8k4.col.row.f32.f32
+    nvvm_mma_m8n8k4_row_col_f16_f16,           // llvm.nvvm.mma.m8n8k4.row.col.f16.f16
+    nvvm_mma_m8n8k4_row_col_f32_f16,           // llvm.nvvm.mma.m8n8k4.row.col.f32.f16
+    nvvm_mma_m8n8k4_row_col_f32_f32,           // llvm.nvvm.mma.m8n8k4.row.col.f32.f32
+    nvvm_mma_m8n8k4_row_row_f16_f16,           // llvm.nvvm.mma.m8n8k4.row.row.f16.f16
+    nvvm_mma_m8n8k4_row_row_f32_f16,           // llvm.nvvm.mma.m8n8k4.row.row.f32.f16
+    nvvm_mma_m8n8k4_row_row_f32_f32,           // llvm.nvvm.mma.m8n8k4.row.row.f32.f32
     nvvm_move_double,                          // llvm.nvvm.move.double
     nvvm_move_float,                           // llvm.nvvm.move.float
     nvvm_move_i16,                             // llvm.nvvm.move.i16
