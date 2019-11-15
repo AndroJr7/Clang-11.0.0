@@ -501,6 +501,33 @@ static void matchRulesForAvailability(llvm::SmallVectorImpl<std::pair<attr::Subj
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable, /*IsSupported=*/true));
 }
 
+static bool checkBPFPreserveAccessIndexAppertainsTo(Sema &S, const ParsedAttr &Attr, const Decl *D) {
+  if (!D || (!isa<RecordDecl>(D))) {
+    S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
+      << Attr << "structs, unions, and classes";
+    return false;
+  }
+  return true;
+}
+
+static bool checkCOnlyLangOpts(Sema &S, const ParsedAttr &Attr) {
+  auto &LangOpts = S.LangOpts;
+  if ((!LangOpts.CPlusPlus))
+    return true;
+
+  S.Diag(Attr.getLoc(), diag::warn_attribute_ignored) << Attr;
+  return false;
+}
+
+static bool isTargetbpfelbpfeb(const TargetInfo &Target) {
+  const llvm::Triple &T = Target.getTriple(); (void)T;
+  return true && (T.getArch() == llvm::Triple::bpfel || T.getArch() == llvm::Triple::bpfeb);
+}
+
+static void matchRulesForBPFPreserveAccessIndex(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) {
+  MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_record, /*IsSupported=*/true));
+}
+
 static bool checkCFAuditedTransferAppertainsTo(Sema &S, const ParsedAttr &Attr, const Decl *D) {
   if (!D || (!isa<FunctionDecl>(D))) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
@@ -2931,15 +2958,6 @@ static bool checkThreadAppertainsTo(Sema &S, const ParsedAttr &Attr, const Decl 
   return true;
 }
 
-static bool checkCOnlyLangOpts(Sema &S, const ParsedAttr &Attr) {
-  auto &LangOpts = S.LangOpts;
-  if ((!LangOpts.CPlusPlus))
-    return true;
-
-  S.Diag(Attr.getLoc(), diag::warn_attribute_ignored) << Attr;
-  return false;
-}
-
 static bool checkTrivialABIAppertainsTo(Sema &S, const ParsedAttr &Attr, const Decl *D) {
   if (!D || (!isa<CXXRecordDecl>(D))) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
@@ -3288,6 +3306,7 @@ static const ParsedAttrInfo AttrInfoMap[ParsedAttr::UnknownAttribute + 1] = {
   { 0, 15, 0, 0, 0, 0, 0, 0, checkAssertSharedLockAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, nullptr },  // AT_AssertSharedLock
   { 1, 1, 0, 0, 0, 0, 1, 1, checkAssumeAlignedAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForAssumeAligned },  // AT_AssumeAligned
   { 9, 0, 1, 0, 0, 0, 0, 1, checkAvailabilityAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForAvailability },  // AT_Availability
+  { 0, 0, 0, 1, 0, 0, 0, 1, checkBPFPreserveAccessIndexAppertainsTo, checkCOnlyLangOpts, isTargetbpfelbpfeb, defaultSpellingIndexToSemanticSpelling, matchRulesForBPFPreserveAccessIndex },  // AT_BPFPreserveAccessIndex
   { 1, 0, 0, 0, 0, 0, 0, 0, defaultAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, nullptr },  // AT_Blocks
   { 0, 0, 0, 0, 1, 0, 1, 0, defaultAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, nullptr },  // AT_CDecl
   { 0, 0, 0, 0, 0, 0, 0, 1, checkCFAuditedTransferAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForCFAuditedTransfer },  // AT_CFAuditedTransfer

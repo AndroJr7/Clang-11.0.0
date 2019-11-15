@@ -277,6 +277,12 @@ Record.push_back(SA->getInterrupt());
     Record.push_back(SA->getPriority());
     break;
   }
+  case attr::BPFPreserveAccessIndex: {
+    const auto *SA = cast<BPFPreserveAccessIndexAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    break;
+  }
   case attr::Blocks: {
     const auto *SA = cast<BlocksAttr>(A);
     Record.push_back(SA->isInherited());
@@ -1121,10 +1127,15 @@ Record.push_back(SA->getDevType());
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
     Record.AddStmt(SA->getVariantFuncRef());
-    Record.AddStmt(SA->getScore());
-Record.push_back(SA->getCtxSelectorSet());
-Record.push_back(SA->getCtxScore());
-Record.push_back(SA->getCtxSelector());
+    Record.push_back(SA->scores_size());
+    for (auto &Val : SA->scores())
+      Record.AddStmt(Val);
+    Record.push_back(SA->ctxSelectorSets_size());
+    for (auto &Val : SA->ctxSelectorSets())
+      Record.push_back(Val);
+    Record.push_back(SA->ctxSelectors_size());
+    for (auto &Val : SA->ctxSelectors())
+      Record.push_back(Val);
     Record.push_back(SA->implVendors_size());
     for (auto &Val : SA->implVendors())
       Record.AddString(Val);

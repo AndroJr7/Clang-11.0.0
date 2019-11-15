@@ -380,12 +380,12 @@ list(APPEND _IMPORT_CHECK_FILES_FOR_clang-refactor "${_IMPORT_PREFIX}/bin/clang-
 # Import target "clang-cpp" for configuration "Release"
 set_property(TARGET clang-cpp APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(clang-cpp PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclang-cpp.so.10svn"
-  IMPORTED_SONAME_RELEASE "libclang-cpp.so.10svn"
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclang-cpp.so.10git"
+  IMPORTED_SONAME_RELEASE "libclang-cpp.so.10git"
   )
 
 list(APPEND _IMPORT_CHECK_TARGETS clang-cpp )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clang-cpp "${_IMPORT_PREFIX}/lib/libclang-cpp.so.10svn" )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clang-cpp "${_IMPORT_PREFIX}/lib/libclang-cpp.so.10git" )
 
 # Import target "clangApplyReplacements" for configuration "Release"
 set_property(TARGET clangApplyReplacements APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
@@ -839,7 +839,7 @@ list(APPEND _IMPORT_CHECK_FILES_FOR_clangd "${_IMPORT_PREFIX}/bin/clangd" )
 set_property(TARGET libclang APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(libclang PROPERTIES
   IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclang.so.10"
-  IMPORTED_SONAME_RELEASE "libclang.so.10svn"
+  IMPORTED_SONAME_RELEASE "libclang.so.10git"
   )
 
 list(APPEND _IMPORT_CHECK_TARGETS libclang )

@@ -263,6 +263,15 @@
         return 2;
     break;
   }
+  case AT_BPFPreserveAccessIndex: {
+    if (Name == "preserve_access_index" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "preserve_access_index" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "preserve_access_index" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
   case AT_Blocks: {
     if (Name == "blocks" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;

@@ -152,6 +152,10 @@
   bool VisitAvailabilityAttr(AvailabilityAttr *A) {
     return true; 
   }
+  bool TraverseBPFPreserveAccessIndexAttr(BPFPreserveAccessIndexAttr *A);
+  bool VisitBPFPreserveAccessIndexAttr(BPFPreserveAccessIndexAttr *A) {
+    return true; 
+  }
   bool TraverseBlocksAttr(BlocksAttr *A);
   bool VisitBlocksAttr(BlocksAttr *A) {
     return true; 
@@ -1557,6 +1561,15 @@ bool VISITORCLASS<Derived>::TraverseAvailabilityAttr(AvailabilityAttr *A) {
 }
 
 template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseBPFPreserveAccessIndexAttr(BPFPreserveAccessIndexAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitBPFPreserveAccessIndexAttr(A))
+    return false;
+  return true;
+}
+
+template <typename Derived>
 bool VISITORCLASS<Derived>::TraverseBlocksAttr(BlocksAttr *A) {
   if (!getDerived().VisitAttr(A))
     return false;
@@ -2777,8 +2790,14 @@ bool VISITORCLASS<Derived>::TraverseOMPDeclareVariantAttr(OMPDeclareVariantAttr 
     return false;
   if (!getDerived().TraverseStmt(A->getVariantFuncRef()))
     return false;
-  if (!getDerived().TraverseStmt(A->getScore()))
-    return false;
+  {
+    Expr * *I = A->scores_begin();
+    Expr * *E = A->scores_end();
+    for (; I != E; ++I) {
+      if (!getDerived().TraverseStmt(*I))
+        return false;
+    }
+  }
   return true;
 }
 
@@ -4037,6 +4056,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseAssumeAlignedAttr(cast<AssumeAlignedAttr>(A));
     case attr::Availability:
       return getDerived().TraverseAvailabilityAttr(cast<AvailabilityAttr>(A));
+    case attr::BPFPreserveAccessIndex:
+      return getDerived().TraverseBPFPreserveAccessIndexAttr(cast<BPFPreserveAccessIndexAttr>(A));
     case attr::Blocks:
       return getDerived().TraverseBlocksAttr(cast<BlocksAttr>(A));
     case attr::C11NoReturn:

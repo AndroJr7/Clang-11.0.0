@@ -1598,6 +1598,48 @@ const char *AvailabilityAttr::getSpelling() const {
   }
 }
 
+BPFPreserveAccessIndexAttr *BPFPreserveAccessIndexAttr::clone(ASTContext &C) const {
+  auto *A = new (C) BPFPreserveAccessIndexAttr(C, *this);
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void BPFPreserveAccessIndexAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((preserve_access_index))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::preserve_access_index]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::preserve_access_index]]";
+    break;
+  }
+}
+}
+
+const char *BPFPreserveAccessIndexAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "preserve_access_index";
+  case 1:
+    return "preserve_access_index";
+  case 2:
+    return "preserve_access_index";
+  }
+}
+
 BlocksAttr *BlocksAttr::clone(ASTContext &C) const {
   auto *A = new (C) BlocksAttr(C, *this, type);
   A->Inherited = Inherited;
@@ -6475,7 +6517,7 @@ const char *OMPDeclareTargetDeclAttr::getSpelling() const {
 }
 
 OMPDeclareVariantAttr *OMPDeclareVariantAttr::clone(ASTContext &C) const {
-  auto *A = new (C) OMPDeclareVariantAttr(C, *this, variantFuncRef, score, ctxSelectorSet, ctxScore, ctxSelector, implVendors_, implVendors_Size);
+  auto *A = new (C) OMPDeclareVariantAttr(C, *this, variantFuncRef, scores_, scores_Size, ctxSelectorSets_, ctxSelectorSets_Size, ctxSelectors_, ctxSelectors_Size, implVendors_, implVendors_Size);
   A->Inherited = Inherited;
   A->IsPackExpansion = IsPackExpansion;
   A->setImplicit(Implicit);
@@ -11627,6 +11669,8 @@ const char *Attr::getSpelling() const {
     return cast<AssumeAlignedAttr>(this)->getSpelling();
   case attr::Availability:
     return cast<AvailabilityAttr>(this)->getSpelling();
+  case attr::BPFPreserveAccessIndex:
+    return cast<BPFPreserveAccessIndexAttr>(this)->getSpelling();
   case attr::Blocks:
     return cast<BlocksAttr>(this)->getSpelling();
   case attr::C11NoReturn:
@@ -12209,6 +12253,8 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<AssumeAlignedAttr>(this)->clone(C);
   case attr::Availability:
     return cast<AvailabilityAttr>(this)->clone(C);
+  case attr::BPFPreserveAccessIndex:
+    return cast<BPFPreserveAccessIndexAttr>(this)->clone(C);
   case attr::Blocks:
     return cast<BlocksAttr>(this)->clone(C);
   case attr::C11NoReturn:
@@ -12791,6 +12837,8 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<AssumeAlignedAttr>(this)->printPretty(OS, Policy);
   case attr::Availability:
     return cast<AvailabilityAttr>(this)->printPretty(OS, Policy);
+  case attr::BPFPreserveAccessIndex:
+    return cast<BPFPreserveAccessIndexAttr>(this)->printPretty(OS, Policy);
   case attr::Blocks:
     return cast<BlocksAttr>(this)->printPretty(OS, Policy);
   case attr::C11NoReturn:

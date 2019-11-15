@@ -720,6 +720,8 @@ OPTION(prefix_1, "fdata-sections", fdata_sections, Flag, f_Group, INVALID, nullp
        "Place each data in its own section (ELF Only)", nullptr, nullptr)
 OPTION(prefix_1, "fdebug-compilation-dir", fdebug_compilation_dir, Separate, f_Group, INVALID, nullptr, CC1Option | CC1AsOption | CoreOption, 0,
        "The compilation directory to embed in the debug info.", nullptr, nullptr)
+OPTION(prefix_1, "fdebug-default-version=", fdebug_default_version, Joined, f_Group, INVALID, nullptr, 0, 0,
+       "Default DWARF version to use, if a -g option caused DWARF debug info to be produced", nullptr, nullptr)
 OPTION(prefix_1, "fdebug-info-for-profiling", fdebug_info_for_profiling, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Emit extra debug info to make sample profile more accurate.", nullptr, nullptr)
 OPTION(prefix_1, "fdebug-macro", fdebug_macro, Flag, f_Group, INVALID, nullptr, CoreOption, 0,
@@ -940,6 +942,8 @@ OPTION(prefix_1, "ffor-scope", ffor_scope, Flag, f_Group, INVALID, nullptr, 0, 0
 OPTION(prefix_1, "fforbid-guard-variables", fforbid_guard_variables, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Emit an error if a C++ static local initializer would need a guard variable", nullptr, nullptr)
 OPTION(prefix_1, "fforce-addr", force_addr, Joined, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fforce-dwarf-frame", fforce_dwarf_frame, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
+       "Always emit a debug frame section", nullptr, nullptr)
 OPTION(prefix_1, "fforce-emit-vtables", fforce_emit_vtables, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Emits more virtual tables to improve devirtualization", nullptr, nullptr)
 OPTION(prefix_1, "fforce-enable-int128", fforce_enable_int128, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
@@ -948,6 +952,10 @@ OPTION(prefix_1, "fforce-experimental-new-constant-interpreter", fforce_experime
        "Force the use of the experimental new constant interpreter, failing on missing features", nullptr, nullptr)
 OPTION(prefix_1, "ffp-contract=", ffp_contract, Joined, f_Group, INVALID, nullptr, CC1Option, 0,
        "Form fused FP ops (e.g. FMAs): fast (everywhere) | on (according to FP_CONTRACT pragma) | off (never fuse). Default is 'fast' for CUDA/HIP and 'on' otherwise.", nullptr, "fast,on,off")
+OPTION(prefix_1, "ffp-exception-behavior=", ffp_exception_behavior_EQ, Joined, f_Group, INVALID, nullptr, CC1Option, 0,
+       "Specifies the exception behavior of floating-point operations.", nullptr, nullptr)
+OPTION(prefix_1, "ffp-model=", ffp_model_EQ, Joined, f_Group, INVALID, nullptr, DriverOption, 0,
+       "Controls the semantics of floating-point calculations.", nullptr, nullptr)
 OPTION(prefix_1, "ffpe-trap=", ffpe_trap_EQ, Joined, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "ffree-form", free_form_f, Flag, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "ffree-line-length-", ffree_line_length_VALUE, Joined, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -1310,6 +1318,8 @@ OPTION(prefix_1, "fno-fixed-point", fno_fixed_point, Flag, f_Group, INVALID, nul
        "Disable fixed point types", nullptr, nullptr)
 OPTION(prefix_1, "fno-float-store", float_store_fno, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-for-scope", fno_for_scope, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fno-force-dwarf-frame", fno_force_dwarf_frame, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
+       "Don't always emit a debug frame section", nullptr, nullptr)
 OPTION(prefix_1, "fno-force-emit-vtables", fno_force_emit_vtables, Flag, f_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-force-enable-int128", fno_force_enable_int128, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Disable support for int128_t type", nullptr, nullptr)
@@ -1460,7 +1470,7 @@ OPTION(prefix_1, "fno-rewrite-imports", fno_rewrite_imports, Flag, f_Group, INVA
 OPTION(prefix_1, "fno-rewrite-includes", fno_rewrite_includes, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-ripa", ripa_fno, Flag, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-ropi", fno_ropi, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "fno-rounding-math", rounding_math_fno, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fno-rounding-math", fno_rounding_math, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-rtlib-add-rpath", fno_rtlib_add_rpath, Flag, INVALID, INVALID, nullptr, NoArgumentUnused, 0,
        "Do not add -rpath with architecture-specific resource directory to the linker flags", nullptr, nullptr)
 OPTION(prefix_1, "fno-rtti-data", fno_rtti_data, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
@@ -1809,7 +1819,7 @@ OPTION(prefix_1, "frewrite-map-file=", frewrite_map_file_EQ, Joined, f_Group, IN
 OPTION(prefix_1, "frewrite-map-file", frewrite_map_file, Separate, f_Group, INVALID, nullptr, DriverOption | CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fripa", ripa_f, Flag, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fropi", fropi, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "frounding-math", rounding_math_f, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "frounding-math", frounding_math, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "frtlib-add-rpath", frtlib_add_rpath, Flag, INVALID, INVALID, nullptr, NoArgumentUnused, 0,
        "Add -rpath with architecture-specific resource directory to the linker flags", nullptr, nullptr)
 OPTION(prefix_1, "frtti", frtti, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -1863,7 +1873,7 @@ OPTION(prefix_1, "fsanitize-coverage-type=", fsanitize_coverage_type, Joined, IN
 OPTION(prefix_1, "fsanitize-coverage=", fsanitize_coverage, CommaJoined, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Specify the type of coverage instrumentation for Sanitizers", nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-hwaddress-abi=", fsanitize_hwaddress_abi_EQ, Joined, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
-       "Select the HWAddressSanitizer ABI to target (interceptor or platform, default interceptor)", nullptr, nullptr)
+       "Select the HWAddressSanitizer ABI to target (interceptor or platform, default interceptor). This option is currently unused.", nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-link-c++-runtime", fsanitize_link_cxx_runtime, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-link-runtime", fsanitize_link_runtime, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-memory-track-origins=", fsanitize_memory_track_origins_EQ, Joined, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
@@ -1878,6 +1888,8 @@ OPTION(prefix_1, "fsanitize-recover=", fsanitize_recover_EQ, CommaJoined, f_clan
 OPTION(prefix_1, "fsanitize-recover", fsanitize_recover, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-stats", fsanitize_stats, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Enable sanitizer statistics gathering.", nullptr, nullptr)
+OPTION(prefix_1, "fsanitize-system-blacklist=", fsanitize_system_blacklist, Joined, INVALID, INVALID, nullptr, CC1Option | CoreOption, 0,
+       "Path to system blacklist file for sanitizers", nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-thread-atomics", fsanitize_thread_atomics, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Enable atomic operations instrumentation in ThreadSanitizer (default)", nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-thread-func-entry-exit", fsanitize_thread_func_entry_exit, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
@@ -2131,7 +2143,8 @@ OPTION(prefix_1, "gdwarf-4", gdwarf_4, Flag, g_Group, INVALID, nullptr, 0, 0,
 OPTION(prefix_1, "gdwarf-5", gdwarf_5, Flag, g_Group, INVALID, nullptr, 0, 0,
        "Generate source-level debug information with dwarf version 5", nullptr, nullptr)
 OPTION(prefix_1, "gdwarf-aranges", gdwarf_aranges, Flag, g_flags_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "gdwarf", gdwarf, Flag, INVALID, gdwarf_4, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "gdwarf", gdwarf, Flag, g_Group, INVALID, nullptr, CoreOption, 0,
+       "Generate source-level debug information with the default dwarf version", nullptr, nullptr)
 OPTION(prefix_2, "Gd", _SLASH_Gd, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0,
        "Set __cdecl as a default calling convention", nullptr, nullptr)
 OPTION(prefix_1, "gembed-source", gembed_source, Flag, g_flags_Group, INVALID, nullptr, CC1Option, 0,
@@ -2154,6 +2167,7 @@ OPTION(prefix_1, "ggdb", ggdb, Flag, gTune_Group, INVALID, nullptr, 0, 0, nullpt
 OPTION(prefix_1, "ggnu-pubnames", ggnu_pubnames, Flag, g_flags_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_2, "GH", _SLASH_GH, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_2, "Gh", _SLASH_Gh, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "ginline-line-tables", ginline_line_tables, Flag, INVALID, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_2, "GL-", _SLASH_GL_, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "gline-directives-only", gline_directives_only, Flag, gN_Group, INVALID, nullptr, CoreOption, 0,
        "Emit debug line info directives only", nullptr, nullptr)
@@ -2171,6 +2185,8 @@ OPTION(prefix_1, "gno-column-info", gno_column_info, Flag, g_flags_Group, INVALI
 OPTION(prefix_1, "gno-embed-source", gno_embed_source, Flag, g_flags_Group, INVALID, nullptr, DriverOption, 0,
        "Restore the default behavior of not embedding source text in DWARF debug sections", nullptr, nullptr)
 OPTION(prefix_1, "gno-gnu-pubnames", gno_gnu_pubnames, Flag, g_flags_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "gno-inline-line-tables", gno_inline_line_tables, Flag, INVALID, INVALID, nullptr, CC1Option | CoreOption, 0,
+       "Don't emit inline line tables", nullptr, nullptr)
 OPTION(prefix_1, "gno-pubnames", gno_pubnames, Flag, g_flags_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "gno-record-command-line", gno_record_command_line, Flag, g_flags_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "gno-record-gcc-switches", anonymous_29, Flag, INVALID, gno_record_command_line, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -2792,6 +2808,7 @@ OPTION(prefix_1, "mno-rdpid", mno_rdpid, Flag, m_x86_Features_Group, INVALID, nu
 OPTION(prefix_1, "mno-rdrnd", mno_rdrnd, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-rdseed", mno_rdseed, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-red-zone", mno_red_zone, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mno-reference-types", mno_reference_types, Flag, m_wasm_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-relax-all", mno_relax_all, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-relax-pic-calls", mno_relax_pic_calls, Flag, m_mips_Features_Group, INVALID, nullptr, HelpHidden, 0,
        "Do not produce relaxation hints for linkers to try optimizing PIC call sequences into direct calls (MIPS only)", nullptr, nullptr)
@@ -2840,6 +2857,7 @@ OPTION(prefix_1, "mno-virt", mno_virt, Flag, m_mips_Features_Group, INVALID, nul
 OPTION(prefix_1, "mno-vpclmulqdq", mno_vpclmulqdq, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-vsx", mno_vsx, Flag, m_ppc_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-vx", mno_vx, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mno-vzeroupper", mno_vzeroupper, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-waitpkg", mno_waitpkg, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-warn-nonportable-cfstrings", mno_warn_nonportable_cfstrings, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-wavefrontsize64", mno_wavefrontsize64, Flag, m_Group, INVALID, nullptr, 0, 0,
@@ -2862,6 +2880,8 @@ OPTION(prefix_1, "mnocrc", mnocrc, Flag, m_arm_Features_Group, INVALID, nullptr,
 OPTION(prefix_1, "mnoexecstack", mno_exec_stack, Flag, INVALID, INVALID, nullptr, CC1Option | CC1AsOption | NoDriverOption, 0,
        "Mark the file as not needing an executable stack", nullptr, nullptr)
 OPTION(prefix_1, "mnontrapping-fptoint", mnontrapping_fptoint, Flag, m_wasm_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mnop-mcount", mnop_mcount, Flag, m_Group, INVALID, nullptr, CC1Option, 0,
+       "Generate mcount/__fentry__ calls as nops. To activate they need to be patched in.", nullptr, nullptr)
 OPTION(prefix_1, "mnvj", mnvj, Flag, m_hexagon_Features_Group, INVALID, nullptr, CC1Option, 0,
        "Enable generation of new-value jumps", nullptr, nullptr)
 OPTION(prefix_1, "mnvs", mnvs, Flag, m_hexagon_Features_Group, INVALID, nullptr, CC1Option, 0,
@@ -2913,6 +2933,7 @@ OPTION(prefix_1, "mreassociate", mreassociate, Flag, INVALID, INVALID, nullptr, 
 OPTION(prefix_1, "mrecip=", mrecip_EQ, CommaJoined, m_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mrecip", mrecip, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mred-zone", mred_zone, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mreference-types", mreference_types, Flag, m_wasm_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mregparm=", mregparm_EQ, Joined, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mregparm", mregparm, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Limit the number of registers available for integer arguments", nullptr, nullptr)
@@ -3018,6 +3039,7 @@ OPTION(prefix_1, "mvirt", mvirt, Flag, m_mips_Features_Group, INVALID, nullptr, 
 OPTION(prefix_1, "mvpclmulqdq", mvpclmulqdq, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mvsx", mvsx, Flag, m_ppc_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mvx", mvx, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mvzeroupper", mvzeroupper, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "MV", MV, Flag, M_Group, INVALID, nullptr, CC1Option, 0,
        "Use NMake/Jom format for the depfile", nullptr, nullptr)
 OPTION(prefix_1, "mwaitpkg", mwaitpkg, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)

@@ -1289,7 +1289,7 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_WorkGroupSizeHint;	 // "work_group_size_hint"
     }
     break;
-  case 21:	 // 9 strings to match.
+  case 21:	 // 10 strings to match.
     switch (Name[0]) {
     default: break;
     case '_':	 // 1 string to match.
@@ -1308,10 +1308,19 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       if (memcmp(Name.data()+1, "bjc_precise_lifetime", 20) != 0)
         break;
       return AttributeCommonInfo::AT_ObjCPreciseLifetime;	 // "objc_precise_lifetime"
-    case 'p':	 // 1 string to match.
-      if (memcmp(Name.data()+1, "ointer_with_type_tag", 20) != 0)
-        break;
-      return AttributeCommonInfo::AT_ArgumentWithTypeTag;	 // "pointer_with_type_tag"
+    case 'p':	 // 2 strings to match.
+      switch (Name[1]) {
+      default: break;
+      case 'o':	 // 1 string to match.
+        if (memcmp(Name.data()+2, "inter_with_type_tag", 19) != 0)
+          break;
+        return AttributeCommonInfo::AT_ArgumentWithTypeTag;	 // "pointer_with_type_tag"
+      case 'r':	 // 1 string to match.
+        if (memcmp(Name.data()+2, "eserve_access_index", 19) != 0)
+          break;
+        return AttributeCommonInfo::AT_BPFPreserveAccessIndex;	 // "preserve_access_index"
+      }
+      break;
     case 's':	 // 2 strings to match.
       switch (Name[1]) {
       default: break;
@@ -3081,10 +3090,10 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_NoInstrumentFunction;	 // "gnu::no_instrument_function"
     }
     break;
-  case 28:	 // 9 strings to match.
+  case 28:	 // 10 strings to match.
     switch (Name[0]) {
     default: break;
-    case 'c':	 // 8 strings to match.
+    case 'c':	 // 9 strings to match.
       if (memcmp(Name.data()+1, "lang::", 6) != 0)
         break;
       switch (Name[7]) {
@@ -3101,10 +3110,19 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
         if (memcmp(Name.data()+8, "bjc_precise_lifetime", 20) != 0)
           break;
         return AttributeCommonInfo::AT_ObjCPreciseLifetime;	 // "clang::objc_precise_lifetime"
-      case 'p':	 // 1 string to match.
-        if (memcmp(Name.data()+8, "ointer_with_type_tag", 20) != 0)
-          break;
-        return AttributeCommonInfo::AT_ArgumentWithTypeTag;	 // "clang::pointer_with_type_tag"
+      case 'p':	 // 2 strings to match.
+        switch (Name[8]) {
+        default: break;
+        case 'o':	 // 1 string to match.
+          if (memcmp(Name.data()+9, "inter_with_type_tag", 19) != 0)
+            break;
+          return AttributeCommonInfo::AT_ArgumentWithTypeTag;	 // "clang::pointer_with_type_tag"
+        case 'r':	 // 1 string to match.
+          if (memcmp(Name.data()+9, "eserve_access_index", 19) != 0)
+            break;
+          return AttributeCommonInfo::AT_BPFPreserveAccessIndex;	 // "clang::preserve_access_index"
+        }
+        break;
       case 's':	 // 2 strings to match.
         switch (Name[8]) {
         default: break;
@@ -3911,7 +3929,7 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_ObjCRuntimeVisible;	 // "clang::objc_runtime_visible"
     }
     break;
-  case 28:	 // 7 strings to match.
+  case 28:	 // 8 strings to match.
     if (memcmp(Name.data()+0, "clang::", 7) != 0)
       break;
     switch (Name[7]) {
@@ -3928,10 +3946,19 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       if (memcmp(Name.data()+8, "bjc_precise_lifetime", 20) != 0)
         break;
       return AttributeCommonInfo::AT_ObjCPreciseLifetime;	 // "clang::objc_precise_lifetime"
-    case 'p':	 // 1 string to match.
-      if (memcmp(Name.data()+8, "ointer_with_type_tag", 20) != 0)
-        break;
-      return AttributeCommonInfo::AT_ArgumentWithTypeTag;	 // "clang::pointer_with_type_tag"
+    case 'p':	 // 2 strings to match.
+      switch (Name[8]) {
+      default: break;
+      case 'o':	 // 1 string to match.
+        if (memcmp(Name.data()+9, "inter_with_type_tag", 19) != 0)
+          break;
+        return AttributeCommonInfo::AT_ArgumentWithTypeTag;	 // "clang::pointer_with_type_tag"
+      case 'r':	 // 1 string to match.
+        if (memcmp(Name.data()+9, "eserve_access_index", 19) != 0)
+          break;
+        return AttributeCommonInfo::AT_BPFPreserveAccessIndex;	 // "clang::preserve_access_index"
+      }
+      break;
     case 's':	 // 1 string to match.
       if (memcmp(Name.data()+8, "wift_indirect_result", 20) != 0)
         break;
