@@ -1320,6 +1320,24 @@
         return 2;
     break;
   }
+  case AT_ObjCDirect: {
+    if (Name == "objc_direct" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "objc_direct" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "objc_direct" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
+  case AT_ObjCDirectMembers: {
+    if (Name == "objc_direct_members" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "objc_direct_members" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "objc_direct_members" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
   case AT_ObjCException: {
     if (Name == "objc_exception" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;

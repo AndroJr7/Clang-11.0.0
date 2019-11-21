@@ -720,6 +720,14 @@
   bool VisitObjCDesignatedInitializerAttr(ObjCDesignatedInitializerAttr *A) {
     return true; 
   }
+  bool TraverseObjCDirectAttr(ObjCDirectAttr *A);
+  bool VisitObjCDirectAttr(ObjCDirectAttr *A) {
+    return true; 
+  }
+  bool TraverseObjCDirectMembersAttr(ObjCDirectMembersAttr *A);
+  bool VisitObjCDirectMembersAttr(ObjCDirectMembersAttr *A) {
+    return true; 
+  }
   bool TraverseObjCExceptionAttr(ObjCExceptionAttr *A);
   bool VisitObjCExceptionAttr(ObjCExceptionAttr *A) {
     return true; 
@@ -2930,6 +2938,24 @@ bool VISITORCLASS<Derived>::TraverseObjCDesignatedInitializerAttr(ObjCDesignated
 }
 
 template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseObjCDirectAttr(ObjCDirectAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitObjCDirectAttr(A))
+    return false;
+  return true;
+}
+
+template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseObjCDirectMembersAttr(ObjCDirectMembersAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitObjCDirectMembersAttr(A))
+    return false;
+  return true;
+}
+
+template <typename Derived>
 bool VISITORCLASS<Derived>::TraverseObjCExceptionAttr(ObjCExceptionAttr *A) {
   if (!getDerived().VisitAttr(A))
     return false;
@@ -4340,6 +4366,10 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseObjCClassStubAttr(cast<ObjCClassStubAttr>(A));
     case attr::ObjCDesignatedInitializer:
       return getDerived().TraverseObjCDesignatedInitializerAttr(cast<ObjCDesignatedInitializerAttr>(A));
+    case attr::ObjCDirect:
+      return getDerived().TraverseObjCDirectAttr(cast<ObjCDirectAttr>(A));
+    case attr::ObjCDirectMembers:
+      return getDerived().TraverseObjCDirectMembersAttr(cast<ObjCDirectMembersAttr>(A));
     case attr::ObjCException:
       return getDerived().TraverseObjCExceptionAttr(cast<ObjCExceptionAttr>(A));
     case attr::ObjCExplicitProtocolImpl:

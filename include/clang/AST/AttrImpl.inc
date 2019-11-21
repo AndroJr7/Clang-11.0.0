@@ -7081,6 +7081,90 @@ const char *ObjCDesignatedInitializerAttr::getSpelling() const {
   }
 }
 
+ObjCDirectAttr *ObjCDirectAttr::clone(ASTContext &C) const {
+  auto *A = new (C) ObjCDirectAttr(C, *this);
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void ObjCDirectAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((objc_direct))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::objc_direct]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::objc_direct]]";
+    break;
+  }
+}
+}
+
+const char *ObjCDirectAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "objc_direct";
+  case 1:
+    return "objc_direct";
+  case 2:
+    return "objc_direct";
+  }
+}
+
+ObjCDirectMembersAttr *ObjCDirectMembersAttr::clone(ASTContext &C) const {
+  auto *A = new (C) ObjCDirectMembersAttr(C, *this);
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void ObjCDirectMembersAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((objc_direct_members))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::objc_direct_members]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::objc_direct_members]]";
+    break;
+  }
+}
+}
+
+const char *ObjCDirectMembersAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "objc_direct_members";
+  case 1:
+    return "objc_direct_members";
+  case 2:
+    return "objc_direct_members";
+  }
+}
+
 ObjCExceptionAttr *ObjCExceptionAttr::clone(ASTContext &C) const {
   auto *A = new (C) ObjCExceptionAttr(C, *this);
   A->Inherited = Inherited;
@@ -11953,6 +12037,10 @@ const char *Attr::getSpelling() const {
     return cast<ObjCClassStubAttr>(this)->getSpelling();
   case attr::ObjCDesignatedInitializer:
     return cast<ObjCDesignatedInitializerAttr>(this)->getSpelling();
+  case attr::ObjCDirect:
+    return cast<ObjCDirectAttr>(this)->getSpelling();
+  case attr::ObjCDirectMembers:
+    return cast<ObjCDirectMembersAttr>(this)->getSpelling();
   case attr::ObjCException:
     return cast<ObjCExceptionAttr>(this)->getSpelling();
   case attr::ObjCExplicitProtocolImpl:
@@ -12537,6 +12625,10 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<ObjCClassStubAttr>(this)->clone(C);
   case attr::ObjCDesignatedInitializer:
     return cast<ObjCDesignatedInitializerAttr>(this)->clone(C);
+  case attr::ObjCDirect:
+    return cast<ObjCDirectAttr>(this)->clone(C);
+  case attr::ObjCDirectMembers:
+    return cast<ObjCDirectMembersAttr>(this)->clone(C);
   case attr::ObjCException:
     return cast<ObjCExceptionAttr>(this)->clone(C);
   case attr::ObjCExplicitProtocolImpl:
@@ -13121,6 +13213,10 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<ObjCClassStubAttr>(this)->printPretty(OS, Policy);
   case attr::ObjCDesignatedInitializer:
     return cast<ObjCDesignatedInitializerAttr>(this)->printPretty(OS, Policy);
+  case attr::ObjCDirect:
+    return cast<ObjCDirectAttr>(this)->printPretty(OS, Policy);
+  case attr::ObjCDirectMembers:
+    return cast<ObjCDirectMembersAttr>(this)->printPretty(OS, Policy);
   case attr::ObjCException:
     return cast<ObjCExceptionAttr>(this)->printPretty(OS, Policy);
   case attr::ObjCExplicitProtocolImpl:

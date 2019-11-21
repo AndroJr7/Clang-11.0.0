@@ -1315,13 +1315,26 @@
     arm_mrrc,                                  // llvm.arm.mrrc
     arm_mrrc2,                                 // llvm.arm.mrrc2
     arm_mve_add_predicated,                    // llvm.arm.mve.add.predicated
+    arm_mve_asrl,                              // llvm.arm.mve.asrl
+    arm_mve_lsll,                              // llvm.arm.mve.lsll
     arm_mve_maxv_s,                            // llvm.arm.mve.maxv.s
     arm_mve_maxv_u,                            // llvm.arm.mve.maxv.u
     arm_mve_minv_s,                            // llvm.arm.mve.minv.s
     arm_mve_minv_u,                            // llvm.arm.mve.minv.u
     arm_mve_pred_i2v,                          // llvm.arm.mve.pred.i2v
     arm_mve_pred_v2i,                          // llvm.arm.mve.pred.v2i
+    arm_mve_sqrshr,                            // llvm.arm.mve.sqrshr
+    arm_mve_sqrshrl,                           // llvm.arm.mve.sqrshrl
+    arm_mve_sqshl,                             // llvm.arm.mve.sqshl
+    arm_mve_sqshll,                            // llvm.arm.mve.sqshll
+    arm_mve_srshr,                             // llvm.arm.mve.srshr
+    arm_mve_srshrl,                            // llvm.arm.mve.srshrl
     arm_mve_sub_predicated,                    // llvm.arm.mve.sub.predicated
+    arm_mve_uqrshl,                            // llvm.arm.mve.uqrshl
+    arm_mve_uqrshll,                           // llvm.arm.mve.uqrshll
+    arm_mve_uqshl,                             // llvm.arm.mve.uqshl
+    arm_mve_uqshll,                            // llvm.arm.mve.uqshll
+    arm_mve_urshr,                             // llvm.arm.mve.urshr
     arm_mve_urshrl,                            // llvm.arm.mve.urshrl
     arm_mve_vadc,                              // llvm.arm.mve.vadc
     arm_mve_vadc_predicated,                   // llvm.arm.mve.vadc.predicated

@@ -1224,6 +1224,14 @@ Record.push_back(SA->getDevType());
     Record.push_back(A->isImplicit());
     break;
   }
+  case attr::ObjCDirect: {
+    Record.push_back(A->isImplicit());
+    break;
+  }
+  case attr::ObjCDirectMembers: {
+    Record.push_back(A->isImplicit());
+    break;
+  }
   case attr::ObjCException: {
     const auto *SA = cast<ObjCExceptionAttr>(A);
     Record.push_back(SA->isInherited());

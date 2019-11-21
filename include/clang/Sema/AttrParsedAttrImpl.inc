@@ -2114,6 +2114,42 @@ static void matchRulesForObjCDesignatedInitializer(llvm::SmallVectorImpl<std::pa
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
 }
 
+static bool checkObjCDirectAppertainsTo(Sema &S, const ParsedAttr &Attr, const Decl *D) {
+  if (!D || (!isa<ObjCMethodDecl>(D))) {
+    S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
+      << Attr << "Objective-C methods";
+    return false;
+  }
+  return true;
+}
+
+static bool checkObjCLangOpts(Sema &S, const ParsedAttr &Attr) {
+  auto &LangOpts = S.LangOpts;
+  if (LangOpts.ObjC)
+    return true;
+
+  S.Diag(Attr.getLoc(), diag::warn_attribute_ignored) << Attr;
+  return false;
+}
+
+static void matchRulesForObjCDirect(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) {
+  MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_method, /*IsSupported=*/LangOpts.ObjC));
+}
+
+static bool checkObjCDirectMembersAppertainsTo(Sema &S, const ParsedAttr &Attr, const Decl *D) {
+  if (!D || (!isa<ObjCImplDecl>(D) && !isa<ObjCCategoryDecl>(D))) {
+    S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
+      << Attr << "Objective-C implementation declarations and Objective-C containers";
+    return false;
+  }
+  return true;
+}
+
+static void matchRulesForObjCDirectMembers(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) {
+  MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_implementation, /*IsSupported=*/LangOpts.ObjC));
+  MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_category, /*IsSupported=*/LangOpts.ObjC));
+}
+
 static bool checkObjCExceptionAppertainsTo(Sema &S, const ParsedAttr &Attr, const Decl *D) {
   if (!D || (!isa<ObjCInterfaceDecl>(D))) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
@@ -2185,15 +2221,6 @@ static bool checkObjCNonLazyClassAppertainsTo(Sema &S, const ParsedAttr &Attr, c
     return false;
   }
   return true;
-}
-
-static bool checkObjCLangOpts(Sema &S, const ParsedAttr &Attr) {
-  auto &LangOpts = S.LangOpts;
-  if (LangOpts.ObjC)
-    return true;
-
-  S.Diag(Attr.getLoc(), diag::warn_attribute_ignored) << Attr;
-  return false;
 }
 
 static void matchRulesForObjCNonLazyClass(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) {
@@ -3437,6 +3464,8 @@ static const ParsedAttrInfo AttrInfoMap[ParsedAttr::UnknownAttribute + 1] = {
   { 3, 0, 1, 0, 0, 0, 0, 1, checkObjCBridgeRelatedAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForObjCBridgeRelated },  // AT_ObjCBridgeRelated
   { 0, 0, 0, 0, 0, 0, 0, 1, checkObjCClassStubAppertainsTo, checkObjCNonFragileRuntimeLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForObjCClassStub },  // AT_ObjCClassStub
   { 0, 0, 0, 0, 0, 0, 0, 1, checkObjCDesignatedInitializerAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForObjCDesignatedInitializer },  // AT_ObjCDesignatedInitializer
+  { 0, 0, 0, 0, 0, 0, 0, 1, checkObjCDirectAppertainsTo, checkObjCLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForObjCDirect },  // AT_ObjCDirect
+  { 0, 0, 0, 0, 0, 0, 0, 1, checkObjCDirectMembersAppertainsTo, checkObjCLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForObjCDirectMembers },  // AT_ObjCDirectMembers
   { 0, 0, 0, 0, 0, 0, 0, 1, checkObjCExceptionAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForObjCException },  // AT_ObjCException
   { 0, 0, 0, 0, 0, 0, 0, 1, checkObjCExplicitProtocolImplAppertainsTo, defaultDiagnoseLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForObjCExplicitProtocolImpl },  // AT_ObjCExplicitProtocolImpl
   { 0, 0, 0, 0, 0, 0, 0, 1, checkObjCExternallyRetainedAppertainsTo, checkObjCAutoRefCountLangOpts, defaultTargetRequirements, defaultSpellingIndexToSemanticSpelling, matchRulesForObjCExternallyRetained },  // AT_ObjCExternallyRetained

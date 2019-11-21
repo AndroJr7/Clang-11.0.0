@@ -842,6 +842,14 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<ObjCDesignatedInitializerAttr>(At);
       return A->clone(C);
     }
+    case attr::ObjCDirect: {
+      const auto *A = cast<ObjCDirectAttr>(At);
+      return A->clone(C);
+    }
+    case attr::ObjCDirectMembers: {
+      const auto *A = cast<ObjCDirectMembersAttr>(At);
+      return A->clone(C);
+    }
     case attr::ObjCException: {
       const auto *A = cast<ObjCExceptionAttr>(At);
       return A->clone(C);
@@ -1890,6 +1898,12 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
       return nullptr;
     }
     case attr::ObjCDesignatedInitializer: {
+      return nullptr;
+    }
+    case attr::ObjCDirect: {
+      return nullptr;
+    }
+    case attr::ObjCDirectMembers: {
       return nullptr;
     }
     case attr::ObjCException: {

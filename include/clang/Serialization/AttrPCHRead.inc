@@ -1637,6 +1637,18 @@
     New->setImplicit(isImplicit);
     break;
   }
+  case attr::ObjCDirect: {
+    bool isImplicit = Record.readInt();
+    New = new (Context) ObjCDirectAttr(Context, Info);
+    New->setImplicit(isImplicit);
+    break;
+  }
+  case attr::ObjCDirectMembers: {
+    bool isImplicit = Record.readInt();
+    New = new (Context) ObjCDirectMembersAttr(Context, Info);
+    New->setImplicit(isImplicit);
+    break;
+  }
   case attr::ObjCException: {
     bool isInherited = Record.readInt();
     bool isImplicit = Record.readInt();
