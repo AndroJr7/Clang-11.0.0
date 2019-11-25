@@ -1522,7 +1522,16 @@
       implVendorsStorage.push_back(Record.readString());
     for (unsigned i = 0; i != implVendorsSize; ++i)
       implVendors.push_back(implVendorsStorage[i]);
-    New = new (Context) OMPDeclareVariantAttr(Context, Info, variantFuncRef, scores.data(), scoresSize, ctxSelectorSets.data(), ctxSelectorSetsSize, ctxSelectors.data(), ctxSelectorsSize, implVendors.data(), implVendorsSize);
+    unsigned deviceKindsSize = Record.readInt();
+    SmallVector<StringRef, 4> deviceKinds;
+    deviceKinds.reserve(deviceKindsSize);
+    SmallVector<std::string, 4> deviceKindsStorage;
+    deviceKindsStorage.reserve(deviceKindsSize);
+    for (unsigned i = 0; i != deviceKindsSize; ++i)
+      deviceKindsStorage.push_back(Record.readString());
+    for (unsigned i = 0; i != deviceKindsSize; ++i)
+      deviceKinds.push_back(deviceKindsStorage[i]);
+    New = new (Context) OMPDeclareVariantAttr(Context, Info, variantFuncRef, scores.data(), scoresSize, ctxSelectorSets.data(), ctxSelectorSetsSize, ctxSelectors.data(), ctxSelectorsSize, implVendors.data(), implVendorsSize, deviceKinds.data(), deviceKindsSize);
     cast<InheritableAttr>(New)->setInherited(isInherited);
     New->setImplicit(isImplicit);
     break;
