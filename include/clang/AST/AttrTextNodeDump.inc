@@ -548,9 +548,24 @@
   void VisitOpenCLAccessAttr(const OpenCLAccessAttr *A) {
     OS << " " << A->getSpelling();
   }
+  void VisitOpenCLConstantAddressSpaceAttr(const OpenCLConstantAddressSpaceAttr *A) {
+    OS << " " << A->getSpelling();
+  }
+  void VisitOpenCLGenericAddressSpaceAttr(const OpenCLGenericAddressSpaceAttr *A) {
+    OS << " " << A->getSpelling();
+  }
+  void VisitOpenCLGlobalAddressSpaceAttr(const OpenCLGlobalAddressSpaceAttr *A) {
+    OS << " " << A->getSpelling();
+  }
   void VisitOpenCLIntelReqdSubGroupSizeAttr(const OpenCLIntelReqdSubGroupSizeAttr *A) {
     const auto *SA = cast<OpenCLIntelReqdSubGroupSizeAttr>(A); (void)SA;
     OS << " " << SA->getSubGroupSize();
+  }
+  void VisitOpenCLLocalAddressSpaceAttr(const OpenCLLocalAddressSpaceAttr *A) {
+    OS << " " << A->getSpelling();
+  }
+  void VisitOpenCLPrivateAddressSpaceAttr(const OpenCLPrivateAddressSpaceAttr *A) {
+    OS << " " << A->getSpelling();
   }
   void VisitOpenCLUnrollHintAttr(const OpenCLUnrollHintAttr *A) {
     const auto *SA = cast<OpenCLUnrollHintAttr>(A); (void)SA;

@@ -2166,6 +2166,14 @@
     New->setImplicit(isImplicit);
     break;
   }
+  case attr::SYCLKernel: {
+    bool isInherited = Record.readInt();
+    bool isImplicit = Record.readInt();
+    New = new (Context) SYCLKernelAttr(Context, Info);
+    cast<InheritableAttr>(New)->setInherited(isInherited);
+    New->setImplicit(isImplicit);
+    break;
+  }
   case attr::ScopedLockable: {
     bool isInherited = Record.readInt();
     bool isImplicit = Record.readInt();

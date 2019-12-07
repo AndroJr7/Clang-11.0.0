@@ -1130,6 +1130,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<SPtrAttr>(At);
       return A->clone(C);
     }
+    case attr::SYCLKernel: {
+      const auto *A = cast<SYCLKernelAttr>(At);
+      return A->clone(C);
+    }
     case attr::ScopedLockable: {
       const auto *A = cast<ScopedLockableAttr>(At);
       return A->clone(C);
@@ -2093,6 +2097,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
       return nullptr;
     }
     case attr::SPtr: {
+      return nullptr;
+    }
+    case attr::SYCLKernel: {
       return nullptr;
     }
     case attr::ScopedLockable: {

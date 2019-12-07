@@ -1613,6 +1613,12 @@ Record.push_back(SA->getState());
     Record.push_back(A->isImplicit());
     break;
   }
+  case attr::SYCLKernel: {
+    const auto *SA = cast<SYCLKernelAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    break;
+  }
   case attr::ScopedLockable: {
     const auto *SA = cast<ScopedLockableAttr>(A);
     Record.push_back(SA->isInherited());

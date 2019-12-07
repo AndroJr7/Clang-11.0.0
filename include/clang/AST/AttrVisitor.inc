@@ -980,6 +980,10 @@
   bool VisitSPtrAttr(SPtrAttr *A) {
     return true; 
   }
+  bool TraverseSYCLKernelAttr(SYCLKernelAttr *A);
+  bool VisitSYCLKernelAttr(SYCLKernelAttr *A) {
+    return true; 
+  }
   bool TraverseScopedLockableAttr(ScopedLockableAttr *A);
   bool VisitScopedLockableAttr(ScopedLockableAttr *A) {
     return true; 
@@ -3547,6 +3551,15 @@ bool VISITORCLASS<Derived>::TraverseSPtrAttr(SPtrAttr *A) {
 }
 
 template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseSYCLKernelAttr(SYCLKernelAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitSYCLKernelAttr(A))
+    return false;
+  return true;
+}
+
+template <typename Derived>
 bool VISITORCLASS<Derived>::TraverseScopedLockableAttr(ScopedLockableAttr *A) {
   if (!getDerived().VisitAttr(A))
     return false;
@@ -4496,6 +4509,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseReturnsTwiceAttr(cast<ReturnsTwiceAttr>(A));
     case attr::SPtr:
       return getDerived().TraverseSPtrAttr(cast<SPtrAttr>(A));
+    case attr::SYCLKernel:
+      return getDerived().TraverseSYCLKernelAttr(cast<SYCLKernelAttr>(A));
     case attr::ScopedLockable:
       return getDerived().TraverseScopedLockableAttr(cast<ScopedLockableAttr>(A));
     case attr::Section:

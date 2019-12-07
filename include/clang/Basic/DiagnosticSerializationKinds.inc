@@ -67,4 +67,4 @@ DIAG(note_second_module_difference, CLASS_NOTE, (unsigned)diag::Severity::Fatal,
 DIAG(remark_module_import, CLASS_REMARK, (unsigned)diag::Severity::Ignored, "importing module '%0'%select{| into '%3'}2 from '%1'", 454, SFINAE_Suppress, false, false, 17)
 DIAG(warn_duplicate_module_file_extension, CLASS_WARNING, (unsigned)diag::Severity::Warning, "duplicate module file extension block name '%0'", 453, SFINAE_Suppress, false, false, 17)
 DIAG(warn_module_system_bit_conflict, CLASS_WARNING, (unsigned)diag::Severity::Warning, "module file '%0' was validated as a system module and is now being imported as a non-system module; any difference in diagnostic options will be ignored", 451, SFINAE_Suppress, false, false, 17)
-DIAG(warn_module_uses_date_time, CLASS_WARNING, (unsigned)diag::Severity::Warning, "%select{precompiled header|module}0 uses __DATE__ or __TIME__", 564, SFINAE_Suppress, false, false, 20)
+DIAG(warn_module_uses_date_time, CLASS_WARNING, (unsigned)diag::Severity::Warning, "%select{precompiled header|module}0 uses __DATE__ or __TIME__", 566, SFINAE_Suppress, false, false, 20)

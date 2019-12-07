@@ -84,6 +84,8 @@
     experimental_constrained_exp,              // llvm.experimental.constrained.exp
     experimental_constrained_exp2,             // llvm.experimental.constrained.exp2
     experimental_constrained_fadd,             // llvm.experimental.constrained.fadd
+    experimental_constrained_fcmp,             // llvm.experimental.constrained.fcmp
+    experimental_constrained_fcmps,            // llvm.experimental.constrained.fcmps
     experimental_constrained_fdiv,             // llvm.experimental.constrained.fdiv
     experimental_constrained_floor,            // llvm.experimental.constrained.floor
     experimental_constrained_fma,              // llvm.experimental.constrained.fma
@@ -463,6 +465,8 @@
     aarch64_neon_ushl,                         // llvm.aarch64.neon.ushl
     aarch64_neon_ushll,                        // llvm.aarch64.neon.ushll
     aarch64_neon_usqadd,                       // llvm.aarch64.neon.usqadd
+    aarch64_neon_vcadd_rot270,                 // llvm.aarch64.neon.vcadd.rot270
+    aarch64_neon_vcadd_rot90,                  // llvm.aarch64.neon.vcadd.rot90
     aarch64_neon_vcopy_lane,                   // llvm.aarch64.neon.vcopy.lane
     aarch64_neon_vcvtfp2fxs,                   // llvm.aarch64.neon.vcvtfp2fxs
     aarch64_neon_vcvtfp2fxu,                   // llvm.aarch64.neon.vcvtfp2fxu
@@ -488,18 +492,49 @@
     aarch64_sve_abs,                           // llvm.aarch64.sve.abs
     aarch64_sve_add,                           // llvm.aarch64.sve.add
     aarch64_sve_and,                           // llvm.aarch64.sve.and
+    aarch64_sve_ands,                          // llvm.aarch64.sve.ands
+    aarch64_sve_andv,                          // llvm.aarch64.sve.andv
+    aarch64_sve_asr,                           // llvm.aarch64.sve.asr
+    aarch64_sve_asr_wide,                      // llvm.aarch64.sve.asr.wide
+    aarch64_sve_asrd,                          // llvm.aarch64.sve.asrd
     aarch64_sve_bic,                           // llvm.aarch64.sve.bic
-    aarch64_sve_bic_pred,                      // llvm.aarch64.sve.bic.pred
+    aarch64_sve_bic_base,                      // llvm.aarch64.sve.bic.base
+    aarch64_sve_bics,                          // llvm.aarch64.sve.bics
     aarch64_sve_cls,                           // llvm.aarch64.sve.cls
     aarch64_sve_clz,                           // llvm.aarch64.sve.clz
+    aarch64_sve_cmpeq,                         // llvm.aarch64.sve.cmpeq
+    aarch64_sve_cmpeq_wide,                    // llvm.aarch64.sve.cmpeq.wide
+    aarch64_sve_cmpge,                         // llvm.aarch64.sve.cmpge
+    aarch64_sve_cmpge_wide,                    // llvm.aarch64.sve.cmpge.wide
+    aarch64_sve_cmpgt,                         // llvm.aarch64.sve.cmpgt
+    aarch64_sve_cmpgt_wide,                    // llvm.aarch64.sve.cmpgt.wide
+    aarch64_sve_cmphi,                         // llvm.aarch64.sve.cmphi
+    aarch64_sve_cmphi_wide,                    // llvm.aarch64.sve.cmphi.wide
+    aarch64_sve_cmphs,                         // llvm.aarch64.sve.cmphs
+    aarch64_sve_cmphs_wide,                    // llvm.aarch64.sve.cmphs.wide
+    aarch64_sve_cmple_wide,                    // llvm.aarch64.sve.cmple.wide
+    aarch64_sve_cmplo_wide,                    // llvm.aarch64.sve.cmplo.wide
+    aarch64_sve_cmpls_wide,                    // llvm.aarch64.sve.cmpls.wide
+    aarch64_sve_cmplt_wide,                    // llvm.aarch64.sve.cmplt.wide
+    aarch64_sve_cmpne,                         // llvm.aarch64.sve.cmpne
+    aarch64_sve_cmpne_wide,                    // llvm.aarch64.sve.cmpne.wide
     aarch64_sve_cnot,                          // llvm.aarch64.sve.cnot
     aarch64_sve_cnt,                           // llvm.aarch64.sve.cnt
+    aarch64_sve_cntb,                          // llvm.aarch64.sve.cntb
+    aarch64_sve_cntd,                          // llvm.aarch64.sve.cntd
+    aarch64_sve_cnth,                          // llvm.aarch64.sve.cnth
+    aarch64_sve_cntp,                          // llvm.aarch64.sve.cntp
+    aarch64_sve_cntw,                          // llvm.aarch64.sve.cntw
+    aarch64_sve_eor,                           // llvm.aarch64.sve.eor
+    aarch64_sve_eors,                          // llvm.aarch64.sve.eors
+    aarch64_sve_eorv,                          // llvm.aarch64.sve.eorv
     aarch64_sve_fabd,                          // llvm.aarch64.sve.fabd
     aarch64_sve_fabs,                          // llvm.aarch64.sve.fabs
     aarch64_sve_facge,                         // llvm.aarch64.sve.facge
     aarch64_sve_facgt,                         // llvm.aarch64.sve.facgt
     aarch64_sve_fadd,                          // llvm.aarch64.sve.fadd
     aarch64_sve_fadda,                         // llvm.aarch64.sve.fadda
+    aarch64_sve_faddp,                         // llvm.aarch64.sve.faddp
     aarch64_sve_faddv,                         // llvm.aarch64.sve.faddv
     aarch64_sve_fcadd,                         // llvm.aarch64.sve.fcadd
     aarch64_sve_fcmla,                         // llvm.aarch64.sve.fcmla
@@ -509,23 +544,58 @@
     aarch64_sve_fcmpgt,                        // llvm.aarch64.sve.fcmpgt
     aarch64_sve_fcmpne,                        // llvm.aarch64.sve.fcmpne
     aarch64_sve_fcmpuo,                        // llvm.aarch64.sve.fcmpuo
+    aarch64_sve_fcvt,                          // llvm.aarch64.sve.fcvt
+    aarch64_sve_fcvt_f16f32,                   // llvm.aarch64.sve.fcvt.f16f32
+    aarch64_sve_fcvt_f16f64,                   // llvm.aarch64.sve.fcvt.f16f64
+    aarch64_sve_fcvt_f32f16,                   // llvm.aarch64.sve.fcvt.f32f16
+    aarch64_sve_fcvt_f32f64,                   // llvm.aarch64.sve.fcvt.f32f64
+    aarch64_sve_fcvt_f64f16,                   // llvm.aarch64.sve.fcvt.f64f16
+    aarch64_sve_fcvt_f64f32,                   // llvm.aarch64.sve.fcvt.f64f32
+    aarch64_sve_fcvtlt_f32f16,                 // llvm.aarch64.sve.fcvtlt.f32f16
+    aarch64_sve_fcvtlt_f64f32,                 // llvm.aarch64.sve.fcvtlt.f64f32
+    aarch64_sve_fcvtnt_f16f32,                 // llvm.aarch64.sve.fcvtnt.f16f32
+    aarch64_sve_fcvtnt_f32f64,                 // llvm.aarch64.sve.fcvtnt.f32f64
+    aarch64_sve_fcvtx_f32f64,                  // llvm.aarch64.sve.fcvtx.f32f64
+    aarch64_sve_fcvtxnt_f32f64,                // llvm.aarch64.sve.fcvtxnt.f32f64
+    aarch64_sve_fcvtzs,                        // llvm.aarch64.sve.fcvtzs
     aarch64_sve_fcvtzs_i32f16,                 // llvm.aarch64.sve.fcvtzs.i32f16
+    aarch64_sve_fcvtzs_i32f64,                 // llvm.aarch64.sve.fcvtzs.i32f64
+    aarch64_sve_fcvtzs_i64f16,                 // llvm.aarch64.sve.fcvtzs.i64f16
+    aarch64_sve_fcvtzs_i64f32,                 // llvm.aarch64.sve.fcvtzs.i64f32
+    aarch64_sve_fcvtzu,                        // llvm.aarch64.sve.fcvtzu
+    aarch64_sve_fcvtzu_i32f16,                 // llvm.aarch64.sve.fcvtzu.i32f16
+    aarch64_sve_fcvtzu_i32f64,                 // llvm.aarch64.sve.fcvtzu.i32f64
+    aarch64_sve_fcvtzu_i64f16,                 // llvm.aarch64.sve.fcvtzu.i64f16
+    aarch64_sve_fcvtzu_i64f32,                 // llvm.aarch64.sve.fcvtzu.i64f32
     aarch64_sve_fdiv,                          // llvm.aarch64.sve.fdiv
     aarch64_sve_fdivr,                         // llvm.aarch64.sve.fdivr
     aarch64_sve_fexpa_x,                       // llvm.aarch64.sve.fexpa.x
+    aarch64_sve_flogb,                         // llvm.aarch64.sve.flogb
     aarch64_sve_fmad,                          // llvm.aarch64.sve.fmad
     aarch64_sve_fmax,                          // llvm.aarch64.sve.fmax
     aarch64_sve_fmaxnm,                        // llvm.aarch64.sve.fmaxnm
+    aarch64_sve_fmaxnmp,                       // llvm.aarch64.sve.fmaxnmp
     aarch64_sve_fmaxnmv,                       // llvm.aarch64.sve.fmaxnmv
+    aarch64_sve_fmaxp,                         // llvm.aarch64.sve.fmaxp
     aarch64_sve_fmaxv,                         // llvm.aarch64.sve.fmaxv
     aarch64_sve_fmin,                          // llvm.aarch64.sve.fmin
     aarch64_sve_fminnm,                        // llvm.aarch64.sve.fminnm
+    aarch64_sve_fminnmp,                       // llvm.aarch64.sve.fminnmp
     aarch64_sve_fminnmv,                       // llvm.aarch64.sve.fminnmv
+    aarch64_sve_fminp,                         // llvm.aarch64.sve.fminp
     aarch64_sve_fminv,                         // llvm.aarch64.sve.fminv
     aarch64_sve_fmla,                          // llvm.aarch64.sve.fmla
     aarch64_sve_fmla_lane,                     // llvm.aarch64.sve.fmla.lane
+    aarch64_sve_fmlalb,                        // llvm.aarch64.sve.fmlalb
+    aarch64_sve_fmlalb_lane,                   // llvm.aarch64.sve.fmlalb.lane
+    aarch64_sve_fmlalt,                        // llvm.aarch64.sve.fmlalt
+    aarch64_sve_fmlalt_lane,                   // llvm.aarch64.sve.fmlalt.lane
     aarch64_sve_fmls,                          // llvm.aarch64.sve.fmls
     aarch64_sve_fmls_lane,                     // llvm.aarch64.sve.fmls.lane
+    aarch64_sve_fmlslb,                        // llvm.aarch64.sve.fmlslb
+    aarch64_sve_fmlslb_lane,                   // llvm.aarch64.sve.fmlslb.lane
+    aarch64_sve_fmlslt,                        // llvm.aarch64.sve.fmlslt
+    aarch64_sve_fmlslt_lane,                   // llvm.aarch64.sve.fmlslt.lane
     aarch64_sve_fmsb,                          // llvm.aarch64.sve.fmsb
     aarch64_sve_fmul,                          // llvm.aarch64.sve.fmul
     aarch64_sve_fmul_lane,                     // llvm.aarch64.sve.fmul.lane
@@ -554,23 +624,56 @@
     aarch64_sve_ftmad_x,                       // llvm.aarch64.sve.ftmad.x
     aarch64_sve_ftsmul_x,                      // llvm.aarch64.sve.ftsmul.x
     aarch64_sve_ftssel_x,                      // llvm.aarch64.sve.ftssel.x
+    aarch64_sve_insr,                          // llvm.aarch64.sve.insr
+    aarch64_sve_ld1_gather,                    // llvm.aarch64.sve.ld1.gather
+    aarch64_sve_ld1_gather_imm,                // llvm.aarch64.sve.ld1.gather.imm
+    aarch64_sve_ld1_gather_index,              // llvm.aarch64.sve.ld1.gather.index
+    aarch64_sve_ld1_gather_sxtw,               // llvm.aarch64.sve.ld1.gather.sxtw
+    aarch64_sve_ld1_gather_sxtw_index,         // llvm.aarch64.sve.ld1.gather.sxtw.index
+    aarch64_sve_ld1_gather_uxtw,               // llvm.aarch64.sve.ld1.gather.uxtw
+    aarch64_sve_ld1_gather_uxtw_index,         // llvm.aarch64.sve.ld1.gather.uxtw.index
+    aarch64_sve_lsl,                           // llvm.aarch64.sve.lsl
+    aarch64_sve_lsl_wide,                      // llvm.aarch64.sve.lsl.wide
+    aarch64_sve_lsr,                           // llvm.aarch64.sve.lsr
+    aarch64_sve_lsr_wide,                      // llvm.aarch64.sve.lsr.wide
     aarch64_sve_mad,                           // llvm.aarch64.sve.mad
     aarch64_sve_mla,                           // llvm.aarch64.sve.mla
     aarch64_sve_mls,                           // llvm.aarch64.sve.mls
     aarch64_sve_msb,                           // llvm.aarch64.sve.msb
     aarch64_sve_mul,                           // llvm.aarch64.sve.mul
+    aarch64_sve_nand,                          // llvm.aarch64.sve.nand
+    aarch64_sve_nands,                         // llvm.aarch64.sve.nands
     aarch64_sve_neg,                           // llvm.aarch64.sve.neg
+    aarch64_sve_nor,                           // llvm.aarch64.sve.nor
+    aarch64_sve_nors,                          // llvm.aarch64.sve.nors
     aarch64_sve_not,                           // llvm.aarch64.sve.not
     aarch64_sve_or,                            // llvm.aarch64.sve.or
+    aarch64_sve_orn,                           // llvm.aarch64.sve.orn
+    aarch64_sve_orns,                          // llvm.aarch64.sve.orns
+    aarch64_sve_orr,                           // llvm.aarch64.sve.orr
+    aarch64_sve_orrs,                          // llvm.aarch64.sve.orrs
+    aarch64_sve_orv,                           // llvm.aarch64.sve.orv
     aarch64_sve_punpkhi,                       // llvm.aarch64.sve.punpkhi
     aarch64_sve_punpklo,                       // llvm.aarch64.sve.punpklo
+    aarch64_sve_rbit,                          // llvm.aarch64.sve.rbit
+    aarch64_sve_revb,                          // llvm.aarch64.sve.revb
+    aarch64_sve_revh,                          // llvm.aarch64.sve.revh
+    aarch64_sve_revw,                          // llvm.aarch64.sve.revw
     aarch64_sve_sabd,                          // llvm.aarch64.sve.sabd
+    aarch64_sve_saddv,                         // llvm.aarch64.sve.saddv
+    aarch64_sve_scvtf,                         // llvm.aarch64.sve.scvtf
+    aarch64_sve_scvtf_f16i32,                  // llvm.aarch64.sve.scvtf.f16i32
+    aarch64_sve_scvtf_f16i64,                  // llvm.aarch64.sve.scvtf.f16i64
+    aarch64_sve_scvtf_f32i64,                  // llvm.aarch64.sve.scvtf.f32i64
+    aarch64_sve_scvtf_f64i32,                  // llvm.aarch64.sve.scvtf.f64i32
     aarch64_sve_sdiv,                          // llvm.aarch64.sve.sdiv
     aarch64_sve_sdivr,                         // llvm.aarch64.sve.sdivr
     aarch64_sve_sdot,                          // llvm.aarch64.sve.sdot
     aarch64_sve_sdot_lane,                     // llvm.aarch64.sve.sdot.lane
     aarch64_sve_smax,                          // llvm.aarch64.sve.smax
+    aarch64_sve_smaxv,                         // llvm.aarch64.sve.smaxv
     aarch64_sve_smin,                          // llvm.aarch64.sve.smin
+    aarch64_sve_sminv,                         // llvm.aarch64.sve.sminv
     aarch64_sve_smulh,                         // llvm.aarch64.sve.smulh
     aarch64_sve_sub,                           // llvm.aarch64.sve.sub
     aarch64_sve_subr,                          // llvm.aarch64.sve.subr
@@ -580,18 +683,34 @@
     aarch64_sve_sxth,                          // llvm.aarch64.sve.sxth
     aarch64_sve_sxtw,                          // llvm.aarch64.sve.sxtw
     aarch64_sve_uabd,                          // llvm.aarch64.sve.uabd
+    aarch64_sve_uaddv,                         // llvm.aarch64.sve.uaddv
+    aarch64_sve_ucvtf,                         // llvm.aarch64.sve.ucvtf
+    aarch64_sve_ucvtf_f16i32,                  // llvm.aarch64.sve.ucvtf.f16i32
+    aarch64_sve_ucvtf_f16i64,                  // llvm.aarch64.sve.ucvtf.f16i64
+    aarch64_sve_ucvtf_f32i64,                  // llvm.aarch64.sve.ucvtf.f32i64
+    aarch64_sve_ucvtf_f64i32,                  // llvm.aarch64.sve.ucvtf.f64i32
     aarch64_sve_udiv,                          // llvm.aarch64.sve.udiv
     aarch64_sve_udivr,                         // llvm.aarch64.sve.udivr
     aarch64_sve_udot,                          // llvm.aarch64.sve.udot
     aarch64_sve_udot_lane,                     // llvm.aarch64.sve.udot.lane
     aarch64_sve_umax,                          // llvm.aarch64.sve.umax
+    aarch64_sve_umaxv,                         // llvm.aarch64.sve.umaxv
     aarch64_sve_umin,                          // llvm.aarch64.sve.umin
+    aarch64_sve_uminv,                         // llvm.aarch64.sve.uminv
     aarch64_sve_umulh,                         // llvm.aarch64.sve.umulh
     aarch64_sve_uunpkhi,                       // llvm.aarch64.sve.uunpkhi
     aarch64_sve_uunpklo,                       // llvm.aarch64.sve.uunpklo
     aarch64_sve_uxtb,                          // llvm.aarch64.sve.uxtb
     aarch64_sve_uxth,                          // llvm.aarch64.sve.uxth
     aarch64_sve_uxtw,                          // llvm.aarch64.sve.uxtw
+    aarch64_sve_whilege,                       // llvm.aarch64.sve.whilege
+    aarch64_sve_whilegt,                       // llvm.aarch64.sve.whilegt
+    aarch64_sve_whilehi,                       // llvm.aarch64.sve.whilehi
+    aarch64_sve_whilehs,                       // llvm.aarch64.sve.whilehs
+    aarch64_sve_whilele,                       // llvm.aarch64.sve.whilele
+    aarch64_sve_whilelo,                       // llvm.aarch64.sve.whilelo
+    aarch64_sve_whilels,                       // llvm.aarch64.sve.whilels
+    aarch64_sve_whilelt,                       // llvm.aarch64.sve.whilelt
     aarch64_sve_xor,                           // llvm.aarch64.sve.xor
     aarch64_tagp,                              // llvm.aarch64.tagp
     aarch64_tcancel,                           // llvm.aarch64.tcancel
@@ -1314,15 +1433,26 @@
     arm_mrc2,                                  // llvm.arm.mrc2
     arm_mrrc,                                  // llvm.arm.mrrc
     arm_mrrc2,                                 // llvm.arm.mrrc2
+    arm_mve_abd_predicated,                    // llvm.arm.mve.abd.predicated
     arm_mve_add_predicated,                    // llvm.arm.mve.add.predicated
+    arm_mve_and_predicated,                    // llvm.arm.mve.and.predicated
     arm_mve_asrl,                              // llvm.arm.mve.asrl
+    arm_mve_bic_predicated,                    // llvm.arm.mve.bic.predicated
+    arm_mve_eor_predicated,                    // llvm.arm.mve.eor.predicated
     arm_mve_lsll,                              // llvm.arm.mve.lsll
+    arm_mve_max_predicated,                    // llvm.arm.mve.max.predicated
     arm_mve_maxv_s,                            // llvm.arm.mve.maxv.s
     arm_mve_maxv_u,                            // llvm.arm.mve.maxv.u
+    arm_mve_min_predicated,                    // llvm.arm.mve.min.predicated
     arm_mve_minv_s,                            // llvm.arm.mve.minv.s
     arm_mve_minv_u,                            // llvm.arm.mve.minv.u
+    arm_mve_mul_predicated,                    // llvm.arm.mve.mul.predicated
+    arm_mve_mulh_predicated,                   // llvm.arm.mve.mulh.predicated
+    arm_mve_orn_predicated,                    // llvm.arm.mve.orn.predicated
+    arm_mve_orr_predicated,                    // llvm.arm.mve.orr.predicated
     arm_mve_pred_i2v,                          // llvm.arm.mve.pred.i2v
     arm_mve_pred_v2i,                          // llvm.arm.mve.pred.v2i
+    arm_mve_rmulh_predicated,                  // llvm.arm.mve.rmulh.predicated
     arm_mve_sqrshr,                            // llvm.arm.mve.sqrshr
     arm_mve_sqrshrl,                           // llvm.arm.mve.sqrshrl
     arm_mve_sqshl,                             // llvm.arm.mve.sqshl
@@ -1336,8 +1466,13 @@
     arm_mve_uqshll,                            // llvm.arm.mve.uqshll
     arm_mve_urshr,                             // llvm.arm.mve.urshr
     arm_mve_urshrl,                            // llvm.arm.mve.urshrl
+    arm_mve_vabd,                              // llvm.arm.mve.vabd
     arm_mve_vadc,                              // llvm.arm.mve.vadc
     arm_mve_vadc_predicated,                   // llvm.arm.mve.vadc.predicated
+    arm_mve_vctp16,                            // llvm.arm.mve.vctp16
+    arm_mve_vctp32,                            // llvm.arm.mve.vctp32
+    arm_mve_vctp64,                            // llvm.arm.mve.vctp64
+    arm_mve_vctp8,                             // llvm.arm.mve.vctp8
     arm_mve_vcvt_narrow,                       // llvm.arm.mve.vcvt.narrow
     arm_mve_vcvt_narrow_predicated,            // llvm.arm.mve.vcvt.narrow.predicated
     arm_mve_vld2q,                             // llvm.arm.mve.vld2q
@@ -1348,6 +1483,8 @@
     arm_mve_vldr_gather_base_wb_predicated,    // llvm.arm.mve.vldr.gather.base.wb.predicated
     arm_mve_vldr_gather_offset,                // llvm.arm.mve.vldr.gather.offset
     arm_mve_vldr_gather_offset_predicated,     // llvm.arm.mve.vldr.gather.offset.predicated
+    arm_mve_vmulh,                             // llvm.arm.mve.vmulh
+    arm_mve_vrmulh,                            // llvm.arm.mve.vrmulh
     arm_mve_vst2q,                             // llvm.arm.mve.vst2q
     arm_mve_vst4q,                             // llvm.arm.mve.vst4q
     arm_mve_vstr_scatter_base,                 // llvm.arm.mve.vstr.scatter.base
@@ -1378,6 +1515,8 @@
     arm_neon_vacge,                            // llvm.arm.neon.vacge
     arm_neon_vacgt,                            // llvm.arm.neon.vacgt
     arm_neon_vbsl,                             // llvm.arm.neon.vbsl
+    arm_neon_vcadd_rot270,                     // llvm.arm.neon.vcadd.rot270
+    arm_neon_vcadd_rot90,                      // llvm.arm.neon.vcadd.rot90
     arm_neon_vcls,                             // llvm.arm.neon.vcls
     arm_neon_vcvtas,                           // llvm.arm.neon.vcvtas
     arm_neon_vcvtau,                           // llvm.arm.neon.vcvtau
@@ -1430,8 +1569,6 @@
     arm_neon_vpmins,                           // llvm.arm.neon.vpmins
     arm_neon_vpminu,                           // llvm.arm.neon.vpminu
     arm_neon_vqabs,                            // llvm.arm.neon.vqabs
-    arm_neon_vqadds,                           // llvm.arm.neon.vqadds
-    arm_neon_vqaddu,                           // llvm.arm.neon.vqaddu
     arm_neon_vqdmulh,                          // llvm.arm.neon.vqdmulh
     arm_neon_vqdmull,                          // llvm.arm.neon.vqdmull
     arm_neon_vqmovns,                          // llvm.arm.neon.vqmovns
@@ -1450,8 +1587,6 @@
     arm_neon_vqshifts,                         // llvm.arm.neon.vqshifts
     arm_neon_vqshiftsu,                        // llvm.arm.neon.vqshiftsu
     arm_neon_vqshiftu,                         // llvm.arm.neon.vqshiftu
-    arm_neon_vqsubs,                           // llvm.arm.neon.vqsubs
-    arm_neon_vqsubu,                           // llvm.arm.neon.vqsubu
     arm_neon_vraddhn,                          // llvm.arm.neon.vraddhn
     arm_neon_vrecpe,                           // llvm.arm.neon.vrecpe
     arm_neon_vrecps,                           // llvm.arm.neon.vrecps
@@ -1574,10 +1709,6 @@
     arm_usub8,                                 // llvm.arm.usub8
     arm_uxtab16,                               // llvm.arm.uxtab16
     arm_uxtb16,                                // llvm.arm.uxtb16
-    arm_vctp16,                                // llvm.arm.vctp16
-    arm_vctp32,                                // llvm.arm.vctp32
-    arm_vctp64,                                // llvm.arm.vctp64
-    arm_vctp8,                                 // llvm.arm.vctp8
     arm_vcvtr,                                 // llvm.arm.vcvtr
     arm_vcvtru,                                // llvm.arm.vcvtru
     bpf_load_byte,                             // llvm.bpf.load.byte

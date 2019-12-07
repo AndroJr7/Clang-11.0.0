@@ -9106,20 +9106,40 @@ public:
       }
       // TODO: add printing of real context selectors.
       OS << " match(";
+      int Used[OMP_CTX_SET_unknown] = {0};
       for (unsigned I = 0, E = ctxSelectorSets_size(); I < E; ++I) {
         auto CtxSet = static_cast<OpenMPContextSelectorSetKind>(
             *std::next(ctxSelectorSets_begin(), I));
-        auto Ctx = static_cast<OpenMPContextSelectorKind>(
-            *std::next(ctxSelectors_begin(), I));
-        assert(CtxSet != OMP_CTX_SET_unknown && Ctx != OMP_CTX_unknown &&
-               "Unknown context selector.");
+        if (Used[CtxSet])
+          continue;
+        if (I > 0)
+          OS << ",";
         switch (CtxSet) {
         case OMP_CTX_SET_implementation:
           OS << "implementation={";
+          break;
+        case OMP_CTX_SET_device:
+          OS << "device={";
+          break;
+        case OMP_CTX_SET_unknown:
+          llvm_unreachable("Unknown context selector set.");
+        }
+        Used[CtxSet] = 1;
+        for (unsigned K = I, EK = ctxSelectors_size(); K < EK; ++K) {
+          auto CtxSetK = static_cast<OpenMPContextSelectorSetKind>(
+              *std::next(ctxSelectorSets_begin(), K));
+          if (CtxSet != CtxSetK)
+            continue;
+          if (K != I)
+            OS << ",";
+          auto Ctx = static_cast<OpenMPContextSelectorKind>(
+              *std::next(ctxSelectors_begin(), K));
           switch (Ctx) {
           case OMP_CTX_vendor:
+            assert(CtxSet == OMP_CTX_SET_implementation &&
+                   "Expected implementation context selector set.");
             OS << "vendor(";
-            printScore(OS, Policy, I);
+            printScore(OS, Policy, K);
             if (implVendors_size() > 0) {
               OS << *implVendors(). begin();
               for (StringRef VendorName : llvm::drop_begin(implVendors(), 1))
@@ -9128,16 +9148,8 @@ public:
             OS << ")";
             break;
           case OMP_CTX_kind:
-            llvm_unreachable("Unexpected context selector in implementation set.");
-          case OMP_CTX_unknown:
-            llvm_unreachable("Unknown context selector.");
-          }
-          OS << "}";
-          break;
-        case OMP_CTX_SET_device:
-          OS << "device={";
-          switch (Ctx) {
-          case OMP_CTX_kind:
+            assert(CtxSet == OMP_CTX_SET_device &&
+                   "Expected device context selector set.");
             OS << "kind(";
             if (deviceKinds_size() > 0) {
               OS << *deviceKinds().begin();
@@ -9146,18 +9158,11 @@ public:
             }
             OS << ")";
             break;
-          case OMP_CTX_vendor:
-            llvm_unreachable("Unexpected context selector in device set.");
           case OMP_CTX_unknown:
             llvm_unreachable("Unknown context selector.");
           }
-          OS << "}";
-          break;
-        case OMP_CTX_SET_unknown:
-          llvm_unreachable("Unknown context selector set.");
         }
-        if (I != E - 1)
-          OS << ",";
+        OS << "}";
       }
       OS << ")";
     }
@@ -10760,6 +10765,15 @@ public:
 
 class OpenCLConstantAddressSpaceAttr : public TypeAttr {
 public:
+  enum Spelling {
+    Keyword_constant = 0,
+    GNU_opencl_constant = 2,
+    CXX11_clang_opencl_constant = 3,
+    C2x_clang_opencl_constant = 4,
+  SpellingNotCalculated = 15
+
+  };
+
   static OpenCLConstantAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
     auto *A = new (Ctx) OpenCLConstantAddressSpaceAttr(Ctx, CommonInfo);
     A->setImplicit(true);
@@ -10770,17 +10784,15 @@ public:
 
   static OpenCLConstantAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
     auto *A = new (Ctx) OpenCLConstantAddressSpaceAttr(Ctx, CommonInfo);
-    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
-      A->setAttributeSpellingListIndex(0);
     return A;
   }
 
-  static OpenCLConstantAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
-    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  static OpenCLConstantAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLConstantAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated)) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax, S);
     return CreateImplicit(Ctx, I);
   }
-  static OpenCLConstantAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
-    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  static OpenCLConstantAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLConstantAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated)) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax, S);
     return Create(Ctx, I);
   }
   OpenCLConstantAddressSpaceAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
@@ -10793,6 +10805,16 @@ public:
   void printPretty(raw_ostream &OS,
                    const PrintingPolicy &Policy) const;
   const char *getSpelling() const;
+  Spelling getSemanticSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+    default: llvm_unreachable("Unknown spelling list index");
+    case 0: return Keyword_constant;
+    case 1: return Keyword_constant;
+    case 2: return GNU_opencl_constant;
+    case 3: return CXX11_clang_opencl_constant;
+    case 4: return C2x_clang_opencl_constant;
+  }
+  }
 
 
   static bool classof(const Attr *A) { return A->getKind() == attr::OpenCLConstantAddressSpace; }
@@ -10800,6 +10822,15 @@ public:
 
 class OpenCLGenericAddressSpaceAttr : public TypeAttr {
 public:
+  enum Spelling {
+    Keyword_generic = 0,
+    GNU_opencl_generic = 2,
+    CXX11_clang_opencl_generic = 3,
+    C2x_clang_opencl_generic = 4,
+  SpellingNotCalculated = 15
+
+  };
+
   static OpenCLGenericAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
     auto *A = new (Ctx) OpenCLGenericAddressSpaceAttr(Ctx, CommonInfo);
     A->setImplicit(true);
@@ -10810,17 +10841,15 @@ public:
 
   static OpenCLGenericAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
     auto *A = new (Ctx) OpenCLGenericAddressSpaceAttr(Ctx, CommonInfo);
-    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
-      A->setAttributeSpellingListIndex(0);
     return A;
   }
 
-  static OpenCLGenericAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
-    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  static OpenCLGenericAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLGenericAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated)) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax, S);
     return CreateImplicit(Ctx, I);
   }
-  static OpenCLGenericAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
-    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  static OpenCLGenericAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLGenericAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated)) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax, S);
     return Create(Ctx, I);
   }
   OpenCLGenericAddressSpaceAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
@@ -10833,6 +10862,16 @@ public:
   void printPretty(raw_ostream &OS,
                    const PrintingPolicy &Policy) const;
   const char *getSpelling() const;
+  Spelling getSemanticSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+    default: llvm_unreachable("Unknown spelling list index");
+    case 0: return Keyword_generic;
+    case 1: return Keyword_generic;
+    case 2: return GNU_opencl_generic;
+    case 3: return CXX11_clang_opencl_generic;
+    case 4: return C2x_clang_opencl_generic;
+  }
+  }
 
 
   static bool classof(const Attr *A) { return A->getKind() == attr::OpenCLGenericAddressSpace; }
@@ -10840,6 +10879,15 @@ public:
 
 class OpenCLGlobalAddressSpaceAttr : public TypeAttr {
 public:
+  enum Spelling {
+    Keyword_global = 0,
+    GNU_opencl_global = 2,
+    CXX11_clang_opencl_global = 3,
+    C2x_clang_opencl_global = 4,
+  SpellingNotCalculated = 15
+
+  };
+
   static OpenCLGlobalAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
     auto *A = new (Ctx) OpenCLGlobalAddressSpaceAttr(Ctx, CommonInfo);
     A->setImplicit(true);
@@ -10850,17 +10898,15 @@ public:
 
   static OpenCLGlobalAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
     auto *A = new (Ctx) OpenCLGlobalAddressSpaceAttr(Ctx, CommonInfo);
-    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
-      A->setAttributeSpellingListIndex(0);
     return A;
   }
 
-  static OpenCLGlobalAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
-    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  static OpenCLGlobalAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLGlobalAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated)) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax, S);
     return CreateImplicit(Ctx, I);
   }
-  static OpenCLGlobalAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
-    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  static OpenCLGlobalAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLGlobalAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated)) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax, S);
     return Create(Ctx, I);
   }
   OpenCLGlobalAddressSpaceAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
@@ -10873,6 +10919,16 @@ public:
   void printPretty(raw_ostream &OS,
                    const PrintingPolicy &Policy) const;
   const char *getSpelling() const;
+  Spelling getSemanticSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+    default: llvm_unreachable("Unknown spelling list index");
+    case 0: return Keyword_global;
+    case 1: return Keyword_global;
+    case 2: return GNU_opencl_global;
+    case 3: return CXX11_clang_opencl_global;
+    case 4: return C2x_clang_opencl_global;
+  }
+  }
 
 
   static bool classof(const Attr *A) { return A->getKind() == attr::OpenCLGlobalAddressSpace; }
@@ -10968,6 +11024,15 @@ public:
 
 class OpenCLLocalAddressSpaceAttr : public TypeAttr {
 public:
+  enum Spelling {
+    Keyword_local = 0,
+    GNU_opencl_local = 2,
+    CXX11_clang_opencl_local = 3,
+    C2x_clang_opencl_local = 4,
+  SpellingNotCalculated = 15
+
+  };
+
   static OpenCLLocalAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
     auto *A = new (Ctx) OpenCLLocalAddressSpaceAttr(Ctx, CommonInfo);
     A->setImplicit(true);
@@ -10978,17 +11043,15 @@ public:
 
   static OpenCLLocalAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
     auto *A = new (Ctx) OpenCLLocalAddressSpaceAttr(Ctx, CommonInfo);
-    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
-      A->setAttributeSpellingListIndex(0);
     return A;
   }
 
-  static OpenCLLocalAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
-    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  static OpenCLLocalAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLLocalAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated)) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax, S);
     return CreateImplicit(Ctx, I);
   }
-  static OpenCLLocalAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
-    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  static OpenCLLocalAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLLocalAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated)) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax, S);
     return Create(Ctx, I);
   }
   OpenCLLocalAddressSpaceAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
@@ -11001,6 +11064,16 @@ public:
   void printPretty(raw_ostream &OS,
                    const PrintingPolicy &Policy) const;
   const char *getSpelling() const;
+  Spelling getSemanticSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+    default: llvm_unreachable("Unknown spelling list index");
+    case 0: return Keyword_local;
+    case 1: return Keyword_local;
+    case 2: return GNU_opencl_local;
+    case 3: return CXX11_clang_opencl_local;
+    case 4: return C2x_clang_opencl_local;
+  }
+  }
 
 
   static bool classof(const Attr *A) { return A->getKind() == attr::OpenCLLocalAddressSpace; }
@@ -11008,6 +11081,15 @@ public:
 
 class OpenCLPrivateAddressSpaceAttr : public TypeAttr {
 public:
+  enum Spelling {
+    Keyword_private = 0,
+    GNU_opencl_private = 2,
+    CXX11_clang_opencl_private = 3,
+    C2x_clang_opencl_private = 4,
+  SpellingNotCalculated = 15
+
+  };
+
   static OpenCLPrivateAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
     auto *A = new (Ctx) OpenCLPrivateAddressSpaceAttr(Ctx, CommonInfo);
     A->setImplicit(true);
@@ -11018,17 +11100,15 @@ public:
 
   static OpenCLPrivateAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
     auto *A = new (Ctx) OpenCLPrivateAddressSpaceAttr(Ctx, CommonInfo);
-    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
-      A->setAttributeSpellingListIndex(0);
     return A;
   }
 
-  static OpenCLPrivateAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
-    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  static OpenCLPrivateAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLPrivateAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated)) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax, S);
     return CreateImplicit(Ctx, I);
   }
-  static OpenCLPrivateAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
-    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  static OpenCLPrivateAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLPrivateAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated)) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax, S);
     return Create(Ctx, I);
   }
   OpenCLPrivateAddressSpaceAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
@@ -11041,6 +11121,16 @@ public:
   void printPretty(raw_ostream &OS,
                    const PrintingPolicy &Policy) const;
   const char *getSpelling() const;
+  Spelling getSemanticSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+    default: llvm_unreachable("Unknown spelling list index");
+    case 0: return Keyword_private;
+    case 1: return Keyword_private;
+    case 2: return GNU_opencl_private;
+    case 3: return CXX11_clang_opencl_private;
+    case 4: return C2x_clang_opencl_private;
+  }
+  }
 
 
   static bool classof(const Attr *A) { return A->getKind() == attr::OpenCLPrivateAddressSpace; }
@@ -13021,6 +13111,46 @@ public:
 
 
   static bool classof(const Attr *A) { return A->getKind() == attr::SPtr; }
+};
+
+class SYCLKernelAttr : public InheritableAttr {
+public:
+  static SYCLKernelAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) SYCLKernelAttr(Ctx, CommonInfo);
+    A->setImplicit(true);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static SYCLKernelAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) SYCLKernelAttr(Ctx, CommonInfo);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static SYCLKernelAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return CreateImplicit(Ctx, I);
+  }
+  static SYCLKernelAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return Create(Ctx, I);
+  }
+  SYCLKernelAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             )
+    : InheritableAttr(Ctx, CommonInfo, attr::SYCLKernel, false, false)
+  {
+  }
+
+  SYCLKernelAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::SYCLKernel; }
 };
 
 class ScopedLockableAttr : public InheritableAttr {
