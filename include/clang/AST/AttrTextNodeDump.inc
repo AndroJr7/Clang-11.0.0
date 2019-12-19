@@ -814,6 +814,10 @@
     const auto *SA = cast<WeakRefAttr>(A); (void)SA;
     OS << " \"" << SA->getAliasee() << "\"";
   }
+  void VisitWebAssemblyExportNameAttr(const WebAssemblyExportNameAttr *A) {
+    const auto *SA = cast<WebAssemblyExportNameAttr>(A); (void)SA;
+    OS << " \"" << SA->getExportName() << "\"";
+  }
   void VisitWebAssemblyImportModuleAttr(const WebAssemblyImportModuleAttr *A) {
     const auto *SA = cast<WebAssemblyImportModuleAttr>(A); (void)SA;
     OS << " \"" << SA->getImportModule() << "\"";

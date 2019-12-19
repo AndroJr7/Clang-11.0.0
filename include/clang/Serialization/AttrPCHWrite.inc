@@ -1890,6 +1890,13 @@ Record.push_back(SA->getVisibility());
     Record.AddString(SA->getAliasee());
     break;
   }
+  case attr::WebAssemblyExportName: {
+    const auto *SA = cast<WebAssemblyExportNameAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.AddString(SA->getExportName());
+    break;
+  }
   case attr::WebAssemblyImportModule: {
     const auto *SA = cast<WebAssemblyImportModuleAttr>(A);
     Record.push_back(SA->isInherited());

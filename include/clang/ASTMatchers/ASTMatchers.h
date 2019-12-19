@@ -6544,6 +6544,20 @@ AST_MATCHER(NamedDecl, hasExternalFormalLinkage) {
 /// void x(int val) {}
 /// void y(int val = 0) {}
 /// \endcode
+///
+/// Deprecated. Use hasInitializer() instead to be able to
+/// match on the contents of the default argument.  For example:
+///
+/// \code
+/// void x(int val = 7) {}
+/// void y(int val = 42) {}
+/// \endcode
+/// parmVarDecl(hasInitializer(integerLiteral(equals(42))))
+///   matches the parameter of y
+///
+/// A matcher such as
+///   parmVarDecl(hasInitializer(anything()))
+/// is equivalent to parmVarDecl(hasDefaultArgument()).
 AST_MATCHER(ParmVarDecl, hasDefaultArgument) {
   return Node.hasDefaultArg();
 }
@@ -6566,7 +6580,7 @@ AST_MATCHER(CXXNewExpr, isArray) {
 /// \code
 ///   MyClass *p1 = new MyClass[10];
 /// \endcode
-/// cxxNewExpr(hasArraySize(intgerLiteral(equals(10))))
+/// cxxNewExpr(hasArraySize(integerLiteral(equals(10))))
 ///   matches the expression 'new MyClass[10]'.
 AST_MATCHER_P(CXXNewExpr, hasArraySize, internal::Matcher<Expr>, InnerMatcher) {
   return Node.isArray() && *Node.getArraySize() &&

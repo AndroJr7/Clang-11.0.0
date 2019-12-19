@@ -11559,6 +11559,48 @@ const char *WeakRefAttr::getSpelling() const {
   }
 }
 
+WebAssemblyExportNameAttr *WebAssemblyExportNameAttr::clone(ASTContext &C) const {
+  auto *A = new (C) WebAssemblyExportNameAttr(C, *this, getExportName());
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void WebAssemblyExportNameAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((export_name(\"" << getExportName() << "\")))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::export_name(\"" << getExportName() << "\")]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::export_name(\"" << getExportName() << "\")]]";
+    break;
+  }
+}
+}
+
+const char *WebAssemblyExportNameAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "export_name";
+  case 1:
+    return "export_name";
+  case 2:
+    return "export_name";
+  }
+}
+
 WebAssemblyImportModuleAttr *WebAssemblyImportModuleAttr::clone(ASTContext &C) const {
   auto *A = new (C) WebAssemblyImportModuleAttr(C, *this, getImportModule());
   A->Inherited = Inherited;
@@ -12385,6 +12427,8 @@ const char *Attr::getSpelling() const {
     return cast<WeakImportAttr>(this)->getSpelling();
   case attr::WeakRef:
     return cast<WeakRefAttr>(this)->getSpelling();
+  case attr::WebAssemblyExportName:
+    return cast<WebAssemblyExportNameAttr>(this)->getSpelling();
   case attr::WebAssemblyImportModule:
     return cast<WebAssemblyImportModuleAttr>(this)->getSpelling();
   case attr::WebAssemblyImportName:
@@ -12975,6 +13019,8 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<WeakImportAttr>(this)->clone(C);
   case attr::WeakRef:
     return cast<WeakRefAttr>(this)->clone(C);
+  case attr::WebAssemblyExportName:
+    return cast<WebAssemblyExportNameAttr>(this)->clone(C);
   case attr::WebAssemblyImportModule:
     return cast<WebAssemblyImportModuleAttr>(this)->clone(C);
   case attr::WebAssemblyImportName:
@@ -13565,6 +13611,8 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<WeakImportAttr>(this)->printPretty(OS, Policy);
   case attr::WeakRef:
     return cast<WeakRefAttr>(this)->printPretty(OS, Policy);
+  case attr::WebAssemblyExportName:
+    return cast<WebAssemblyExportNameAttr>(this)->printPretty(OS, Policy);
   case attr::WebAssemblyImportModule:
     return cast<WebAssemblyImportModuleAttr>(this)->printPretty(OS, Policy);
   case attr::WebAssemblyImportName:

@@ -583,7 +583,7 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       break;
     }
     break;
-  case 11:	 // 21 strings to match.
+  case 11:	 // 22 strings to match.
     switch (Name[0]) {
     default: break;
     case 'a':	 // 2 strings to match.
@@ -618,6 +618,10 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       if (memcmp(Name.data()+1, "iagnose_if", 10) != 0)
         break;
       return AttributeCommonInfo::AT_DiagnoseIf;	 // "diagnose_if"
+    case 'e':	 // 1 string to match.
+      if (memcmp(Name.data()+1, "xport_name", 10) != 0)
+        break;
+      return AttributeCommonInfo::AT_WebAssemblyExportName;	 // "export_name"
     case 'f':	 // 1 string to match.
       if (memcmp(Name.data()+1, "allthrough", 10) != 0)
         break;
@@ -2519,10 +2523,10 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_VectorCall;	 // "clang::vectorcall"
     }
     break;
-  case 18:	 // 17 strings to match.
+  case 18:	 // 18 strings to match.
     switch (Name[0]) {
     default: break;
-    case 'c':	 // 14 strings to match.
+    case 'c':	 // 15 strings to match.
       if (memcmp(Name.data()+1, "lang::", 6) != 0)
         break;
       switch (Name[7]) {
@@ -2531,6 +2535,10 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
         if (memcmp(Name.data()+8, "f_consumed", 10) != 0)
           break;
         return AttributeCommonInfo::AT_CFConsumed;	 // "clang::cf_consumed"
+      case 'e':	 // 1 string to match.
+        if (memcmp(Name.data()+8, "xport_name", 10) != 0)
+          break;
+        return AttributeCommonInfo::AT_WebAssemblyExportName;	 // "clang::export_name"
       case 'f':	 // 1 string to match.
         if (memcmp(Name.data()+8, "allthrough", 10) != 0)
           break;
@@ -3646,7 +3654,7 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_VectorCall;	 // "clang::vectorcall"
     }
     break;
-  case 18:	 // 11 strings to match.
+  case 18:	 // 12 strings to match.
     if (memcmp(Name.data()+0, "clang::", 7) != 0)
       break;
     switch (Name[7]) {
@@ -3655,6 +3663,10 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       if (memcmp(Name.data()+8, "f_consumed", 10) != 0)
         break;
       return AttributeCommonInfo::AT_CFConsumed;	 // "clang::cf_consumed"
+    case 'e':	 // 1 string to match.
+      if (memcmp(Name.data()+8, "xport_name", 10) != 0)
+        break;
+      return AttributeCommonInfo::AT_WebAssemblyExportName;	 // "clang::export_name"
     case 'i':	 // 1 string to match.
       if (memcmp(Name.data()+8, "mport_name", 10) != 0)
         break;

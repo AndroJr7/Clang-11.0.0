@@ -1334,6 +1334,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<WeakRefAttr>(At);
       return A->clone(C);
     }
+    case attr::WebAssemblyExportName: {
+      const auto *A = cast<WebAssemblyExportNameAttr>(At);
+      return A->clone(C);
+    }
     case attr::WebAssemblyImportModule: {
       const auto *A = cast<WebAssemblyImportModuleAttr>(At);
       return A->clone(C);
@@ -2226,6 +2230,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
       return nullptr;
     }
     case attr::WeakRef: {
+      return nullptr;
+    }
+    case attr::WebAssemblyExportName: {
       return nullptr;
     }
     case attr::WebAssemblyImportModule: {

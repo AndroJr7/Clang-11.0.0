@@ -1152,6 +1152,10 @@
   bool VisitWeakRefAttr(WeakRefAttr *A) {
     return true; 
   }
+  bool TraverseWebAssemblyExportNameAttr(WebAssemblyExportNameAttr *A);
+  bool VisitWebAssemblyExportNameAttr(WebAssemblyExportNameAttr *A) {
+    return true; 
+  }
   bool TraverseWebAssemblyImportModuleAttr(WebAssemblyImportModuleAttr *A);
   bool VisitWebAssemblyImportModuleAttr(WebAssemblyImportModuleAttr *A) {
     return true; 
@@ -3964,6 +3968,15 @@ bool VISITORCLASS<Derived>::TraverseWeakRefAttr(WeakRefAttr *A) {
 }
 
 template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseWebAssemblyExportNameAttr(WebAssemblyExportNameAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitWebAssemblyExportNameAttr(A))
+    return false;
+  return true;
+}
+
+template <typename Derived>
 bool VISITORCLASS<Derived>::TraverseWebAssemblyImportModuleAttr(WebAssemblyImportModuleAttr *A) {
   if (!getDerived().VisitAttr(A))
     return false;
@@ -4595,6 +4608,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseWeakImportAttr(cast<WeakImportAttr>(A));
     case attr::WeakRef:
       return getDerived().TraverseWeakRefAttr(cast<WeakRefAttr>(A));
+    case attr::WebAssemblyExportName:
+      return getDerived().TraverseWebAssemblyExportNameAttr(cast<WebAssemblyExportNameAttr>(A));
     case attr::WebAssemblyImportModule:
       return getDerived().TraverseWebAssemblyImportModuleAttr(cast<WebAssemblyImportModuleAttr>(A));
     case attr::WebAssemblyImportName:
